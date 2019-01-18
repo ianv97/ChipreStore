@@ -15,15 +15,17 @@ class AddTableOffers extends Migration
     {
         Schema::create('offers', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->integer('min_quantity');
+            $table->string('name', 60);
+            $table->unsignedInteger('min_quantity');
             $table->date('start_date');
             $table->date('end_date');
-            $table->decimal('discount_percentage');
-            $table->decimal('new_price');
-            $table->integer('product_id')->unsigned();
+            $table->unsignedDecimal('discount_percentage');
+            $table->unsignedDecimal('new_price');
+            $table->unsignedInteger('product_id')->nullable();
+            $table->unsignedInteger('category_id')->nullable();
 
-            $table->foreign('product_id')->references('id')->on('products')->ondelete('set null');
+            $table->foreign('product_id')->references('id')->on('products')->ondelete('cascade');
+            $table->foreign('category_id')->references('id')->on('categories')->ondelete('cascade');
 
             $table->timestamps();
         });

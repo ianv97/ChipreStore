@@ -15,15 +15,15 @@ class AddTableProducts extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
-            $table->string('description',240);
-            $table->string('photo',240);
-            $table->decimal('cost_price');
-            $table->decimal('sale_price');
-            $table->decimal('credit_price');
+            $table->string('name', 60);
+            $table->string('description');
+            $table->string('photo', 55);
+            $table->unsignedDecimal('cost_price');
+            $table->unsignedDecimal('sale_price');
+            $table->unsignedDecimal('credit_price');
             $table->integer('stock_quantity');
             $table->boolean('without_stock_sales');
-            $table->integer('category_id')->unsigned();
+            $table->unsignedInteger('category_id');
 
             $table->foreign('category_id')->references('id')->on('categories')->ondelete('set null');
 
