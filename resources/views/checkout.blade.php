@@ -97,3 +97,9 @@
     </div>
 </div>
 @endsection
+
+@section('footer')
+<script>
+   $('#checkout').addClass('active');
+</script>
+@endsection

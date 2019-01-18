@@ -103,3 +103,9 @@
     </div>
 </div>
 @endsection
+
+@section('footer')
+<script>
+   $('#cart').addClass('active');
+</script>
+@endsection

@@ -124,3 +124,9 @@
     </div>
     <!-- Product Catagories Area End -->
 @endsection
+
+@section('footer')
+<script>
+   $('#index').addClass('active');
+</script>
+@endsection

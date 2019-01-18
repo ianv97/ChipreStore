@@ -64,11 +64,11 @@
         <!-- Nav -->
         <nav class="amado-nav">
             <ul>
-                <li class="active"><a href="{{action('Shop@index')}}">Inicio</a></li>
-                <li><a href="{{action('Shop@products')}}">Productos</a></li>
-                <li><a href="{{action('Shop@product_details')}}">Detalles</a></li>
-                <li><a href="{{action('Shop@cart')}}">Carrito</a></li>
-                <li><a href="{{action('Shop@checkout')}}">Finalizar compra</a></li>
+                <li id="index"><a href="{{action('Shop@index')}}">Inicio</a></li>
+                <li id="products"><a href="{{action('Shop@products')}}">Productos</a></li>
+                <li id="product_details"><a href="{{action('Shop@product_details')}}">Detalles</a></li>
+                <li id="cart"><a href="{{action('Shop@cart')}}">Carrito</a></li>
+                <li id="checkout"><a href="{{action('Shop@checkout')}}">Finalizar compra</a></li>
             </ul>
         </nav>
         <!-- Button Group -->
