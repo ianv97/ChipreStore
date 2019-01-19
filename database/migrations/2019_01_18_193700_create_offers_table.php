@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTableOffers extends Migration
+class CreateOffersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -17,16 +17,14 @@ class AddTableOffers extends Migration
             $table->increments('id');
             $table->string('name', 60);
             $table->unsignedInteger('min_quantity');
-            $table->date('start_date');
-            $table->date('end_date');
+            $table->date('start_date')->nullable();
+            $table->date('end_date')->nullable();
             $table->unsignedDecimal('discount_percentage');
-            $table->unsignedDecimal('new_price');
-            $table->unsignedInteger('product_id')->nullable();
+            $table->string('state', 15);
             $table->unsignedInteger('category_id')->nullable();
-
-            $table->foreign('product_id')->references('id')->on('products')->ondelete('cascade');
-            $table->foreign('category_id')->references('id')->on('categories')->ondelete('cascade');
-
+            $table->unsignedInteger('products_offer_id')->nullable();
+            
+            $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });
     }
