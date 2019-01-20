@@ -1,6 +1,6 @@
 @extends('admin/layout')
 
-@section('content')
+@section('body')
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
