@@ -20,6 +20,14 @@ Route::get('/admin/simple', function () {
     return view('admin/pages/tables/simple');
 })->name('admin.simple');
 
+//Rutas de categorias
+Route::get('/admin/categories', 'CategoryController@index')->name('admin.table.categories');
+Route::resource('categories','CategoryController');
+Route::get('categories/{id}/destroy',[
+    'uses' => 'CategoryController@destroy',
+    'as' => 'categories.destroy'
+]);
+
 Route::get('/admin/data', function () {
     return view('admin/pages/tables/data');
 })->name('admin.data');

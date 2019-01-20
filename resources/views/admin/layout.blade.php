@@ -421,7 +421,7 @@
             </span>
           </a>
           <ul class="treeview-menu">
-            <li><a href="{{route('admin.simple')}}"><i class="fa fa-circle-o"></i> Simple tables</a></li>
+            <li><a href="{{route('admin.table.categories')}}"><i class="fa fa-circle-o"></i>Categorias</a></li>
             <li><a href="{{route('admin.data')}}"><i class="fa fa-circle-o"></i> Data tables</a></li>
           </ul>
         </li>
