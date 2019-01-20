@@ -18,6 +18,7 @@ Route::get('/product_details', 'Shop@product_details');
 Route::get('/cart', 'Shop@cart');
 Route::get('/checkout', 'Shop@checkout');
 
+
 Route::get('/admin', 'User@index');
 Route::get('/admin/simple', 'User@simple');
 Route::get('/admin/data', 'User@data');
@@ -27,3 +28,11 @@ Route::post('/admin/change_photo', 'User@change_photo');
 Route::get('/admin/list_users', 'User@list_users');
 Route::post('/admin/new_user', 'User@new_user');
 Route::post('/admin/edit_user', 'User@edit_user');
+
+//Rutas de categorias
+Route::get('/admin/categories', 'CategoryController@index')->name('admin.table.categories');
+Route::resource('categories','CategoryController');
+Route::get('categories/{id}/destroy',[
+    'uses' => 'CategoryController@destroy',
+    'as' => 'categories.destroy'
+]);
