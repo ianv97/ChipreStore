@@ -2,614 +2,142 @@
 <html>
     <head>
         <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>ChipreStore | Administración</title>
-        <!-- Favicon  -->
         <link rel="shortcut icon" href="../img/logo.ico">
-        <!-- Tell the browser to be responsive to screen width -->
-        <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-        <!-- Bootstrap 3.3.7 -->
-        <link rel="stylesheet" href="../templateAdmin/bower_components/bootstrap/dist/css/bootstrap.min.css">
-        <!-- Font Awesome -->
+        <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">
-        <!--<link rel="stylesheet" href="../templateAdmin/bower_components/font-awesome/css/font-awesome.min.css">-->
-        <!-- Ionicons -->
-        <link rel="stylesheet" href="../templateAdmin/bower_components/Ionicons/css/ionicons.min.css">
-        <!-- Theme style -->
-        <link rel="stylesheet" href="../templateAdmin/dist/css/AdminLTE.min.css">
-        <!-- AdminLTE Skins. Choose a skin from the css/skins
-             folder instead of downloading all of them to reduce the load. -->
-        <link rel="stylesheet" href="../templateAdmin/dist/css/skins/_all-skins.min.css">
-        <!-- Morris chart -->
-        <link rel="stylesheet" href="../templateAdmin/bower_components/morris.js/morris.css">
-        <!-- jvectormap -->
-        <link rel="stylesheet" href="../templateAdmin/bower_components/jvectormap/jquery-jvectormap.css">
-        <!-- Date Picker -->
-        <link rel="stylesheet" href="../templateAdmin/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
-        <!-- Daterange picker -->
-        <link rel="stylesheet" href="../templateAdmin/bower_components/bootstrap-daterangepicker/daterangepicker.css">
-        <!-- bootstrap wysihtml5 - text editor -->
-        <link rel="stylesheet" href="../templateAdmin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.min.css">
-        <!-- Google Font -->
-        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
-        <!--Toastr-->
-        <link rel="stylesheet" href="../css/toastr.min.css">
-        <!--Estilos personalizados-->
+        <link rel="stylesheet" href="../font/stylesheet.css">
+        <link rel="stylesheet" href="../css/mCustomScrollbar.min.css">
+        <link rel="stylesheet" href="../css/sidebar.css">
         <link rel="stylesheet" href="../css/estilos.css">
+        <link rel="stylesheet" href="../css/toastr.min.css">
+        <style>.menuopt:hover{color:#007bff !important;}</style>
         @yield('head')
     </head>
-    <body class="hold-transition skin-blue sidebar-mini">
-        <div class="wrapper">
 
-            <header class="main-header">
-                <!-- Logo -->
-                <a href="index2.html" class="logo">
-                    <!-- mini logo for sidebar mini 50x50 pixels -->
-                    <span class="logo-mini"><img src="../img/logo50x50.jpg" style="border-radius:10px;"></span>
-                    <!-- logo for regular state and mobile devices -->
-                    <span class="logo-lg"><b>Chipre</b>Store</span>
+    <body>
+        <div class="page-wrapper ice-theme toggled">
+            <aside>
+                <a id="show-sidebar" class="btn btn-sm btn-dark menuopt" style="z-index: 999999; background-color:#efefef">
+                    <i class="fas fa-bars"></i>
                 </a>
-                <!-- Header Navbar: style can be found in header.less -->
-                <nav class="navbar navbar-static-top">
-                    <!-- Sidebar toggle button-->
-                    <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-                        <span class="sr-only">Toggle navigation</span>
-                    </a>
-
-                    <div class="navbar-custom-menu">
-                        <ul class="nav navbar-nav">
-                            <!-- Messages: style can be found in dropdown.less-->
-                            <li class="dropdown messages-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fas fa-envelope"></i>
-                                    <span class="label label-success">4</span>
+                <nav id="sidebar" class="sidebar-wrapper" style="z-index: 999999;">
+                    <div class="sidebar-content">
+                        <!-- TÍTULO -->
+                        <div class="sidebar-brand">
+                            <a href="#">MENÚ</a>
+                            <div id="close-sidebar">
+                                <i class="fas fa-times menuopt"></i>
+                            </div>
+                        </div>
+                        <!-- CABECERA  -->
+                        <div class="sidebar-header">
+                            <div class="user-pic bhover">
+                                <img id="userphoto" class="img-responsive img-rounded cursor" src="../img/users/{{$_SESSION['photo']}}">
+                                <form method="post" action="{{action('User@change_photo')}}" id="userphotoform" name="userphotoform" enctype="multipart/form-data" style="display: none;">
+                                    {{ csrf_field() }}
+                                    <input type="file" id="userphotofile" name="userphotofile" accept=".jpeg,.jpg,.png">
+                                </form>
+                            </div>
+                            <div class="user-info">
+                                <span class="user-name">
+                                    <strong style="color: #bdd4de">{{$_SESSION['name']}}</strong>
+                                </span>
+                                <span class="user-role">{{$_SESSION['role']}}</span>
+                                <span class="user-status">
+                                    <i class="fa fa-circle"></i>
+                                    <span>Online</span>
+                                </span>
+                            </div>
+                            <div class="user-info" style="margin-top:10px;">
+                                <a href="{{ action('User@edit_password')}}">
+                                    <i class="fa fa-unlock"></i>
+                                    <span>Cambiar contraseña</span>
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">You have 4 messages</li>
-                                    <li>
-                                        <!-- inner menu: contains the actual data -->
-                                        <ul class="menu">
-                                            <li><!-- start message -->
-                                                <a href="#">
-                                                    <div class="pull-left">
-                                                        <img class="img-circle" src="../templateAdmin/dist/img/user4-128x128.jpg">
-                                                    </div>
-                                                    <h4>
-                                                        Support Team
-                                                        <small><i class="fas fa-clock"></i> 5 mins</small>
-                                                    </h4>
-                                                    <p>Why not buy a new awesome theme?</p>
-                                                </a>
-                                            </li>
-                                            <!-- end message -->
-                                        </ul>
-                                    </li>
-                                    <li class="footer"><a href="#">See All Messages</a></li>
-                                </ul>
-                            </li>
-                            <!-- Notifications: style can be found in dropdown.less -->
-                            <li class="dropdown notifications-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="fas fa-bell"></i>
-                                    <span class="label label-warning">10</span>
+                            </div>
+                        </div>
+                        <!-- MENÚ  -->
+                        <div class="sidebar-menu">
+                            <ul>
+                                <li class="header-menu">
+                                    <span>General</span>
+                                </li>
+                                <li>
+                                    <a href="{{action('Category@list_categories')}}">
+                                        <i class="fas fa-object-group"></i>
+                                        <span class="menuopt">Categorías</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-tshirt"></i>
+                                        <span class="menuopt">Productos</span>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-dollar-sign"></i>
+                                        <span class="menuopt">Ofertas</span>
+                                    </a>
+                                </li>
+                                <li class="header-menu">
+                                    <span>Tienda</span>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="fas fa-newspaper"></i>
+                                        <span class="menuopt">Publicaciones</span>
+                                    </a>
+                                </li>
+                            @if ($_SESSION['role'] == 'Administrador')
+                                <li class="header-menu">
+                                    <span>Administrador</span>
+                                </li>
+                                <li>
+                                    <a href="{{action('User@list_users')}}">
+                                        <i class="fas fa-users"></i>
+                                        <span class="menuopt">Usuarios</span>
+                                    </a>
+                                </li>
+                            @endif
+                                
+                            </ul>
+                        </div>
+                        <div class="sidebar-header">
+                            <li style="list-style-type:none;">
+                                <a href="{{ action('Session@logout') }}" class="thover nosub" style="color:#ef6603">
+                                    <i class="fa fa-sign-out-alt"></i>
+                                    <span>Cerrar Sesión</span>
                                 </a>
-                                <ul class="dropdown-menu">
-                                    <li class="header">You have 10 notifications</li>
-                                    <li>
-                                        <!-- inner menu: contains the actual data -->
-                                        <ul class="menu">
-                                            <li>
-                                                <a href="#">
-                                                    <i class="fa fa-users text-aqua"></i> 5 new members joined today
-                                                </a>
-                                            </li>
-                                        </ul>
-                                    </li>
-                                    <li class="footer"><a href="#">View all</a></li>
-                                </ul>
                             </li>
-                                            
-                            <!-- User Account: style can be found in dropdown.less -->
-                            <li class="dropdown user user-menu">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <img class="user-image" src="../img/users/{{$_SESSION['photo']}}">
-                                    <span>{{$_SESSION['name']}}</span>
-                                </a>
-                                <ul class="dropdown-menu">
-                                    <!-- User image -->
-                                    <li class="user-header">
-                                        <img id="user_photo" src="../img/users/{{$_SESSION['photo']}}" class="img-circle" style="cursor:pointer;">
-                                        <form method="post" action="{{action('User@change_photo')}}" id="userphotoform" name="userphotoform" enctype="multipart/form-data" style="display:none;">
-                                            {{ csrf_field() }}
-                                            <input type="file" id="userphotofile" name="userphotofile" accept=".jpeg,.jpg,.png">
-                                        </form>
-                                        <p style="font-weight: bold;">
-                                            {{$_SESSION['name']}}
-                                        </p>
-                                    </li>
-                                    <!-- Menu Footer-->
-                                    <li class="user-footer">
-                                        <div class="pull-left">
-                                            <a href="{{action('User@edit_password')}}" class="btn btn-default btn-flat" style="border-radius:10px;">Cambiar contraseña</a>
-                                        </div>
-                                        <div class="pull-right">
-                                            <a href="{{action('Session@logout')}}" class="btn btn-default btn-flat" style="border-radius:10px;">Cerrar sesión</a>
-                                        </div>
-                                    </li>
-                                </ul>
-                            </li>
-                            <!-- Control Sidebar Toggle Button -->
-                            <li>
-                                <a href="#" data-toggle="control-sidebar"><i class="fas fa-cogs"></i></a>
-                            </li>
-                        </ul>
+                        </div>
                     </div>
                 </nav>
-            </header>
-            
-            
-            <!-- Left side column. contains the logo and sidebar -->
-            <aside class="main-sidebar">
-                <!-- sidebar: style can be found in sidebar.less -->
-                <section class="sidebar">
-                    <!-- Sidebar user panel -->
-                    <div class="user-panel">
-                        <div class="pull-left image">
-                            <img src="../img/users/{{$_SESSION['photo']}}" class="img-circle" alt="User Image">
-                        </div>
-                        <div class="pull-left info">
-                            <p>{{$_SESSION['name']}}</p>
-                            <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-                        </div>
-                    </div>
-                    
-                    <!-- search form -->
-                    <form action="#" method="get" class="sidebar-form">
-                        <div class="input-group">
-                            <input type="text" name="q" class="form-control" placeholder="Búsqueda...">
-                            <span class="input-group-btn">
-                                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                                </button>
-                            </span>
-                        </div>
-                    </form>
-                    <!-- /.search form -->
-                    
-                    <!-- sidebar menu: : style can be found in sidebar.less -->
-                    <ul class="sidebar-menu" data-widget="tree">
-                        <li class="header">General</li>
-                        <li>
-                            <a href="{{action('User@list_users')}}">
-                                <i class="fa fa-users"></i> <span>Usuarios</span>
-                            </a>
-                        </li>
-                        
-                        
-                        
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li class="active"><a href="index.html"><i class="fa fa-circle"></i> Dashboard v1</a></li>
-                                <li><a href="index2.html"><i class="fa fa-circle"></i> Dashboard v2</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-files"></i>
-                                <span>Layout Options</span>
-                                <span class="pull-right-container">
-                                    <span class="label label-primary pull-right">4</span>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/layout/top-nav.html"><i class="fa fa-circle"></i> Top Navigation</a></li>
-                                <li><a href="pages/layout/boxed.html"><i class="fa fa-circle"></i> Boxed</a></li>
-                                <li><a href="pages/layout/fixed.html"><i class="fa fa-circle"></i> Fixed</a></li>
-                                <li><a href="pages/layout/collapsed-sidebar.html"><i class="fa fa-circle"></i> Collapsed Sidebar</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="pages/widgets.html">
-                                <i class="fa fa-th"></i> <span>Widgets</span>
-                                <span class="pull-right-container">
-                                    <small class="label pull-right bg-green">new</small>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-pie-chart"></i>
-                                <span>Charts</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/charts/chartjs.html"><i class="fa fa-circle"></i> ChartJS</a></li>
-                                <li><a href="pages/charts/morris.html"><i class="fa fa-circle"></i> Morris</a></li>
-                                <li><a href="pages/charts/flot.html"><i class="fa fa-circle"></i> Flot</a></li>
-                                <li><a href="pages/charts/inline.html"><i class="fa fa-circle"></i> Inline charts</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-laptop"></i>
-                                <span>UI Elements</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/UI/general.html"><i class="fa fa-circle"></i> General</a></li>
-                                <li><a href="pages/UI/icons.html"><i class="fa fa-circle"></i> Icons</a></li>
-                                <li><a href="pages/UI/buttons.html"><i class="fa fa-circle"></i> Buttons</a></li>
-                                <li><a href="pages/UI/sliders.html"><i class="fa fa-circle"></i> Sliders</a></li>
-                                <li><a href="pages/UI/timeline.html"><i class="fa fa-circle"></i> Timeline</a></li>
-                                <li><a href="pages/UI/modals.html"><i class="fa fa-circle"></i> Modals</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-edit"></i> <span>Forms</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/forms/general.html"><i class="fa fa-circle"></i> General Elements</a></li>
-                                <li><a href="pages/forms/advanced.html"><i class="fa fa-circle"></i> Advanced Elements</a></li>
-                                <li><a href="pages/forms/editors.html"><i class="fa fa-circle"></i> Editors</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-table"></i> <span>Tables</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="{{action('User@simple')}}"><i class="fa fa-circle"></i> Simple tables</a></li>
-                                <li><a href="{{action('User@data')}}"><i class="fa fa-circle"></i> Data tables</a></li>
-                            </ul>
-                        </li>
-                        <li>
-                            <a href="pages/calendar.html">
-                                <i class="fa fa-calendar"></i> <span>Calendar</span>
-                                <span class="pull-right-container">
-                                    <small class="label pull-right bg-red">3</small>
-                                    <small class="label pull-right bg-blue">17</small>
-                                </span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="pages/mailbox/mailbox.html">
-                                <i class="fa fa-envelope"></i> <span>Mailbox</span>
-                                <span class="pull-right-container">
-                                    <small class="label pull-right bg-yellow">12</small>
-                                    <small class="label pull-right bg-green">16</small>
-                                    <small class="label pull-right bg-red">5</small>
-                                </span>
-                            </a>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-folder"></i> <span>Examples</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="pages/examples/invoice.html"><i class="fa fa-circle"></i> Invoice</a></li>
-                                <li><a href="pages/examples/profile.html"><i class="fa fa-circle"></i> Profile</a></li>
-                                <li><a href="pages/examples/login.html"><i class="fa fa-circle"></i> Login</a></li>
-                                <li><a href="pages/examples/register.html"><i class="fa fa-circle"></i> Register</a></li>
-                                <li><a href="pages/examples/lockscreen.html"><i class="fa fa-circle"></i> Lockscreen</a></li>
-                                <li><a href="pages/examples/404.html"><i class="fa fa-circle"></i> 404 Error</a></li>
-                                <li><a href="pages/examples/500.html"><i class="fa fa-circle"></i> 500 Error</a></li>
-                                <li><a href="pages/examples/blank.html"><i class="fa fa-circle"></i> Blank Page</a></li>
-                                <li><a href="pages/examples/pace.html"><i class="fa fa-circle"></i> Pace Page</a></li>
-                            </ul>
-                        </li>
-                        <li class="treeview">
-                            <a href="#">
-                                <i class="fa fa-share"></i> <span>Multilevel</span>
-                                <span class="pull-right-container">
-                                    <i class="fa fa-angle-left pull-right"></i>
-                                </span>
-                            </a>
-                            <ul class="treeview-menu">
-                                <li><a href="#"><i class="fa fa-circle"></i> Level One</a></li>
-                                <li class="treeview">
-                                    <a href="#"><i class="fa fa-circle"></i> Level One
-                                        <span class="pull-right-container">
-                                            <i class="fa fa-angle-left pull-right"></i>
-                                        </span>
-                                    </a>
-                                    <ul class="treeview-menu">
-                                        <li><a href="#"><i class="fa fa-circle"></i> Level Two</a></li>
-                                        <li class="treeview">
-                                            <a href="#"><i class="fa fa-circle"></i> Level Two
-                                                <span class="pull-right-container">
-                                                    <i class="fa fa-angle-left pull-right"></i>
-                                                </span>
-                                            </a>
-                                            <ul class="treeview-menu">
-                                                <li><a href="#"><i class="fa fa-circle"></i> Level Three</a></li>
-                                                <li><a href="#"><i class="fa fa-circle"></i> Level Three</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a href="#"><i class="fa fa-circle"></i> Level One</a></li>
-                            </ul>
-                        </li>
-                        <li><a href="https://adminlte.io/docs"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-                        <li class="header">LABELS</li>
-                        <li><a href="#"><i class="fa fa-circle text-red"></i> <span>Important</span></a></li>
-                        <li><a href="#"><i class="fa fa-circle text-yellow"></i> <span>Warning</span></a></li>
-                        <li><a href="#"><i class="fa fa-circle text-aqua"></i> <span>Information</span></a></li>
-                    </ul>
-                </section>
-                <!-- /.sidebar -->
             </aside>
-
-            <main class="content-wrapper">
+            <main class="page-content">
                 @yield('body')
             </main>
-            
-            <footer class="main-footer">
-                <!-- jQuery 3 -->
-                <script src="../js/jquery3.min.js"></script>
-                <!--<script src="../templateAdmin/bower_components/jquery/dist/jquery.min.js"></script>-->
-                <!-- jQuery UI 1.11.4 -->
-                <!--<script src="../templateAdmin/bower_components/jquery-ui/jquery-ui.min.js"></script>-->
-                <!-- Resolve conflict in jQuery UI tooltip with Bootstrap tooltip -->
-                <script>
-                $.widget.bridge('uibutton', $.ui.button);
-                </script>
-                <!-- Bootstrap 3.3.7 -->
-                <script src="../templateAdmin/bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-                <!--Toastr-->
-                <script src="../js/toastr.min.js"></script>
-                <!-- Morris.js charts -->
-                <script src="../templateAdmin/bower_components/raphael/raphael.min.js"></script>
-                <script src="../templateAdmin/bower_components/morris.js/morris.min.js"></script>
-                <!-- Sparkline -->
-                <script src="../templateAdmin/bower_components/jquery-sparkline/dist/jquery.sparkline.min.js"></script>
-                <!-- jvectormap -->
-                <script src="../templateAdmin/plugins/jvectormap/jquery-jvectormap-1.2.2.min.js"></script>
-                <script src="../templateAdmin/plugins/jvectormap/jquery-jvectormap-world-mill-en.js"></script>
-                <!-- jQuery Knob Chart -->
-                <script src="../templateAdmin/bower_components/jquery-knob/dist/jquery.knob.min.js"></script>
-                <!-- daterangepicker -->
-                <script src="../templateAdmin/bower_components/moment/min/moment.min.js"></script>
-                <script src="../templateAdmin/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
-                <!-- datepicker -->
-                <script src="../templateAdmin/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
-                <!-- Bootstrap WYSIHTML5 -->
-                <script src="../templateAdmin/plugins/bootstrap-wysihtml5/bootstrap3-wysihtml5.all.min.js"></script>
-                <!-- Slimscroll -->
-                <script src="../templateAdmin/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-                <!-- FastClick -->
-                <script src="../templateAdmin/bower_components/fastclick/lib/fastclick.js"></script>
-                <!-- AdminLTE App -->
-                <script src="../templateAdmin/dist/js/adminlte.min.js"></script>
-                <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-                <!--<script src="../templateAdmin/dist/js/pages/dashboard.js"></script>-->
-                <!-- AdminLTE for demo purposes -->
-                <!--<script src="../templateAdmin/dist/js/demo.js"></script>-->
-
-                <script type="text/javascript">
-                $('#user_photo').click(function () {
-                    $('#userphotofile').click();
-                    $('#userphotofile').change(function () {
-                        $('#userphotoform').submit();
-                    });
-                });
-                </script>
-                @yield('footer')
-            </footer>
-            
-            
-            <!-- Control Sidebar -->
-            <aside class="control-sidebar control-sidebar-dark">
-                <!-- Create the tabs -->
-                <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-                    <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-                    <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-cogs"></i></a></li>
-                </ul>
-                <!-- Tab panes -->
-                <div class="tab-content">
-                    <!-- Home tab content -->
-                    <div class="tab-pane" id="control-sidebar-home-tab">
-                        <h3 class="control-sidebar-heading">Recent Activity</h3>
-                        <ul class="control-sidebar-menu">
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-                                    <div class="menu-info">
-                                        <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                                        <p>Will be 23 on April 24th</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="menu-icon fa fa-user bg-yellow"></i>
-
-                                    <div class="menu-info">
-                                        <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                                        <p>New phone +1(800)555-1234</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="menu-icon fa fa-envelope bg-light-blue"></i>
-
-                                    <div class="menu-info">
-                                        <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                                        <p>nora@example.com</p>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <i class="menu-icon fa fa-file-code bg-green"></i>
-
-                                    <div class="menu-info">
-                                        <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                                        <p>Execution time 5 seconds</p>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- /.control-sidebar-menu -->
-
-                        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-                        <ul class="control-sidebar-menu">
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <h4 class="control-sidebar-subheading">
-                                        Custom Template Design
-                                        <span class="label label-danger pull-right">70%</span>
-                                    </h4>
-
-                                    <div class="progress progress-xxs">
-                                        <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <h4 class="control-sidebar-subheading">
-                                        Update Resume
-                                        <span class="label label-success pull-right">95%</span>
-                                    </h4>
-
-                                    <div class="progress progress-xxs">
-                                        <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <h4 class="control-sidebar-subheading">
-                                        Laravel Integration
-                                        <span class="label label-warning pull-right">50%</span>
-                                    </h4>
-
-                                    <div class="progress progress-xxs">
-                                        <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="javascript:void(0)">
-                                    <h4 class="control-sidebar-subheading">
-                                        Back End Framework
-                                        <span class="label label-primary pull-right">68%</span>
-                                    </h4>
-
-                                    <div class="progress progress-xxs">
-                                        <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-                                    </div>
-                                </a>
-                            </li>
-                        </ul>
-                        <!-- /.control-sidebar-menu -->
-
-                    </div>
-                    <!-- /.tab-pane -->
-                    <!-- Stats tab content -->
-                    <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-                    <!-- /.tab-pane -->
-                    <!-- Settings tab content -->
-                    <div class="tab-pane" id="control-sidebar-settings-tab">
-                        <form method="post">
-                            <h3 class="control-sidebar-heading">General Settings</h3>
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Report panel usage
-                                    <input type="checkbox" class="pull-right" checked>
-                                </label>
-
-                                <p>
-                                    Some information about this general settings option
-                                </p>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Allow mail redirect
-                                    <input type="checkbox" class="pull-right" checked>
-                                </label>
-
-                                <p>
-                                    Other sets of options are available
-                                </p>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Expose author name in posts
-                                    <input type="checkbox" class="pull-right" checked>
-                                </label>
-
-                                <p>
-                                    Allow the user to show his name in blog posts
-                                </p>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Show me as online
-                                    <input type="checkbox" class="pull-right" checked>
-                                </label>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Turn off notifications
-                                    <input type="checkbox" class="pull-right">
-                                </label>
-                            </div>
-                            <!-- /.form-group -->
-
-                            <div class="form-group">
-                                <label class="control-sidebar-subheading">
-                                    Delete chat history
-                                    <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash"></i></a>
-                                </label>
-                            </div>
-                            <!-- /.form-group -->
-                        </form>
-                    </div>
-                    <!-- /.tab-pane -->
-                </div>
-            </aside>
-            <!-- /.control-sidebar -->
-            <!-- Add the sidebar's background. This div must be placed
-                 immediately after the control sidebar -->
-            <div class="control-sidebar-bg"></div>
         </div>
-</body>
+    </body>
+
+    <footer>
+        <script src="../js/jquery3.min.js"></script>
+        <script src="../js/popper.min.js"></script>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/mCustomScrollbar.min.js"></script>
+        <script src="../js/sidebar.js"></script>
+        <script src="../js/toastr.min.js"></script>
+        @yield('footer')
+    </footer>
 </html>
+
+<script type="text/javascript">
+$('#userphoto').click(function(){
+    $('#userphotofile').click();
+  
+    $('#userphotofile').change(function(){
+        $('#userphotoform').submit();
+    });
+});
+ </script>

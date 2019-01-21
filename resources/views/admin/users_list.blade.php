@@ -13,7 +13,7 @@
     <div class="card-body">
         <div class="row px-3">
             <div class="d-inline-flex ml-auto mb-2">
-            <button type="button" class="btn btn-danger px-2" data-toggle="modal" data-target="#newusermodal" style="font-weight:bold;">
+            <button type="button" class="btn btn-danger px-2" data-toggle="modal" data-target="#new_user_modal" style="font-weight:bold;">
                 <span class="fas fa-plus-square"></span> Nuevo usuario
             </button>
             </div>
@@ -38,17 +38,17 @@
                     <?php $users = \App\User::all() ?>
                     @foreach ($users as $user)
                     <tr>
-                        <td class="negrita">{{ $user->id }}</td>
-                        <td class="negrita">{{ $user->name }}</td>
-                        <td class="negrita">{{ $user->email }}</td>
-                        <td class="negrita">{{ $user->role }}</td>
-                        <td class="negrita">{{ $user->dni }}</td>
-                        <td class="negrita">{{ $user->phone }}</td>
-                        <td class="negrita">{{ $user->address }}</td>
-                        <td class="negrita">{{ $user->salary }}</td>
-                        <td class="negrita">{{ $user->comission }}</td>
+                        <td class="negrita">{{$user->id}}</td>
+                        <td class="negrita">{{$user->name}}</td>
+                        <td class="negrita">{{$user->email}}</td>
+                        <td class="negrita">{{$user->role}}</td>
+                        <td class="negrita">{{$user->dni}}</td>
+                        <td class="negrita">{{$user->phone}}</td>
+                        <td class="negrita">{{$user->address}}</td>
+                        <td class="negrita">{{$user->salary}}</td>
+                        <td class="negrita">{{$user->comission}}</td>
                         <td>
-                            <span class="btn btn-danger" onclick="edituser('{{$user->id}}', '{{$user->access}}', '{{$user->email}}', '{{$user->name}}', '{{$user->lastname}}')" data-toggle="modal" data-target="#editusermodal">
+                            <span class="btn btn-danger" onclick="edituser('{{$user->id}}', '{{$user->role}}', '{{$user->email}}', '{{$user->first_name}}', '{{$user->last_name}}')" data-toggle="modal" data-target="#edit_user_modal">
                                     <i class="fas fa-user-edit"></i>
                             </span>
                         </td>
@@ -77,7 +77,7 @@
 
 
 <!-- MODAL NUEVO USUARIO -->
-<div class="modal fade" id="newusermodal" tabindex="-1" role="dialog">
+<div class="modal fade" id="new_user_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="margin-top: 5vh;">
             <div class="modal-header">
@@ -110,26 +110,26 @@
                     </div>
                     
                     <div class="row d-flex justify-content-center mt-4">
-                        <div class="input-group largewidth">
+                        <div class="large_width">
                             <input type="email" class="form-control" name="email" value="{{old('email')}}" placeholder="E-mail *" aria-label="E-mail">
                         </div>
                     </div>
                     
                     <div class="row d-flex justify-content-center mt-4">
-                        <div class="input-group normalwidth">
+                        <div class="normal_width">
                             <input type="password" class="form-control" name="password1" placeholder="Contraseña *" aria-label="Contraseña">
                         </div>
-                        <div class="input-group ml-5 normalwidth">
+                        <div class="ml-5 normal_width">
                             <input type="password" class="form-control" name="password2" placeholder="Repetir Contraseña *" aria-label="Repetir Contraseña">
                         </div>
                     </div>
                     
                     <div class="row d-flex justify-content-center mt-4">
-                        <div class="input-group normalwidth">
-                            <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Nombre *" aria-label="Nombre">
+                        <div class="normal_width">
+                            <input type="text" class="form-control" name="first_name" value="{{old('first_name')}}" placeholder="Nombre *" aria-label="Nombre">
                         </div>
-                        <div class="input-group ml-5 normalwidth">
-                            <input type="text" class="form-control" name="lastname" value="{{old('lastname')}}" placeholder="Apellido *" aria-label="Apellido">
+                        <div class="ml-5 normal_width">
+                            <input type="text" class="form-control" name="last_name" value="{{old('last_name')}}" placeholder="Apellido *" aria-label="Apellido">
                         </div>
                     </div>
                     
@@ -144,7 +144,7 @@
 
 
 <!-- MODAL EDITAR USUARIO -->
-<div class="modal fade" id="editusermodal" tabindex="-1" role="dialog">
+<div class="modal fade" id="edit_user_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="margin-top: 5vh;">
             <div class="modal-header">
@@ -164,30 +164,30 @@
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
                     <div class="row d-flex justify-content-center mt-3">
                         <div class="btn-group btn-group-toggle" data-toggle="buttons">
-                            <label class="btn btn-danger negrita" id="eaccess1btn">
-                                <input type="radio" name="erole" id="eaccess1" value="Administrador"> Administrador
+                            <label class="btn btn-danger negrita" id="erole1btn">
+                                <input type="radio" name="erole" id="erole1" value="Administrador"> Administrador
                             </label>
-                            <label class="btn btn-danger negrita" id="eaccess2btn">
-                                <input type="radio" name="erole" id="eaccess2" value="Stock"> Stock
+                            <label class="btn btn-danger negrita" id="erole2btn">
+                                <input type="radio" name="erole" id="erole2" value="Stock"> Stock
                             </label>
-                            <label class="btn btn-danger negrita" id="eaccess3btn">
-                                <input type="radio" name="erole" id="eaccess3" value="Consultas"> Consultas
+                            <label class="btn btn-danger negrita" id="erole3btn">
+                                <input type="radio" name="erole" id="erole3" value="Consultas"> Consultas
                             </label>
                         </div>
                     </div>
                     
                     <div class="row d-flex justify-content-center mt-4">
-                        <div class="input-group largewidth">
+                        <div class="large_width">
                             <input type="email" class="form-control" name="eemail" id="eemail" value="{{old('eemail')}}" placeholder="E-mail" aria-label="E-mail">
                         </div>
                     </div>
                     
                     <div class="row d-flex justify-content-center my-4">
-                        <div class="input-group normalwidth">
-                            <input type="text" class="form-control" name="ename" id="ename" value="{{old('ename')}}" placeholder="Nombre" aria-label="Nombre">
+                        <div class="normal_width">
+                            <input type="text" class="form-control" name="efirst_name" id="efirst_name" value="{{old('efirst_name')}}" placeholder="Nombre" aria-label="Nombre">
                         </div>
-                        <div class="input-group ml-5 normalwidth">
-                            <input type="text" class="form-control" name="elastname" id="elastname" value="{{old('elastname')}}" placeholder="Apellido" aria-label="Apellido">
+                        <div class="ml-5 normal_width">
+                            <input type="text" class="form-control" name="elast_name" id="elast_name" value="{{old('elast_name')}}" placeholder="Apellido" aria-label="Apellido">
                         </div>
                     </div>
                 </form>
@@ -209,17 +209,17 @@
 <script src="../js/bootstrap.min.js"></script>
 <script src="../js/popper.min.js"></script>
 <script type="text/javascript">
-    @if ($errors->get('access') or $errors->get('email') or $errors->get('password1') or $errors->get('password2') or $errors->get('name') or $errors->get('lastname'))
-        $('#newusermodal').modal('show');
+    @if ($errors->get('role') or $errors->get('email') or $errors->get('password1') or $errors->get('password2') or $errors->get('first_name') or $errors->get('last_name'))
+        $('#new_user_modal').modal('show');
     @endif
     
-    @if ($errors->get('eaccess') or $errors->get('eemail') or $errors->get('ename') or $errors->get('elastname'))
-        switch("{{old('eaccess')}}"){
-            case 'Administrador': $('#eaccess1').prop('checked', true); $('#eaccess1btn').click(); break;
-            case 'Stock': $('#eaccess2').prop('checked', true); $('#eaccess2btn').click(); break;
-            case 'Consultas': $('#eaccess3').prop('checked', true); $('#eaccess3btn').click(); break;
+    @if ($errors->get('erole') or $errors->get('eemail') or $errors->get('efirst_name') or $errors->get('elast_name'))
+        switch("{{old('erole')}}"){
+            case 'Administrador': $('#erole1').prop('checked', true); $('#erole1btn').click(); break;
+            case 'Stock': $('#erole2').prop('checked', true); $('#erole2btn').click(); break;
+            case 'Consultas': $('#erole3').prop('checked', true); $('#erole3btn').click(); break;
         }
-        $('#editusermodal').modal('show');
+        $('#edit_user_modal').modal('show');
     @endif
     
     @if (session('success'))
@@ -232,16 +232,16 @@
 </script>
 
 <script type="text/javascript">    
-    function edituser(id, access, email, name, lastname){
+    function edituser(id, role, email, first_name, last_name){
         $('#eid').val(id);
-        switch(access){
-            case 'Administrador': $('#eaccess1').prop('checked', true); $('#eaccess1btn').click(); break;
-            case 'Stock': $('#eaccess2').prop('checked', true); $('#eaccess2btn').click(); break;
-            case 'Consultas': $('#eaccess3').prop('checked', true); $('#eaccess3btn').click(); break;
+        switch(role){
+            case 'Administrador': $('#erole1').prop('checked', true); $('#erole1btn').click(); break;
+            case 'Stock': $('#erole2').prop('checked', true); $('#erole2btn').click(); break;
+            case 'Consultas': $('#erole3').prop('checked', true); $('#erole3btn').click(); break;
         }
         $('#eemail').val(email);
-        $('#ename').val(name);
-        $('#elastname').val(lastname);
+        $('#efirst_name').val(first_name);
+        $('#elast_name').val(last_name);
     }
 </script>
 

@@ -8,26 +8,8 @@ class User extends Controller
 {
     function index(){
         session_start();
-        if (isset($_SESSION['id']) and $_SESSION['role'] == 'Administrador'){
+        if (isset($_SESSION['id'])){
             return view('admin/index');
-        }else{
-            return redirect(action('Session@admin_login'));
-        }
-    }
-    
-    function simple(){
-        session_start();
-        if (isset($_SESSION['id']) and $_SESSION['role'] == 'Administrador'){
-            return view('admin/pages/tables/simple');
-        }else{
-            return redirect(action('Session@admin_login'));
-        }
-    }
-    
-    function data(){
-        session_start();
-        if (isset($_SESSION['id']) and $_SESSION['role'] == 'Administrador'){
-            return view('admin/pages/tables/data');
         }else{
             return redirect(action('Session@admin_login'));
         }
@@ -91,8 +73,8 @@ class User extends Controller
     function new_user(){
         $data = request()->validate([
             'role' => 'required',
-            'name' => 'required',
-            'lastname' => 'required',
+            'first_name' => 'required',
+            'last_name' => 'required',
             'email' => 'required|email',
             'password1' => 'required',
             'password2' => 'required'
@@ -100,8 +82,8 @@ class User extends Controller
             'role.required' => 'Debe seleccionar el rol del usuario',
             'email.required' => 'Debe ingresar el email',
             'email.email' => 'El email ingresado no es válido',
-            'name.required' => 'Debe ingresar el nombre',
-            'lastname.required' => 'Debe ingresar el apellido',
+            'first_name.required' => 'Debe ingresar el nombre',
+            'last_name.required' => 'Debe ingresar el apellido',
             'password1.required' => 'Debe ingresar una contraseña',
             'password2.required' => 'Debe repetir la contraseña'
         ]);
@@ -109,7 +91,7 @@ class User extends Controller
             \App\User::Create([
                 'role' => $data['role'],
                 'email' => $data['email'],
-                'name' => $data['lastname'] . ', ' . $data['name'],
+                'name' => $data['last_name'] . ', ' . $data['first_name'],
                 'password' => bcrypt($data['password1'])
             ]);
             return redirect(action('User@list_users'))
@@ -121,7 +103,7 @@ class User extends Controller
     }
     
     function edit_user(){
-        if (isset($_POST['delete_employee'])){
+        if (isset($_POST['delete_user'])){
             $data = request('eid');
             $user = \App\User::find($data);
             $user->delete();
@@ -132,19 +114,19 @@ class User extends Controller
                 'eid' => 'required',
                 'erole' => 'required',
                 'eemail' => 'required',
-                'ename' => 'required',
-                'elastname' => 'required'
+                'efirst_name' => 'required',
+                'elast_name' => 'required'
             ], [
                 'erole.required' => 'Debe seleccionar el rol del empleado',
                 'eemail.required' => 'Debe ingresar el email',
                 'eemail.email' => 'El email ingresado no es válido',
-                'ename.required' => 'Debe ingresar el nombre',
-                'elastname.required' => 'Debe ingresar el apellido'
+                'efirst_name.required' => 'Debe ingresar el nombre',
+                'elast_name.required' => 'Debe ingresar el apellido'
             ]);
             $user = \App\User::find($data['eid']);
             $user->role = $data['erole'];
             $user->email = $data['eemail'];
-            $user->name = $data['elastname'] . ', ' . $data['ename'];
+            $user->name = $data['elast_name'] . ', ' . $data['efirst_name'];
             $user->save();
             return redirect(action('User@list_users'))
                     ->with('success', 'Usuario actualizado con éxito');;

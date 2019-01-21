@@ -12,7 +12,7 @@
         <div class="row">
             <div class="col-8 offset-2 col-lg-6 offset-lg-3 login-form">
                 <div class="login-logo">
-                    <img src="img/logo.jpg" alt=""/>
+                    <img src="../img/logo.jpg" alt=""/>
                 </div>
                 <h3>Sección administrativa</h3>
                 <form method="POST" action="{{action('Session@admin_authenticate')}}">
