@@ -18,12 +18,19 @@ class Category extends Controller
     
     function new_category(){
         $data = request()->validate([
-            'name' => 'required'
+            'name' => 'required',
+            'state' => 'nullable'
         ], [
             'name.required' => 'Debe ingresar el nombre de la categoría'
         ]);
+        if (isset($data['state'])){
+            $state = 1;
+        }else{
+            $state = 0;
+        }
         \App\Category::Create([
-            'name' => $data['name']
+            'name' => $data['name'],
+            'state' => $state
         ]);
         return redirect(action('Category@list_categories'))
                 ->with('success', 'Categoría registrada con éxito');;
@@ -39,14 +46,21 @@ class Category extends Controller
         }else{
             $data = request()->validate([
                 'eid' => 'required',
-                'ename' => 'required'
+                'ename' => 'required',
+                'estate' => 'nullable'
             ], [
-                'ename.required' => 'Debe ingresar el nombre de la categoría',
+                'ename.required' => 'Debe ingresar el nombre de la categoría'
             ]);
+            if (isset($data['estate'])){
+                $state = 1;
+            }else{
+                $state = 0;
+            }
             $category = \App\Category::find($data['eid']);
             $category->name = $data['ename'];
+            $category->state = $state;
             $category->save();
-            return redirect(action('Category@listcategories'))
+            return redirect(action('Category@list_categories'))
                     ->with('success', 'Categoría modificada con éxito');;
         }
     }

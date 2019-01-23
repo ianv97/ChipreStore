@@ -33,9 +33,9 @@
                     <tr>
                         <td class="negrita">{{$category->id}}</td>
                         <td class="negrita">{{$category->name}}</td>
-                        <td class="negrita">{{$category->state}}</td>
+                        <td class="negrita">@if ($category->state == 0)Deshabilitada @else Habilitada @endif</td>
                         <td>
-                            <span class="btn btn-danger" class="btn btn-warning border-radius" onclick="editcategory('{{$category->id}}', '{{$category->name}}')" data-toggle="modal" data-target="#edit_category_modal">
+                            <span class="btn btn-danger" class="btn btn-warning border-radius" onclick="edit_category('{{$category->id}}', '{{$category->name}}', {{$category->state}})" data-toggle="modal" data-target="#edit_category_modal">
                                     <i class="fas fa-user-edit"></i>
                             </span>
                         </td>
@@ -80,6 +80,15 @@
                         </div>
                     </div>
                     
+                    <div class="row d-flex justify-content-center mt-4">
+                        <label class="text-white" for="state">Estado *</label>
+                        <label class="switch  mx-3" onclick="toggle_state()">
+                            <input type="checkbox" id="state" name="state">
+                            <span class="slider round"></span>
+                        </label>
+                        <label class="text-white mt-1" id="state_label" for="state">Deshabilitada</label>
+                    </div>
+                    
                     <div class="row d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary btn-lg mt-4 negrita">Registrar</button>
                     </div>
@@ -109,10 +118,20 @@
                 <form method="POST" action="{{ action('Category@edit_category')}}" enctype="multipart/form-data" id="editform">
                     {{ csrf_field() }}
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
+                    
                     <div class="row d-flex justify-content-center my-4">
                         <div class="input-category largewidth">
                             <input type="text" class="form-control" name="ename" id="ename" value="{{old('ename')}}" placeholder="Nombre *">
                         </div>
+                    </div>
+                    
+                    <div class="row d-flex justify-content-center mt-4">
+                        <label class="text-white" for="estate">Estado *</label>
+                        <label class="switch  mx-3" onclick="toggle_estate()">
+                            <input type="checkbox" id="estate" name="estate">
+                            <span class="slider round"></span>
+                        </label>
+                        <label class="text-white mt-1" id="estate_label" for="state">Deshabilitada</label>
                     </div>
                 </form>
             </div>
@@ -149,9 +168,30 @@
 </script>
 
 <script type="text/javascript">    
-    function edit_category(id, name){
+    function edit_category(id, name, state){
         $('#eid').val(id);
         $('#ename').val(name);
+        if (state == 0){
+            $('#estate').prop("checked", false);
+        }else{
+            $('#estate').prop("checked", true);
+        };
+    }
+    
+    function toggle_state(){
+        if ($('#state').prop('checked')){
+            $('#state_label').text('Habilitada');
+        }else{
+            $('#state_label').text('Deshabilitada');
+        }
+    }
+    
+    function toggle_estate(){
+        if ($('#estate').prop('checked')){
+            $('#estate_label').text('Habilitada');
+        }else{
+            $('#estate_label').text('Deshabilitada');
+        }
     }
 </script>
 
@@ -190,8 +230,8 @@ $(document).ready(function () {
         ],
         "order": [[1, "asc"]],
         "columnDefs": [
-            { "orderable": false, "targets": 2 },
-            { "searchable": false, "targets": 2 }
+            { "orderable": false, "targets": 3 },
+            { "searchable": false, "targets": 3 }
           ],
         "autoWidth": false,
         "language": {
@@ -231,4 +271,70 @@ $(document).ready(function () {
 
 });
 </script>
+
+<style>
+    /* The switch - the box around the slider */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 60px;
+      height: 34px;
+    }
+
+    /* Hide default HTML checkbox */
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    /* The slider */
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: #ccc;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 26px;
+      width: 26px;
+      left: 4px;
+      bottom: 4px;
+      background-color: white;
+      -webkit-transition: .4s;
+      transition: .4s;
+    }
+
+    input:checked + .slider {
+      background-color: #2196F3;
+    }
+
+    input:focus + .slider {
+      box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+      -webkit-transform: translateX(26px);
+      -ms-transform: translateX(26px);
+      transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+      border-radius: 34px;
+    }
+
+    .slider.round:before {
+      border-radius: 50%;
+    }
+    </style>
+    
 @endsection
