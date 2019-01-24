@@ -12,6 +12,8 @@ Route::get('/admin/login','Session@admin_login');
 Route::post('/admin/login','Session@admin_authenticate');
 Route::get('/logout', 'Session@logout');
 
+Route::post('/ajax/find_product', 'Ajax@find_product');
+
 Route::get('/', 'Shop@index');
 Route::get('/products', 'Shop@products');
 Route::get('/product_details', 'Shop@product_details');
@@ -30,6 +32,9 @@ Route::get('/admin/list_categories', 'Category@list_categories');
 Route::post('/admin/new_category', 'Category@new_category');
 Route::post('/admin/edit_category', 'Category@edit_category');
 
+Route::get('/admin/list_products', 'Product@list_products');
+Route::post('/admin/new_product', 'Product@new_product');
+Route::post('/admin/edit_product', 'Product@edit_product');
 
 
 //Rutas de categorias

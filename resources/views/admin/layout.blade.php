@@ -70,7 +70,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{action('Product@list_products')}}">
                                         <i class="fas fa-tshirt"></i>
                                         <span class="menuopt">Productos</span>
                                     </a>

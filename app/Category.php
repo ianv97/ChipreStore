@@ -10,8 +10,8 @@ class Category extends Model
         'name', 'state'
     ];
     
-    public function products(){
-        return $this->hasMany(Product::class);
+    public function categories_products(){
+        return $this->hasMany(CategoriesProduct::class);
     }
 
     public function scopeSearch($query, $name){

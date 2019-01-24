@@ -7,11 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $fillable = [
-        'name', 'description', 'photo', 'cost_price', 'sale_price', 'credit_price', 'stock_quantity', 'without_stock_sales', 'category_id'
+        'name', 'description', 'cost_price', 'sale_price', 'credit_price', 'stock_quantity', 'without_stock_sales'
     ];
     
-    public function category() {
-        return $this->belongsTo(Category::class);
+    public function categories_products() {
+        return $this->hasMany(CategoriesProduct::class);
     }
     
     public function products_offers(){
@@ -20,5 +20,9 @@ class Product extends Model
     
     public function sale_lines(){
         return $this->hasMany(SaleLine::class);
+    }
+    
+    public function photos(){
+        return $this->hasMany(ProductPhoto::class);
     }
 }
