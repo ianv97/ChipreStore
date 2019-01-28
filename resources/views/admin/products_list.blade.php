@@ -164,12 +164,27 @@
                                 </select>
                             </div>
                             <div class="normal_width">
-                                <input type="number" class="form-control stock_quantity text-center ml-3" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
+                                <input type="number" class="form-control stock_quantity text-center ml-4" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
                             </div>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-2 mb-3">
                         <button type="button" class="btn btn-success" onclick="append_waist()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
+                    </div>
+                    
+                    
+                    <div id="photos">
+                        <div class="row d-flex justify-content-center mt-4">
+                            <label class="text-primary negrita mb-0" style="font-size:30px;">Fotos</label>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto" onclick="remove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                            <input name="file-input" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;"/>
+                            <img class="imgSalida" style="max-width:355px; max-height:200px"/>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-2 mb-3">
+                        <button type="button" class="btn btn-success" onclick="append_photo()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
                     </div>
                     
                     
@@ -330,10 +345,36 @@
                     </select>
                 </div>
                 <div class="normal_width">
-                    <input type="number" class="form-control stock_quantity text-center ml-3" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
+                    <input type="number" class="form-control stock_quantity text-center ml-4" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
                 </div>
             </div>`);
     }
+    
+    function remove_photo(photo){
+        $(photo).parent().remove();
+    }
+
+    function append_photo(){
+        $('#photos').append(
+            `<div class="row d-flex justify-content-center">
+                <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto" onclick="remove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                <input name="file-input" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;"/>
+                <img class="imgSalida" style="max-width:355px; max-height:200px"/>
+            </div>`);
+    }
+    
+    $('.file-input').change(function(e) {
+        var file = e.target.files[0],
+        imageType = /image.*/;
+        if (!file.type.match(imageType))
+            return;
+        var reader = new FileReader();
+        reader.onload = function(e) {
+            var result=e.target.result;
+            $('.imgSalida:last').prop("src",result);
+        }
+        reader.readAsDataURL(file);
+    });
 </script>
 
 <script>
