@@ -93,9 +93,13 @@ body {
 
 .nosub{text-decoration: none;}
 
+.small_width{width: 140px;}
+
 .normal_width{width: 180px;}
 
 .large_width{width: 250px;}
+
+.xlarge_width{width: 350px;}
 
 .border-radius{border-radius: 20px;}
 

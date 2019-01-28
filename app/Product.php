@@ -25,4 +25,8 @@ class Product extends Model
     public function photos(){
         return $this->hasMany(ProductPhoto::class);
     }
+    
+    public function products_waists(){
+        return $this->hasMany(ProductsWaists::class);
+    }
 }

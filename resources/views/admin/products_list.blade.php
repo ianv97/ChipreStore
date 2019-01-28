@@ -112,7 +112,7 @@
                         <div class="row d-flex justify-content-center mt-2">
                             <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                             <div class="input-group ml-1 mr-5 normal_width">
-                                <select class="form-control" name="category[]">
+                                <select class="form-control" name="categories[]">
                                     <option>Seleccionar</option>
                                     @foreach (\App\Category::all() as $category)
                                     <option>{{$category->name}}</option>
@@ -126,33 +126,52 @@
                     </div>
                     
                     
-                    
-                    <div class="row d-flex justify-content-center mt-4">
-                        <div class="input-group large_width">
+                    <div class="row d-flex justify-content-center mt-4 mb-0">
+                        <label class="text-white negrita col-4 col-lg-3">Costo</label>
+                        <label class="text-white negrita col-4 col-lg-3 mx-lg-4 mx-xl-5">Precio de venta *</label>
+                        <label class="text-white negrita col-4 col-lg-3">Precio con crédito</label>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-0">
+                        <div class="input-group col-4 col-lg-3">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="cost_price" name="cost_price" placeholder="Costo" min="0" step="0.01">
+                            <input type="number" class="form-control" id="cost_price" name="cost_price" min="0" step="0.01" placeholder="0.00">
                         </div>
-                    </div>
-                    
-                    <div class="row d-flex justify-content-center mt-4">
-                        <div class="input-group large_width">
+                      
+                        <div class="input-group col-4 col-lg-3 mx-lg-4 mx-xl-5">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="sale_price" name="sale_price" placeholder="Precio de venta *" min="0" step="0.01">
+                            <input type="number" class="form-control" id="sale_price" name="sale_price" min="0" step="0.01" placeholder="0.00">
                         </div>
-                    </div>
-                    
-                    <div class="row d-flex justify-content-center mt-4">
-                        <div class="input-group large_width">
+                        
+                        <div class="input-group col-4 col-lg-3">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="credit_price" name="credit_price" placeholder="Precio con crédito" min="0" step="0.01">
+                            <input type="number" class="form-control" id="credit_price" name="credit_price" min="0" step="0.01" placeholder="0.00">
                         </div>
                     </div>
                     
-                    <div class="row d-flex justify-content-center mt-4">
-                        <div class="normal_width">
-                            <input type="number" class="form-control" id="stock_quantity" name="stock_quantity" value="{{old('stock_quantity')}}" placeholder="Cantidad en stock" min="0">
+                    
+                    <div id="waists">
+                        <div class="row d-flex justify-content-center mt-4">
+                            <label class="text-primary negrita mb-0" style="font-size:30px;">Talles - Stock</label>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-2 pr-5">
+                            <button type="button" class="btn btn-danger mr-1 mr-lg-3" onclick="remove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                            <div class="input-group ml-1 normal_width">
+                                <select class="form-control" name="waists[]">
+                                    <option>Seleccionar</option>
+                                    @foreach (\App\Waist::all() as $waist)
+                                    <option>{{$waist->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="normal_width">
+                                <input type="number" class="form-control stock_quantity text-center ml-3" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
+                            </div>
                         </div>
                     </div>
+                    <div class="row d-flex justify-content-center mt-2 mb-3">
+                        <button type="button" class="btn btn-success" onclick="append_waist()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
+                    </div>
+                    
                     
                     <div class="row d-flex justify-content-center mt-4">
                         <label class="text-white negrita mt-1" for="without_stock_sales">Ventas sin stock</label>
@@ -162,7 +181,7 @@
                         </label>
                     </div>
                     
-                    <div class="row d-flex justify-content-center mt-4">
+                    <div class="row d-flex justify-content-center mt-2">
                         <label class="text-white negrita mt-1" for="visible">Visible en la tienda</label>
                         <label class="switch  mx-3">
                             <input type="checkbox" id="visible" name="visible">
@@ -271,7 +290,7 @@
     $('#credit_price').blur(function() {
         this.value = parseFloat(this.value).toFixed(2);
     });
-    $('#stock_quantity').blur(function() {
+    $('.stock_quantity').blur(function() {
         this.value = parseFloat(this.value).toFixed(0);
     });
     
@@ -279,8 +298,8 @@
         $(category).parent().remove();
     }
 
-function append_category(){
-    $('#categories').append(
+    function append_category(){
+        $('#categories').append(
             `<div class="row d-flex justify-content-center mt-2">
                 <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <div class="input-group ml-1 mr-5 normal_width">
@@ -292,7 +311,29 @@ function append_category(){
                     </select>
                 </div>
             </div>`);
-}
+    }
+    
+    function remove_waist(waist){
+        $(waist).parent().remove();
+    }
+
+    function append_waist(){
+        $('#waists').append(
+            `<div class="row d-flex justify-content-center mt-2 pr-5">
+                <button type="button" class="btn btn-danger mr-1 mr-lg-3" onclick="remove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                <div class="input-group ml-1 normal_width">
+                    <select class="form-control" name="waists[]">
+                        <option>Seleccionar</option>
+                        @foreach (\App\Waist::all() as $waist)
+                        <option>{{$waist->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="normal_width">
+                    <input type="number" class="form-control stock_quantity text-center ml-3" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
+                </div>
+            </div>`);
+    }
 </script>
 
 <script>

@@ -32,6 +32,10 @@ Route::get('/admin/list_categories', 'Category@list_categories');
 Route::post('/admin/new_category', 'Category@new_category');
 Route::post('/admin/edit_category', 'Category@edit_category');
 
+Route::get('/admin/list_waists', 'Waist@list_waists');
+Route::post('/admin/new_waist', 'Waist@new_waist');
+Route::post('/admin/edit_waist', 'Waist@edit_waist');
+
 Route::get('/admin/list_products', 'Product@list_products');
 Route::post('/admin/new_product', 'Product@new_product');
 Route::post('/admin/edit_product', 'Product@edit_product');

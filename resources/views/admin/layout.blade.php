@@ -70,6 +70,12 @@
                                     </a>
                                 </li>
                                 <li>
+                                    <a href="{{action('Waist@list_waists')}}">
+                                        <i class="fas fa-tape"></i>
+                                        <span class="menuopt">Talles</span>
+                                    </a>
+                                </li>
+                                <li>
                                     <a href="{{action('Product@list_products')}}">
                                         <i class="fas fa-tshirt"></i>
                                         <span class="menuopt">Productos</span>
