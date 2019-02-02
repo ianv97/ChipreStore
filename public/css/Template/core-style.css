@@ -17,7 +17,6 @@
   src: url("../../font/Template/helveticaneue_medium-webfont.woff2") format("woff2"), url("../../font/Template/helveticaneue_medium-webfont.woff") format("woff");
   font-weight: normal;
   font-style: normal; }
-/* :: 2.0 Import All CSS */
 /* :: 3.0 Base CSS */
 * {
   margin: 0;

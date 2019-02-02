@@ -27,7 +27,6 @@
                         <th style="padding-left:30px;">Costo</th>
                         <th style="padding-left:30px;">Precio de Venta</th>
                         <th style="padding-left:30px;">Precio con Crédito</th>
-                        <th style="padding-left:30px;">Stock</th>
                         <th style="padding-left:30px;">Ventas S/Stock</th>
                         <th style="padding-left:30px;">Visible</th>
                         <td style="padding-left:15px;">Editar</th>
@@ -44,7 +43,6 @@
                         <td class="negrita">{{$product->cost_price}}</td>
                         <td class="negrita">{{$product->sale_price}}</td>
                         <td class="negrita">{{$product->credit_price}}</td>
-                        <td class="negrita">{{$product->stock_quantity}}</td>
                         <td class="negrita">@if ($product->without_stock_sales==1)Sí @else No @endif</td>
                         <td class="negrita">@if ($product->visible==1)Sí @else No @endif</td>
                         <td>
@@ -64,7 +62,6 @@
                         <th>Costo</th>
                         <th>Precio de venta</th>
                         <th>Precio con crédito</th>
-                        <th>Stock</th>
                         <th>Ventas S/Stock</th>
                         <th>Visible</th>
                         <td>Editar</th>
@@ -115,7 +112,7 @@
                                 <select class="form-control" name="categories[]">
                                     <option>Seleccionar</option>
                                     @foreach (\App\Category::all() as $category)
-                                    <option>{{$category->name}}</option>
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -159,7 +156,7 @@
                                 <select class="form-control" name="waists[]">
                                     <option>Seleccionar</option>
                                     @foreach (\App\Waist::all() as $waist)
-                                    <option>{{$waist->name}}</option>
+                                    <option value="{{$waist->id}}">{{$waist->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -179,8 +176,8 @@
                         </div>
                         <div class="row d-flex justify-content-center">
                             <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto" onclick="remove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
-                            <input name="file-input" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;"/>
-                            <img class="imgSalida" style="max-width:355px; max-height:200px"/>
+                            <input name="photos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;" onchange="file_input(this)"/>
+                            <img style="max-width:355px; max-height:200px"/>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-2 mb-3">
@@ -319,9 +316,9 @@
                 <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <div class="input-group ml-1 mr-5 normal_width">
                     <select class="form-control" name="category[]">
-                        <option>Seleccionar</option>
+                        <option value="null">Seleccionar</option>
                         @foreach (\App\Category::all() as $category)
-                        <option>{{$category->name}}</option>
+                        <option value="{{$category->id}}">{{$category->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -338,9 +335,9 @@
                 <button type="button" class="btn btn-danger mr-1 mr-lg-3" onclick="remove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <div class="input-group ml-1 normal_width">
                     <select class="form-control" name="waists[]">
-                        <option>Seleccionar</option>
+                        <option value="null">Seleccionar</option>
                         @foreach (\App\Waist::all() as $waist)
-                        <option>{{$waist->name}}</option>
+                        <option value="{{$waist->id}}">{{$waist->name}}</option>
                         @endforeach
                     </select>
                 </div>
@@ -358,23 +355,22 @@
         $('#photos').append(
             `<div class="row d-flex justify-content-center">
                 <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto" onclick="remove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
-                <input name="file-input" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;"/>
-                <img class="imgSalida" style="max-width:355px; max-height:200px"/>
+                <input name="photos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;" onchange="file_input(this)"/>
+                <img style="max-width:355px; max-height:200px"/>
             </div>`);
     }
     
-    $('.file-input').change(function(e) {
-        var file = e.target.files[0],
-        imageType = /image.*/;
+    function file_input(input){
+        var file = input.files[0], imageType = /image.*/;
         if (!file.type.match(imageType))
             return;
         var reader = new FileReader();
         reader.onload = function(e) {
-            var result=e.target.result;
-            $('.imgSalida:last').prop("src",result);
+            var result = e.target.result;
+            $(input).next().prop('src', result);
         }
         reader.readAsDataURL(file);
-    });
+    }
 </script>
 
 <script>
@@ -412,8 +408,8 @@ $(document).ready(function () {
         ],
         "order": [[1, "asc"]],
         "columnDefs": [
-            { "orderable": false, "targets": 10 },
-            { "searchable": false, "targets": 10 }
+            { "orderable": false, "targets": 9 },
+            { "searchable": false, "targets": 9 }
           ],
         "autoWidth": false,
         "language": {
@@ -432,7 +428,7 @@ $(document).ready(function () {
             }
         }
     });
-    table.columns( [0, 2, 4, 6, 8] ).visible( false );
+    table.columns( [0, 2, 4, 6, 7] ).visible( false );
 
     // Apply the search
     table.columns().every(function () {

@@ -53,7 +53,7 @@ class User extends Controller
         session_start();
         $file = request()->file('userphotofile');
         $filename = substr($_SESSION['email'], 0, strpos($_SESSION['email'], '@')) . '.' . $file->getClientOriginalExtension();
-        \Storage::disk('public')->put($filename, \File::get($file));
+        \Storage::disk('users_img')->put($filename, \File::get($file));
         $_SESSION['photo'] = $filename;
         $user = \App\User::find($_SESSION['id']);
         $user->photo = $filename;

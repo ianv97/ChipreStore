@@ -4,18 +4,15 @@
     <!-- ##### Single Widget ##### -->
     <div class="widget catagory mb-50">
         <!-- Widget Title -->
-        <h6 class="widget-title mb-30">Catagories</h6>
+        <h6 class="widget-title mb-30">Catagorías</h6>
 
         <!--  Catagories  -->
         <div class="catagories-menu">
             <ul>
-                <li class="active"><a href="#">Chairs</a></li>
-                <li><a href="#">Beds</a></li>
-                <li><a href="#">Accesories</a></li>
-                <li><a href="#">Furniture</a></li>
-                <li><a href="#">Home Deco</a></li>
-                <li><a href="#">Dressings</a></li>
-                <li><a href="#">Tables</a></li>
+                <li class="active"><a href="#">Todas</a></li>
+                @foreach (\App\Category::all() as $category)
+                <li><a href="#">{{$category->name}}</a></li>
+                @endforeach
             </ul>
         </div>
     </div>
@@ -23,7 +20,7 @@
     <!-- ##### Single Widget ##### -->
     <div class="widget brands mb-50">
         <!-- Widget Title -->
-        <h6 class="widget-title mb-30">Brands</h6>
+        <h6 class="widget-title mb-30">Marcas</h6>
 
         <div class="widget-desc">
             <!-- Single Form Check -->
@@ -135,6 +132,47 @@
 
         <div class="row">
 
+            @foreach (\App\Product::all() as $product)
+            
+            <!-- Single Product Area -->
+            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+                <div class="single-product-wrapper">
+                    <!-- Product Image -->
+                    <div class="product-img">
+                        <img src="img/product-img/{{$product->photos[0]->name}}" alt="">
+                        <!-- Hover Thumb -->
+                        <img class="hover-img" src="img/product-img/product2.jpg" alt="">
+                    </div>
+
+                    <!-- Product Description -->
+                    <div class="product-description d-flex align-items-center justify-content-between">
+                        <!-- Product Meta Data -->
+                        <div class="product-meta-data">
+                            <div class="line"></div>
+                            <p class="product-price">${{$product->sale_price}}</p>
+                            <a href="product-details.html">
+                                <h6>{{$product->name}}</h6>
+                            </a>
+                        </div>
+                        <!-- Ratings & Cart -->
+                        <div class="ratings-cart text-right">
+                            <div class="ratings">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <div class="cart">
+                                <a href="cart.blade.php.html" data-toggle="tooltip" data-placement="left" title="Añadir al carro"><img src="img/core-img/cart.png" alt=""></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            @endforeach
+            
             <!-- Single Product Area -->
             <div class="col-12 col-sm-6 col-md-12 col-xl-6">
                 <div class="single-product-wrapper">
