@@ -1,3 +1,7 @@
+<?php
+if(!isset($_SESSION)){ 
+        session_start(); 
+} ?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -10,9 +14,9 @@
     <!-- Title  -->
     <title>Chipre Store</title>
     <!-- Favicon  -->
-    <link rel="shortcut icon" href="img/logo.ico">
+    <link rel="shortcut icon" href="/img/logo.ico">
     <!-- Core Style CSS -->
-    <link rel="stylesheet" href="css/Template/core-style.css">
+    <link rel="stylesheet" href="/css/Template/core-style.css">
     
     @yield('head')
 </head>
@@ -29,7 +33,7 @@
                 <div class="search-content">
                     <form action="#" method="get">
                         <input type="search" name="search" id="search" placeholder="Ingresa tu búsqueda...">
-                        <button type="submit"><img src="img/core-img/search.png" alt=""></button>
+                        <button type="submit"><img src="/img/core-img/search.png" alt=""></button>
                     </form>
                 </div>
             </div>
@@ -44,7 +48,7 @@
     <div class="mobile-nav">
         <!-- Navbar Brand -->
         <div class="amado-navbar-brand">
-            <a href="/"><img src="img/logo.svg" alt=""></a>
+            <a href="/"><img src="/img/logo.svg" alt=""></a>
         </div>
         <!-- Navbar Toggler -->
         <div class="amado-navbar-toggler">
@@ -59,27 +63,26 @@
         </div>
         <!-- Logo -->
         <div>
-            <a href="index.html"><img src="img/logo.svg" alt=""></a>
+            <a href="index.html"><img src="/img/logo.svg" alt=""></a>
         </div>
         <!-- Nav -->
         <nav class="amado-nav">
             <ul>
                 <li id="index"><a href="{{action('Shop@index')}}">Inicio</a></li>
                 <li id="products"><a href="{{action('Shop@products')}}">Productos</a></li>
-                <li id="product_details"><a href="{{action('Shop@product_details')}}">Detalles</a></li>
-                <li id="cart"><a href="{{action('Shop@cart')}}">Carrito</a></li>
+                <li id="product_details"><a href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a></li>
+                <li id="cart"><a href="{{action('Shop@cart')}}" class="cart-nav"><img src="/img/core-img/cart.png"> Carrito <span>(0)</span></a></li>
                 <li id="checkout"><a href="{{action('Shop@checkout')}}">Finalizar compra</a></li>
             </ul>
         </nav>
         <!-- Button Group -->
-        <div class="amado-btn-group mt-30 mb-100">
+        <div class="amado-btn-group mt-30 mb-30">
             <a href="#" class="btn amado-btn mb-15">En descuento</a>
-            <a href="#" class="btn amado-btn active">Lo nuevo</a>
+            <a href="#" class="btn amado-btn">Lo nuevo</a>
         </div>
         <!-- Cart Menu -->
-        <div class="cart-fav-search mb-100">
-            <a href="{{action('Shop@cart')}}" class="cart-nav"><img src="img/core-img/cart.png"> Carrito <span>(0)</span></a>
-            <a href="#" class="search-nav"><img src="img/core-img/search.png"> Búsqueda</a>
+        <div class="cart-fav-search mb-30">
+            <a href="#" class="search-nav"><img src="/img/core-img/search.png"> Búsqueda</a>
         </div>
         <!-- Social Buttons -->
         <div class="social-info d-flex justify-content-between mx-4">
@@ -101,7 +104,7 @@
                     <div class="single_widget_area">
                         <!-- Logo -->
                         <div class="footer-logo mr-50">
-                            <a href="index.html"><img src="img/logo.svg"></a>
+                            <a href="index.html"><img src="/img/logo.svg"></a>
                         </div>
                     </div>
                 </div>
@@ -121,7 +124,7 @@
                                             <a class="nav-link" href="{{action('Shop@products')}}">Productos</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{action('Shop@product_details')}}">Detalles</a>
+                                            <a class="nav-link" href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{action('Shop@cart')}}">Carrito</a>
@@ -138,11 +141,11 @@
             </div>
         </div>
         
-        <script src="js/Template/jquery/jquery-2.2.4.min.js"></script>
-        <script src="js/Template/popper.min.js"></script>
-        <script src="js/Template/bootstrap.min.js"></script>
-        <script src="js/Template/plugins.js"></script>
-        <script src="js/Template/active.js"></script>
+        <script src="/js/Template/jquery/jquery-2.2.4.min.js"></script>
+        <script src="/js/Template/popper.min.js"></script>
+        <script src="/js/Template/bootstrap.min.js"></script>
+        <script src="/js/Template/plugins.js"></script>
+        <script src="/js/Template/active.js"></script>
         @yield('footer')
     </footer>
     

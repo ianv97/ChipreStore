@@ -14,8 +14,9 @@ class Shop extends Controller
         return view('products');
     }
     
-    function product_details(){
-        return view('product_details');
+    function product_details($id){
+        $product = \App\Product::find($id);
+        return view('product_details', compact('product'));
     }
     
     function cart(){

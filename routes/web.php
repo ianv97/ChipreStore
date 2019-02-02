@@ -16,7 +16,7 @@ Route::post('/ajax/find_product', 'Ajax@find_product');
 
 Route::get('/', 'Shop@index');
 Route::get('/products', 'Shop@products');
-Route::get('/product_details', 'Shop@product_details');
+Route::get('/product_details/{id}', 'Shop@product_details');
 Route::get('/cart', 'Shop@cart');
 Route::get('/checkout', 'Shop@checkout');
 

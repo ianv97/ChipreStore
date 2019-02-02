@@ -1,49 +1,64 @@
 @extends('layout')
 @section('body')
 <div class="shop_sidebar_area">
+    
     <!-- ##### Single Widget ##### -->
     <div class="widget catagory mb-50">
         <!-- Widget Title -->
-        <h6 class="widget-title mb-30">Catagorías</h6>
-
+        <h6 class="widget-title mb-20">Categorías</h6>
         <!--  Catagories  -->
         <div class="catagories-menu">
             <ul>
                 <li class="active"><a href="#">Todas</a></li>
-                @foreach (\App\Category::all() as $category)
+                @foreach (\App\Category::where('state', 1)->get() as $category)
                 <li><a href="#">{{$category->name}}</a></li>
                 @endforeach
             </ul>
         </div>
     </div>
-
+    
     <!-- ##### Single Widget ##### -->
-    <div class="widget brands mb-50">
+    <div class="widget catagory mb-50">
         <!-- Widget Title -->
+        <h6 class="widget-title mb-20">Talle</h6>
+        <!--  Catagories  -->
+        <div class="catagories-menu">
+            <ul>
+                <li class="active"><a href="#">Todos</a></li>
+                @foreach (\App\Waist::all() as $waist)
+                <li><a href="#">{{$waist->name}}</a></li>
+                @endforeach
+            </ul>
+        </div>
+    </div>
+
+<!--     ##### Single Widget ##### 
+    <div class="widget brands mb-50">
+         Widget Title 
         <h6 class="widget-title mb-30">Marcas</h6>
 
         <div class="widget-desc">
-            <!-- Single Form Check -->
+             Single Form Check 
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="amado">
                 <label class="form-check-label" for="amado">Amado</label>
             </div>
-            <!-- Single Form Check -->
+             Single Form Check 
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="ikea">
                 <label class="form-check-label" for="ikea">Ikea</label>
             </div>
-            <!-- Single Form Check -->
+             Single Form Check 
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="furniture">
                 <label class="form-check-label" for="furniture">Furniture Inc</label>
             </div>
-            <!-- Single Form Check -->
+             Single Form Check 
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="factory">
                 <label class="form-check-label" for="factory">The factory</label>
             </div>
-            <!-- Single Form Check -->
+             Single Form Check 
             <div class="form-check">
                 <input class="form-check-input" type="checkbox" value="" id="artdeco">
                 <label class="form-check-label" for="artdeco">Artdeco</label>
@@ -51,9 +66,9 @@
         </div>
     </div>
 
-    <!-- ##### Single Widget ##### -->
+     ##### Single Widget ##### 
     <div class="widget color mb-50">
-        <!-- Widget Title -->
+         Widget Title 
         <h6 class="widget-title mb-30">Color</h6>
 
         <div class="widget-desc">
@@ -68,12 +83,12 @@
                 <li><a href="#" class="color8"></a></li>
             </ul>
         </div>
-    </div>
+    </div>-->
 
     <!-- ##### Single Widget ##### -->
     <div class="widget price mb-50">
         <!-- Widget Title -->
-        <h6 class="widget-title mb-30">Price</h6>
+        <h6 class="widget-title mb-30">Precio</h6>
 
         <div class="widget-desc">
             <div class="slider-range">
@@ -82,7 +97,7 @@
                     <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                     <span class="ui-slider-handle ui-state-default ui-corner-all" tabindex="0"></span>
                 </div>
-                <div class="range-price">$10 - $1000</div>
+                <div class="range-price">$0 - $10.000</div>
             </div>
         </div>
     </div>
@@ -96,16 +111,16 @@
                 <div class="product-topbar d-xl-flex align-items-end justify-content-between">
                     <!-- Total Products -->
                     <div class="total-products">
-                        <p>Showing 1-8 0f 25</p>
+                        <p>Mostrando 1-8 de 25</p>
                         <div class="view d-flex">
-                            <a href="#"><i class="fa fa-th-large" aria-hidden="true"></i></a>
+                            <a href="#" class="active"><i class="fa fa-th-large" aria-hidden="true"></i></a>
                             <a href="#"><i class="fa fa-bars" aria-hidden="true"></i></a>
                         </div>
                     </div>
                     <!-- Sorting -->
                     <div class="product-sorting d-flex">
                         <div class="sort-by-date d-flex align-items-center mr-15">
-                            <p>Sort by</p>
+                            <p>Ordenar por</p>
                             <form action="#" method="get">
                                 <select name="select" id="sortBydate">
                                     <option value="value">Date</option>
@@ -115,7 +130,7 @@
                             </form>
                         </div>
                         <div class="view-product d-flex align-items-center">
-                            <p>View</p>
+                            <p>Ver</p>
                             <form action="#" method="get">
                                 <select name="select" id="viewProduct">
                                     <option value="value">12</option>
@@ -132,16 +147,19 @@
 
         <div class="row">
 
-            @foreach (\App\Product::all() as $product)
+            @foreach (\App\Product::where('visible', 1)->get() as $product)
             
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+            <div class="col-12 col-sm-6 col-md-12 col-xl-4">
                 <div class="single-product-wrapper">
                     <!-- Product Image -->
-                    <div class="product-img">
-                        <img src="img/product-img/{{$product->photos[0]->name}}" alt="">
-                        <!-- Hover Thumb -->
-                        <img class="hover-img" src="img/product-img/product2.jpg" alt="">
+                    <div class="product-img" style="max-height:500px;">
+                        <a href="{{action('Shop@product_details', ['id'=>$product->id])}}">
+                            <img src="img/product-img/{{$product->photos[0]->name}}">
+                            <!-- Hover Thumb -->
+                            @if (isset($product->photos[1]))
+                                <img class="hover-img" src="img/product-img/{{$product->photos[1]->name}}">
+                            @endif
+                        </a>
                     </div>
 
                     <!-- Product Description -->
@@ -150,21 +168,14 @@
                         <div class="product-meta-data">
                             <div class="line"></div>
                             <p class="product-price">${{$product->sale_price}}</p>
-                            <a href="product-details.html">
-                                <h6>{{$product->name}}</h6>
+                            <a href="{{action('Shop@product_details', ['id'=>$product->id])}}">
+                                <h6 style="font-weight:600;">{{$product->name}}</h6>
                             </a>
                         </div>
                         <!-- Ratings & Cart -->
                         <div class="ratings-cart text-right">
-                            <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
                             <div class="cart">
-                                <a href="cart.blade.php.html" data-toggle="tooltip" data-placement="left" title="Añadir al carro"><img src="img/core-img/cart.png" alt=""></a>
+                                <a href="cart.blade.php.html" data-toggle="tooltip" data-placement="left" title="Añadir al carrito"><img src="img/core-img/cart.png"></a>
                             </div>
                         </div>
                     </div>
@@ -173,14 +184,15 @@
             
             @endforeach
             
+
             <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+            <div class="col-12 col-sm-6 col-md-12 col-xl-4">
                 <div class="single-product-wrapper">
                     <!-- Product Image -->
                     <div class="product-img">
-                        <img src="img/product-img/product1.jpg" alt="">
+                        <img src="img/product-img/product6.jpg" alt="">
                         <!-- Hover Thumb -->
-                        <img class="hover-img" src="img/product-img/product2.jpg" alt="">
+                        <img class="hover-img" src="img/product-img/product1.jpg" alt="">
                     </div>
 
                     <!-- Product Description -->
@@ -208,158 +220,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div>            
 
             <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                <div class="single-product-wrapper">
-                    <!-- Product Image -->
-                    <div class="product-img">
-                        <img src="img/product-img/product2.jpg" alt="">
-                        <!-- Hover Thumb -->
-                        <img class="hover-img" src="img/product-img/product3.jpg" alt="">
-                    </div>
-
-                    <!-- Product Description -->
-                    <div class="product-description d-flex align-items-center justify-content-between">
-                        <!-- Product Meta Data -->
-                        <div class="product-meta-data">
-                            <div class="line"></div>
-                            <p class="product-price">$180</p>
-                            <a href="product-details.html">
-                                <h6>Modern Chair</h6>
-                            </a>
-                        </div>
-                        <!-- Ratings & Cart -->
-                        <div class="ratings-cart text-right">
-                            <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <div class="cart">
-                                <a href="cart.blade.php.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                <div class="single-product-wrapper">
-                    <!-- Product Image -->
-                    <div class="product-img">
-                        <img src="img/product-img/product3.jpg" alt="">
-                        <!-- Hover Thumb -->
-                        <img class="hover-img" src="img/product-img/product4.jpg" alt="">
-                    </div>
-
-                    <!-- Product Description -->
-                    <div class="product-description d-flex align-items-center justify-content-between">
-                        <!-- Product Meta Data -->
-                        <div class="product-meta-data">
-                            <div class="line"></div>
-                            <p class="product-price">$180</p>
-                            <a href="product-details.html">
-                                <h6>Modern Chair</h6>
-                            </a>
-                        </div>
-                        <!-- Ratings & Cart -->
-                        <div class="ratings-cart text-right">
-                            <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <div class="cart">
-                                <a href="cart.blade.php.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                <div class="single-product-wrapper">
-                    <!-- Product Image -->
-                    <div class="product-img">
-                        <img src="img/product-img/product4.jpg" alt="">
-                        <!-- Hover Thumb -->
-                        <img class="hover-img" src="img/product-img/product5.jpg" alt="">
-                    </div>
-
-                    <!-- Product Description -->
-                    <div class="product-description d-flex align-items-center justify-content-between">
-                        <!-- Product Meta Data -->
-                        <div class="product-meta-data">
-                            <div class="line"></div>
-                            <p class="product-price">$180</p>
-                            <a href="product-details.html">
-                                <h6>Modern Chair</h6>
-                            </a>
-                        </div>
-                        <!-- Ratings & Cart -->
-                        <div class="ratings-cart text-right">
-                            <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <div class="cart">
-                                <a href="cart.blade.php.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
-                <div class="single-product-wrapper">
-                    <!-- Product Image -->
-                    <div class="product-img">
-                        <img src="img/product-img/product5.jpg" alt="">
-                        <!-- Hover Thumb -->
-                        <img class="hover-img" src="img/product-img/product6.jpg" alt="">
-                    </div>
-
-                    <!-- Product Description -->
-                    <div class="product-description d-flex align-items-center justify-content-between">
-                        <!-- Product Meta Data -->
-                        <div class="product-meta-data">
-                            <div class="line"></div>
-                            <p class="product-price">$180</p>
-                            <a href="product-details.html">
-                                <h6>Modern Chair</h6>
-                            </a>
-                        </div>
-                        <!-- Ratings & Cart -->
-                        <div class="ratings-cart text-right">
-                            <div class="ratings">
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                                <i class="fa fa-star" aria-hidden="true"></i>
-                            </div>
-                            <div class="cart">
-                                <a href="cart.blade.php.html" data-toggle="tooltip" data-placement="left" title="Add to Cart"><img src="img/core-img/cart.png" alt=""></a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Single Product Area -->
-            <div class="col-12 col-sm-6 col-md-12 col-xl-6">
+            <div class="col-12 col-sm-6 col-md-12 col-xl-4">
                 <div class="single-product-wrapper">
                     <!-- Product Image -->
                     <div class="product-img">
@@ -401,10 +265,10 @@
                 <!-- Pagination -->
                 <nav aria-label="navigation">
                     <ul class="pagination justify-content-end mt-50">
-                        <li class="page-item active"><a class="page-link" href="#">01.</a></li>
-                        <li class="page-item"><a class="page-link" href="#">02.</a></li>
-                        <li class="page-item"><a class="page-link" href="#">03.</a></li>
-                        <li class="page-item"><a class="page-link" href="#">04.</a></li>
+                        <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                        <li class="page-item"><a class="page-link" href="#">2</a></li>
+                        <li class="page-item"><a class="page-link" href="#">3</a></li>
+                        <li class="page-item"><a class="page-link" href="#">4</a></li>
                     </ul>
                 </nav>
             </div>
