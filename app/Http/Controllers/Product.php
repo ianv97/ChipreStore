@@ -75,7 +75,7 @@ class Product extends Controller
             $files = request()->file('photos');
             $i = 0;
             foreach ($files as $file) {
-                $filename = $data['name'] . $i . '.' . $file->getClientOriginalExtension();
+                $filename = str_replace(' ', '', $data['name']) . $i . '.' . $file->getClientOriginalExtension();
                 \Storage::disk('products_img')->put($filename, \File::get($file));
                 \App\ProductPhoto::Create([
                     'name' => $filename,

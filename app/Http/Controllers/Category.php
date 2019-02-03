@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Category extends Controller
-{
-    
+class Category extends Controller{
     function list_categories(){
         session_start();
         if (isset($_SESSION['id'])){

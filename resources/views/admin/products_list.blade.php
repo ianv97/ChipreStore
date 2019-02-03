@@ -2,6 +2,7 @@
 
 @section('head')
 <link rel="stylesheet" href="../css/datatable.css">
+<meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
 @section('body')
@@ -208,7 +209,7 @@
             </div>
         </div>
     </div>
-</div></div>
+</div>
 
 
 <!-- MODAL EDITAR PRODUCTO -->
@@ -225,38 +226,136 @@
             </div>
             <div class="modal-body bg-dark">
                 <div class="row align-middle d-flex justify-content-center">
-                    <h2 class="negrita nosub text-white">Editar Datos</h2>
+                    <h2 class="negrita nosub text-white">Editar Producto</h2>
                 </div>
-                <form method="POST" action="{{ action('Product@edit_product')}}" enctype="multipart/form-data" id="editform">
+                <form method="POST" action="{{action('Product@edit_product')}}" enctype="multipart/form-data" id="editform">
                     {{ csrf_field() }}
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
                     
-                    <div class="row d-flex justify-content-center my-4">
-                        <div class="input-product largewidth">
-                            <input type="text" class="form-control" name="ename" id="ename" value="{{old('ename')}}" placeholder="Nombre *">
+                    <div class="row d-flex justify-content-center mt-4">
+                        <div class="normal_width">
+                            <input type="text" class="form-control" id="ename" name="ename" value="{{old('ename')}}" placeholder="Nombre *">
                         </div>
                     </div>
                     
                     <div class="row d-flex justify-content-center mt-4">
-                        <label class="text-white" for="estate">Estado *</label>
-                        <label class="switch  mx-3" onclick="toggle_estate()">
-                            <input type="checkbox" id="estate" name="estate">
+                            <textarea class="form-control col-12 col-lg-10 col-xl-8" id="edescription" name="edescription" value="{{old('edescription')}}" rows='3' placeholder="Descripción"></textarea>
+                    </div>
+                    
+                    
+                    <div id="ecategories">
+                        <div class="row d-flex justify-content-center mt-4">
+                            <label class="text-primary negrita mb-0" style="font-size:30px;">Categorías</label>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-2">
+                            <button type="button" class="btn btn-danger mr-3 ecategories_btn" onclick="eremove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                            <div class="input-group ml-1 mr-5 normal_width">
+                                <select class="form-control ecategories" name="ecategories[]">
+                                    <option>Seleccionar</option>
+                                    @foreach (\App\Category::all() as $category)
+                                    <option value="{{$category->id}}">{{$category->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-2 mb-3">
+                        <button type="button" class="btn btn-success" onclick="eappend_category()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
+                    </div>
+                    
+                    
+                    <div class="row d-flex justify-content-center mt-4 mb-0">
+                        <label class="text-white negrita col-4 col-lg-3">Costo</label>
+                        <label class="text-white negrita col-4 col-lg-3 mx-lg-4 mx-xl-5">Precio de venta *</label>
+                        <label class="text-white negrita col-4 col-lg-3">Precio con crédito</label>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-0">
+                        <div class="input-group col-4 col-lg-3">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="ecost_price" name="ecost_price" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                      
+                        <div class="input-group col-4 col-lg-3 mx-lg-4 mx-xl-5">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="esale_price" name="esale_price" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                        
+                        <div class="input-group col-4 col-lg-3">
+                            <span class="input-group-text">$</span>
+                            <input type="number" class="form-control" id="ecredit_price" name="ecredit_price" min="0" step="0.01" placeholder="0.00">
+                        </div>
+                    </div>
+                    
+                    
+                    <div id="ewaists">
+                        <div class="row d-flex justify-content-center mt-4">
+                            <label class="text-primary negrita mb-0" style="font-size:30px;">Talles - Stock *</label>
+                        </div>
+                        <div class="row d-flex justify-content-center mt-2 pr-5">
+                            <button type="button" class="btn btn-danger mr-1 mr-lg-3 ewaists_btn" onclick="eremove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                            <div class="input-group ml-1 normal_width">
+                                <select class="form-control ewaists" name="ewaists[]">
+                                    <option>Seleccionar</option>
+                                    @foreach (\App\Waist::all() as $waist)
+                                    <option value="{{$waist->id}}">{{$waist->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="normal_width">
+                                <input type="number" class="form-control estock_quantity text-center ml-4" name="estock_quantity[]" placeholder="Cantidad en stock" min="0">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-2 mb-3">
+                        <button type="button" class="btn btn-success" onclick="eappend_waist()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
+                    </div>
+                    
+                    
+                    <div id="ephotos">
+                        <div class="row d-flex justify-content-center mt-4">
+                            <label class="text-primary negrita mb-0" style="font-size:30px;">Fotos *</label>
+                        </div>
+                        <div class="row d-flex justify-content-center">
+                            <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto ephotos_btn" onclick="eremove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                            <input name="ephotos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto ephotos" style="color:transparent; max-height: 30px;" onchange="file_input(this)"/>
+                            <img class="ephotos_img" style="max-width:355px; max-height:200px"/>
+                        </div>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-2 mb-3">
+                        <button type="button" class="btn btn-success" onclick="eappend_photo()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
+                    </div>
+                    
+                    
+                    <div class="row d-flex justify-content-center mt-4">
+                        <label class="text-white negrita mt-1" for="ewithout_stock_sales">Ventas sin stock</label>
+                        <label class="switch  mx-3">
+                            <input type="checkbox" id="ewithout_stock_sales" name="ewithout_stock_sales">
                             <span class="slider round"></span>
                         </label>
-                        <label class="text-white mt-1" id="estate_label" for="state">Deshabilitada</label>
+                    </div>
+                    
+                    <div class="row d-flex justify-content-center mt-2">
+                        <label class="text-white negrita mt-1" for="evisible">Visible en la tienda</label>
+                        <label class="switch  mx-3">
+                            <input type="checkbox" id="evisible" name="evisible">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+                    
+                    
+                    <div class="modal-footer justify-content-center">
+                        <div style="margin-right:10vw;">
+                            <button type="button" class="btn btn-danger negrita" id="deletebtn"><i class="fa fa-times"></i> Eliminar</button>
+                        </div>
+                        <button type="submit" form="editform" class="btn btn-success negrita"><i class="fa fa-check"></i> Guardar</button>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer justify-content-center">
-                <div style="margin-right:10vw;">
-                    <button type="button" class="btn btn-danger negrita" id="deletebtn"><i class="fa fa-times"></i> Eliminar</button>
-                </div>
-                <button type="submit" form="editform" class="btn btn-success negrita"><i class="fa fa-check"></i> Guardar</button>
             </div>
         </div>
     </div>
 </div>
 
+</div>
 @endsection
 
 
@@ -282,13 +381,44 @@
 <script type="text/javascript">    
     function edit_product(id){
         $('#eid').val(id);
+        $.ajaxSetup({
+            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+        });
         $.ajax({
           type:"POST",
-          data:"_token = <?php echo csrf_token() ?> & product_id=" + id,
+          data:"product_id=" + id,
           url:"/ajax/find_product",
             success:function(r){
-                product = jQuery.parseJSON(r);
-                $('#name').val(product['name']);
+                $('#ename').val(r['product']['name']);
+                $('#edescription').val(r['product']['description']);
+                $('#ecost_price').val(r['product']['cost_price']);
+                $('#esale_price').val(r['product']['sale_price']);
+                $('#ecredit_price').val(r['product']['credit_price']);
+                if (r['product']['without_stock_sales'] == 1){
+                    $('#ewithout_stock_sales').prop("checked", true);
+                };
+                if (r['product']['visible'] == 1){
+                    $('#evisible').prop("checked", true);
+                };
+                
+                r['categories'].forEach(function(valor, indice, array) {
+                    $('.ecategories').last().val(valor['id']);
+                    eappend_category();
+                });
+                $('.ecategories_btn').last().parent().remove();
+                
+                r['waists'].forEach(function(valor, indice, array) {
+                    $('.ewaists').last().val(valor['id']);
+                    $('.estock_quantity').last().val(valor['stock_quantity']);
+                    eappend_waist();
+                });
+                $('.ewaists_btn').last().parent().remove();
+                
+                r['photos'].forEach(function(valor, indice, array) {
+                    $('.ephotos_img').last().prop('src', '../img/product-img/'.concat(valor['name']));
+                    eappend_photo();
+                });
+                $('.ephotos_btn').last().parent().remove();
             }
         });
     }
@@ -306,10 +436,22 @@
         this.value = parseFloat(this.value).toFixed(0);
     });
     
+    $('#ecost_price').blur(function() {
+        this.value = parseFloat(this.value).toFixed(2);
+    });
+    $('#esale_price').blur(function() {
+        this.value = parseFloat(this.value).toFixed(2);
+    });
+    $('#ecredit_price').blur(function() {
+        this.value = parseFloat(this.value).toFixed(2);
+    });
+    $('.estock_quantity').blur(function() {
+        this.value = parseFloat(this.value).toFixed(0);
+    });
+    
     function remove_category(category){
         $(category).parent().remove();
     }
-
     function append_category(){
         $('#categories').append(
             `<div class="row d-flex justify-content-center mt-2">
@@ -324,11 +466,9 @@
                 </div>
             </div>`);
     }
-    
     function remove_waist(waist){
         $(waist).parent().remove();
     }
-
     function append_waist(){
         $('#waists').append(
             `<div class="row d-flex justify-content-center mt-2 pr-5">
@@ -346,11 +486,9 @@
                 </div>
             </div>`);
     }
-    
     function remove_photo(photo){
         $(photo).parent().remove();
     }
-
     function append_photo(){
         $('#photos').append(
             `<div class="row d-flex justify-content-center">
@@ -359,6 +497,58 @@
                 <img style="max-width:355px; max-height:200px"/>
             </div>`);
     }
+    
+    
+    function eremove_category(category){
+        $(category).parent().remove();
+    }
+    function eappend_category(){
+        $('#ecategories').append(
+            `<div class="row d-flex justify-content-center mt-2">
+                <button type="button" class="btn btn-danger mr-3 ecategories_btn" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                <div class="input-group ml-1 mr-5 normal_width">
+                    <select class="form-control ecategories" name="ecategory[]">
+                        <option value="null">Seleccionar</option>
+                        @foreach (\App\Category::all() as $category)
+                        <option value="{{$category->id}}">{{$category->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+            </div>`);
+    }
+    function eremove_waist(waist){
+        $(waist).parent().remove();
+    }
+    function eappend_waist(){
+        $('#ewaists').append(
+            `<div class="row d-flex justify-content-center mt-2 pr-5">
+                <button type="button" class="btn btn-danger mr-1 mr-lg-3 ewaists_btn" onclick="eremove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                <div class="input-group ml-1 normal_width">
+                    <select class="form-control ewaists" name="ewaists[]">
+                        <option value="null">Seleccionar</option>
+                        @foreach (\App\Waist::all() as $waist)
+                        <option value="{{$waist->id}}">{{$waist->name}}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="normal_width">
+                    <input type="number" class="form-control stock_quantity text-center ml-4 estock_quantity" name="estock_quantity[]" placeholder="Cantidad en stock" min="0">
+                </div>
+            </div>`);
+    }
+    function eremove_photo(photo){
+        $(photo).parent().remove();
+    }
+    function eappend_photo(){
+        $('#ephotos').append(
+            `<div class="row d-flex justify-content-center">
+                <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto ephotos_btn" onclick="eremove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                <input name="ephotos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto ephotos" style="color:transparent; max-height: 30px;" onchange="file_input(this)"/>
+                <img class="ephotos_img" style="max-width:355px; max-height:200px"/>
+            </div>`);
+    }
+    
+    
     
     function file_input(input){
         var file = input.files[0], imageType = /image.*/;
