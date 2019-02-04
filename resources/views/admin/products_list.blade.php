@@ -40,7 +40,8 @@
                         <td class="negrita">{{$product->id}}</td>
                         <td class="negrita">{{$product->name}}</td>
                         <td class="negrita">{{$product->description}}</td>
-                        <td class="negrita">@foreach ($product->categories_products as $category_product) {{$category_product->category->name . ', '}} @endforeach </td>
+                        <?php $categories=''; foreach ($product->categories_products as $category_product){$categories .= $category_product->category->name . ', ';}?>
+                        <td class="negrita">{{substr($categories, 0, -2)}}</td>
                         <td class="negrita">{{$product->cost_price}}</td>
                         <td class="negrita">{{$product->sale_price}}</td>
                         <td class="negrita">{{$product->credit_price}}</td>
@@ -99,7 +100,7 @@
                     </div>
                     
                     <div class="row d-flex justify-content-center mt-4">
-                            <textarea class="form-control col-12 col-lg-10 col-xl-8" name="description" value="{{old('description')}}" rows='3' placeholder="Descripción"></textarea>
+                            <textarea class="form-control col-12 col-lg-10 col-xl-8" name="description" rows='3' placeholder="Descripción">{{old('description')}}</textarea>
                     </div>
                     
                     
@@ -107,6 +108,22 @@
                         <div class="row d-flex justify-content-center mt-4">
                             <label class="text-primary negrita mb-0" style="font-size:30px;">Categorías</label>
                         </div>
+                        @if (!empty(old('categories.0')))
+                            <?php $n = 0;
+                            while (!empty(old('categories.'.$n))){ ?>
+                            <div class="row d-flex justify-content-center mt-2">
+                                <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
+                                <div class="input-group ml-1 mr-5 normal_width">
+                                    <select class="form-control" name="categories[]" value="{{old('categories.'.$n)}}">
+                                        <option>Seleccionar</option>
+                                        @foreach (\App\Category::all() as $category)
+                                        <option value="{{$category->id}}">{{$category->name}}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <?php $n += 1;} ?>
+                        @else
                         <div class="row d-flex justify-content-center mt-2">
                             <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                             <div class="input-group ml-1 mr-5 normal_width">
@@ -118,6 +135,7 @@
                                 </select>
                             </div>
                         </div>
+                        @endif
                     </div>
                     <div class="row d-flex justify-content-center mt-2 mb-3">
                         <button type="button" class="btn btn-success" onclick="append_category()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
@@ -132,24 +150,24 @@
                     <div class="row d-flex justify-content-center mt-0">
                         <div class="input-group col-4 col-lg-3">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="cost_price" name="cost_price" min="0" step="0.01" placeholder="0.00">
+                            <input type="number" class="form-control" id="cost_price" name="cost_price" min="0" step="0.01" placeholder="0.00" value="{{old('cost_price')}}">
                         </div>
                       
                         <div class="input-group col-4 col-lg-3 mx-lg-4 mx-xl-5">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="sale_price" name="sale_price" min="0" step="0.01" placeholder="0.00">
+                            <input type="number" class="form-control" id="sale_price" name="sale_price" min="0" step="0.01" placeholder="0.00" value="{{old('sale_price')}}">
                         </div>
                         
                         <div class="input-group col-4 col-lg-3">
                             <span class="input-group-text">$</span>
-                            <input type="number" class="form-control" id="credit_price" name="credit_price" min="0" step="0.01" placeholder="0.00">
+                            <input type="number" class="form-control" id="credit_price" name="credit_price" min="0" step="0.01" placeholder="0.00" value="{{old('credit_price')}}">
                         </div>
                     </div>
                     
                     
                     <div id="waists">
                         <div class="row d-flex justify-content-center mt-4">
-                            <label class="text-primary negrita mb-0" style="font-size:30px;">Talles - Stock</label>
+                            <label class="text-primary negrita mb-0" style="font-size:30px;">Talles - Stock *</label>
                         </div>
                         <div class="row d-flex justify-content-center mt-2 pr-5">
                             <button type="button" class="btn btn-danger mr-1 mr-lg-3" onclick="remove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
@@ -173,7 +191,7 @@
                     
                     <div id="photos">
                         <div class="row d-flex justify-content-center mt-4">
-                            <label class="text-primary negrita mb-0" style="font-size:30px;">Fotos</label>
+                            <label class="text-primary negrita mb-0" style="font-size:30px;">Fotos *</label>
                         </div>
                         <div class="row d-flex justify-content-center">
                             <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto" onclick="remove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
@@ -189,7 +207,7 @@
                     <div class="row d-flex justify-content-center mt-4">
                         <label class="text-white negrita mt-1" for="without_stock_sales">Ventas sin stock</label>
                         <label class="switch  mx-3">
-                            <input type="checkbox" id="without_stock_sales" name="without_stock_sales">
+                            <input type="checkbox" id="without_stock_sales" name="without_stock_sales" @if (!empty(old('without_stock_sales'))) checked="true" @endif>
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -197,7 +215,7 @@
                     <div class="row d-flex justify-content-center mt-2">
                         <label class="text-white negrita mt-1" for="visible">Visible en la tienda</label>
                         <label class="switch  mx-3">
-                            <input type="checkbox" id="visible" name="visible">
+                            <input type="checkbox" id="visible" name="visible" @if (!empty(old('visible'))) checked="true" @endif>
                             <span class="slider round"></span>
                         </label>
                     </div>
@@ -457,7 +475,7 @@
             `<div class="row d-flex justify-content-center mt-2">
                 <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <div class="input-group ml-1 mr-5 normal_width">
-                    <select class="form-control" name="category[]">
+                    <select class="form-control" name="categories[]">
                         <option value="null">Seleccionar</option>
                         @foreach (\App\Category::all() as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
