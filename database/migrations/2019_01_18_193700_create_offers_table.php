@@ -22,8 +22,6 @@ class CreateOffersTable extends Migration
             $table->unsignedDecimal('discount_percentage');
             $table->string('state', 15);
             $table->unsignedInteger('category_id')->nullable();
-            $table->unsignedInteger('products_offer_id')->nullable();
-            
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->timestamps();
         });

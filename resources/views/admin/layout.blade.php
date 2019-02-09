@@ -82,7 +82,7 @@
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#">
+                                    <a href="{{route('admin.offers.index')}}">
                                         <i class="fas fa-dollar-sign"></i>
                                         <span class="menuopt">Ofertas</span>
                                     </a>

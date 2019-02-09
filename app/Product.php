@@ -14,8 +14,8 @@ class Product extends Model
         return $this->hasMany(CategoriesProduct::class);
     }
     
-    public function products_offers(){
-        return $this->hasMany(ProductsOffer::class);
+    public function offers(){
+        return $this->belongsToMany('App\Offer');
     }
     
     public function sale_lines(){

@@ -40,6 +40,9 @@ Route::get('/admin/list_products', 'Product@list_products');
 Route::post('/admin/new_product', 'Product@new_product');
 Route::post('/admin/edit_product', 'Product@edit_product');
 
+Route::get('/admin/offers_list','OfferController@index')->name('admin.offers.index');
+Route::post('/admin/create','OfferController@create')->name('admin.offers.create');
+
 
 //Rutas de categorias
 //Route::get('/admin/categories', 'CategoryController@index')->name('admin.table.categories');

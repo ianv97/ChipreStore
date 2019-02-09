@@ -14,7 +14,7 @@ class Offer extends Model
         return $this->belongsTo(Category::class);
     }
     
-    public function products_offers(){
-        return $this->hasMany(ProductsOffer::class);
+    public function products(){
+        return $this->belongsToMany('App\Product');
     }
 }
