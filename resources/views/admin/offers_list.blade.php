@@ -12,7 +12,7 @@
     <div class="card-body">
         <div class="row px-3">
             <div class="d-inline-flex ml-auto mb-2">
-            <button type="button" class="btn btn-danger px-2" data-toggle="modal" data-target="#new_waist_modal" style="font-weight:bold;">
+            <button type="button" class="btn btn-danger px-2" data-toggle="modal" data-target="#new_offer_modal" style="font-weight:bold;">
                 <span class="fas fa-plus-square"></span> Nuevo talle
             </button>
             </div>
@@ -53,7 +53,7 @@
 </div>
 
 <!-- MODAL NUEVO PRODUCTO -->
-<div class="modal fade" id="new_product_modal" tabindex="-1" role="dialog">
+<div class="modal fade" id="new_offer_modal" tabindex="-1" role="dialog">
     <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content" style="margin-top: 5vh;">
             <div class="modal-header">
