@@ -6,6 +6,14 @@
 |--------------------------------------------------------------------------
 */
 
+
+Route::get('/', 'Shop@index');
+Route::get('/products', 'Shop@products');
+Route::get('/product_details/{id}', 'Shop@product_details');
+Route::get('/cart', 'Shop@cart');
+Route::get('/checkout', 'Shop@checkout');
+Route::post('/cart', 'Shop@add_to_cart');
+
 Route::get('/login','Session@login');
 Route::post('/login','Session@authenticate');
 Route::get('/admin/login','Session@admin_login');
@@ -13,12 +21,6 @@ Route::post('/admin/login','Session@admin_authenticate');
 Route::get('/logout', 'Session@logout');
 
 Route::post('/ajax/find_product', 'Ajax@find_product');
-
-Route::get('/', 'Shop@index');
-Route::get('/products', 'Shop@products');
-Route::get('/product_details/{id}', 'Shop@product_details');
-Route::get('/cart', 'Shop@cart');
-Route::get('/checkout', 'Shop@checkout');
 
 Route::get('/admin', 'User@index');
 Route::get('/admin/change_password', 'User@edit_password');
@@ -42,12 +44,3 @@ Route::post('/admin/edit_product', 'Product@edit_product');
 
 Route::get('/admin/offers_list','OfferController@index')->name('admin.offers.index');
 Route::post('/admin/create','OfferController@create')->name('admin.offers.create');
-
-
-//Rutas de categorias
-//Route::get('/admin/categories', 'CategoryController@index')->name('admin.table.categories');
-//Route::resource('categories','CategoryController');
-//Route::get('categories/{id}/destroy',[
-//    'uses' => 'CategoryController@destroy',
-//    'as' => 'categories.destroy'
-//]);

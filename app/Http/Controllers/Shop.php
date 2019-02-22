@@ -26,4 +26,14 @@ class Shop extends Controller
     function checkout(){
         return view('checkout');
     }
+    
+    function add_to_cart(){
+        if (!isset($_SESSION)){
+            session_start();
+        }
+        setcookie("product[".$_SESSION['product']."][id]", $_SESSION['product'], time()+3600);
+        setcookie("product[".$_SESSION['product']."][waist]", $_POST['waist'], time()+3600);
+        setcookie("product[".$_SESSION['product']."][qty]", $_POST['qty'], time()+3600);
+        return redirect()->action('Shop@cart');
+    }
 }

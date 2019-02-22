@@ -63,10 +63,11 @@ $_SESSION['product'] = $product->id;
                     </div>
 
                     <!-- Add to Cart Form -->
-                    <form class="cart clearfix" method="post">
+                    <form class="cart clearfix" method="post" action="{{action('Shop@add_to_cart')}}">
+                        {{ csrf_field() }}
                         <div class="row mb-50">
                             <div class="input-group d-flex" style="width: 100px;">
-                                <select class="form-control" name="waists[]" id="waist" onchange="check_stock()">
+                                <select class="form-control" name="waist" id="waist" onchange="check_stock()">
                                     <option>Talle</option>
                                     @foreach ($product->products_waists as $waist)
                                     <option value="{{$waist->waist->id}}">{{$waist->waist->name}}</option>
@@ -77,7 +78,7 @@ $_SESSION['product'] = $product->id;
                                 <p>Cantidad</p>
                                 <div class="quantity">
                                     <span class="qty-minus" onclick=" var effect = document.getElementById('qty'); var qty = effect.value; if(!isNaN(qty) &amp;&amp; qty &gt; 1){ effect.value--;} check_stock();"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                    <input type="text" class="qty-text" id="qty" step="1" name="quantity" value="1" pattern="\d+" onchange="check_stock()">
+                                    <input type="text" class="qty-text" id="qty" step="1" name="qty" value="1" pattern="\d+" onchange="check_stock()">
                                     <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if(!isNaN(qty)){effect.value++;} check_stock();"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                 </div>
                             </div>
