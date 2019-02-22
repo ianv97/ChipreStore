@@ -3,7 +3,7 @@ if(!isset($_SESSION)){
         session_start(); 
 } ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -65,13 +65,23 @@ if(!isset($_SESSION)){
         <div>
             <a href="index.html"><img src="/img/logo.svg" alt=""></a>
         </div>
+        
+        <?php
+            $cart = 0;
+            if (isset($_COOKIE['product'])){
+                foreach ($_COOKIE['product'] as $cookiep){
+                    $cart += sizeof($cookiep);
+                }
+            }
+        ?>
+         
         <!-- Nav -->
         <nav class="amado-nav">
             <ul>
                 <li id="index"><a href="{{action('Shop@index')}}">Inicio</a></li>
                 <li id="products"><a href="{{action('Shop@products')}}">Productos</a></li>
                 <li id="product_details"><a href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a></li>
-                <li id="cart"><a href="{{action('Shop@cart')}}" class="cart-nav"><img src="/img/core-img/cart.png"> Carrito <span>(0)</span></a></li>
+                <li id="cart"><a href="{{action('Shop@cart')}}" class="cart-nav"><img src="/img/core-img/cart.png"> Carrito <span>({{$cart}})</span></a></li>
                 <li id="checkout"><a href="{{action('Shop@checkout')}}">Finalizar compra</a></li>
             </ul>
         </nav>
@@ -96,7 +106,7 @@ if(!isset($_SESSION)){
 </div>
     
     
-    <footer class="footer_area clearfix">
+    <footer class="footer_area clearfix mt-100">
         <div class="container">
             <div class="row align-items-center">
                 <!-- Single Widget Area -->
@@ -127,7 +137,7 @@ if(!isset($_SESSION)){
                                             <a class="nav-link" href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a>
                                         </li>
                                         <li class="nav-item">
-                                            <a class="nav-link" href="{{action('Shop@cart')}}">Carrito</a>
+                                            <a class="nav-link" href="{{action('Shop@cart')}}">Carrito ({{$cart}})</a>
                                         </li>
                                         <li class="nav-item">
                                             <a class="nav-link" href="{{action('Shop@checkout')}}">Finalizar compra</a>

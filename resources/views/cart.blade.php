@@ -25,31 +25,42 @@
                         </thead>
                         <tbody>
                             <?php $total = 0; $ship = 100;
-                            foreach($_COOKIE["product"] as $cookie){
-                            $product = \App\Product::find($cookie['id']); ?>
+                            if (isset($_COOKIE["product"])){
+                                foreach($_COOKIE["product"] as $cookie_product){
+                                    foreach($cookie_product as $cookie_waist){
+                                        $product = \App\Product::find($cookie_waist['id']); ?>
+                                        <tr>
+                                            <td class="cart_product_img" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
+                                                <a href="{{action('Shop@product_details', ['id'=>$cookie_waist['id']])}}">
+                                                    <img src="img/product-img/{{$product->photos[0]->name}}" style="max-height: 200px;">
+                                                </a>
+                                            </td>
+                                            <td class="cart_product_desc" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
+                                                <h5>{{$product->name}}</h5>
+                                            </td>
+                                            <td class="waist" style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">
+                                                <span>{{\App\Waist::find($cookie_waist['waist'])->name}}</span>
+                                            </td>
+                                            <td class="price" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
+                                                <span>${{number_format($product->sale_price, 2, ',', '.')}}</span>
+                                            </td>
+                                            <td class="qty" style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">
+                                                <span>{{$cookie_waist['qty']}}</span>
+                                            </td>
+                                            <td class="subtotal" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
+                                                <span>${{number_format($product->sale_price * $cookie_waist['qty'], 2, ',', '.')}}</span>
+                                            </td>
+                                        </tr>
+                                        <?php $total+= $product->sale_price * $cookie_waist['qty'];
+                                    }
+                                }
+                            }else{ ?>
                             <tr>
-                                <td class="cart_product_img" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
-                                    <a href="{{action('Shop@product_details', ['id'=>$cookie['id']])}}">
-                                        <img src="img/product-img/{{$product->photos[0]->name}}" style="max-height: 300px;">
-                                    </a>
-                                </td>
-                                <td class="cart_product_desc" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
-                                    <h5>{{$product->name}}</h5>
-                                </td>
-                                <td class="waist" style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">
-                                    <span>{{\App\Waist::find($cookie['waist'])->name}}</span>
-                                </td>
-                                <td class="price" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
-                                    <span>${{number_format($product->sale_price, 2, ',', '.')}}</span>
-                                </td>
-                                <td class="qty" style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">
-                                    <span>{{$cookie['qty']}}</span>
-                                </td>
-                                <td class="subtotal" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
-                                    <span>${{number_format($product->sale_price * $cookie['qty'], 2, ',', '.')}}</span>
+                                <td style="width: 100%;max-width: 100%;">
+                                    <h2 style="color:#ffc107;">El carrito está vacío</h2>
                                 </td>
                             </tr>
-                            <?php $total+= $product->sale_price * $cookie['qty'];}?>
+                            <?php }?>
                         </tbody>
                     </table>
                 </div>

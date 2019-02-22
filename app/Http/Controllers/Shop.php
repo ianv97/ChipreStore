@@ -31,9 +31,9 @@ class Shop extends Controller
         if (!isset($_SESSION)){
             session_start();
         }
-        setcookie("product[".$_SESSION['product']."][id]", $_SESSION['product'], time()+3600);
-        setcookie("product[".$_SESSION['product']."][waist]", $_POST['waist'], time()+3600);
-        setcookie("product[".$_SESSION['product']."][qty]", $_POST['qty'], time()+3600);
+        setcookie("product[".$_SESSION['product']."][".$_POST['waist']."][id]", $_SESSION['product'], time()+60);
+        setcookie("product[".$_SESSION['product']."][".$_POST['waist']."][waist]", $_POST['waist'], time()+60);
+        setcookie("product[".$_SESSION['product']."][".$_POST['waist']."][qty]", $_POST['qty'], time()+60);
         return redirect()->action('Shop@cart');
     }
 }
