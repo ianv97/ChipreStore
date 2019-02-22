@@ -68,8 +68,8 @@ $_SESSION['product'] = $product->id;
                             <div class="input-group d-flex" style="width: 100px;">
                                 <select class="form-control" name="waists[]" id="waist" onchange="check_stock()">
                                     <option>Talle</option>
-                                    @foreach (\App\Waist::all() as $waist)
-                                    <option value="{{$waist->id}}">{{$waist->name}}</option>
+                                    @foreach ($product->products_waists as $waist)
+                                    <option value="{{$waist->waist->id}}">{{$waist->waist->name}}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -77,12 +77,12 @@ $_SESSION['product'] = $product->id;
                                 <p>Cantidad</p>
                                 <div class="quantity">
                                     <span class="qty-minus" onclick=" var effect = document.getElementById('qty'); var qty = effect.value; if(!isNaN(qty) &amp;&amp; qty &gt; 1){ effect.value--;} check_stock();"><i class="fa fa-caret-down" aria-hidden="true"></i></span>
-                                    <input type="text" class="qty-text" id="qty" step="1" min="1" max="300" name="quantity" value="1" pattern="\d{3}" onchange="check_stock()">
+                                    <input type="text" class="qty-text" id="qty" step="1" name="quantity" value="1" pattern="\d+" onchange="check_stock()">
                                     <span class="qty-plus" onclick="var effect = document.getElementById('qty'); var qty = effect.value; if(!isNaN(qty)){effect.value++;} check_stock();"><i class="fa fa-caret-up" aria-hidden="true"></i></span>
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" name="addtocart" class="btn amado-btn">Añadir al carrito</button>
+                        <button type="submit" id="add_to_cart" name="add_to_cart" class="btn amado-btn">Añadir al carrito</button>
                     </form>
 
                 </div>
@@ -95,7 +95,7 @@ $_SESSION['product'] = $product->id;
 @section('footer')
 <script>
    $('#product_details').addClass('active');
-   
+   $('#add_to_cart').prop('disabled', true);
    function check_stock(){
        switch($('#waist').val()){
             @foreach (\App\Waist::all() as $waist)
@@ -103,12 +103,14 @@ $_SESSION['product'] = $product->id;
                     case "{{$waist->id}}": 
                         if ($("#qty").val() > {{$product_waist->stock_quantity}}){
                             $("#available").html('<i class="fa fa-circle" style="color: #ff0000;"></i> Sin Stock');
+                            $('#add_to_cart').prop('disabled', true);
                         }else{
                             $("#available").html('<i class="fa fa-circle" style="color: #20d34a;"></i> En Stock');
+                            $('#add_to_cart').prop('disabled', false);
                         }; break;
                 @endif
             @endforeach
-            default: $("#available").html('<i class="fa fa-circle" style="color: #ff0000;"></i> Sin Stock');
+            default: $("#available").html('<i class="fa fa-circle" style="color: #ff0000;"></i> Sin Stock'); $('#add_to_cart').prop('disabled', true);
        }
    }
 </script>

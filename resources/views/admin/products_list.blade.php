@@ -265,17 +265,6 @@
                         <div class="row d-flex justify-content-center mt-4">
                             <label class="text-primary negrita mb-0" style="font-size:30px;">Categorías</label>
                         </div>
-                        <div class="row d-flex justify-content-center mt-2">
-                            <button type="button" class="btn btn-danger mr-3 ecategories_btn" onclick="eremove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
-                            <div class="input-group ml-1 mr-5 normal_width">
-                                <select class="form-control ecategories" name="ecategories[]">
-                                    <option>Seleccionar</option>
-                                    @foreach (\App\Category::all() as $category)
-                                    <option value="{{$category->id}}">{{$category->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                        </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-2 mb-3">
                         <button type="button" class="btn btn-success" onclick="eappend_category()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
@@ -309,20 +298,6 @@
                         <div class="row d-flex justify-content-center mt-4">
                             <label class="text-primary negrita mb-0" style="font-size:30px;">Talles - Stock *</label>
                         </div>
-                        <div class="row d-flex justify-content-center mt-2 pr-5">
-                            <button type="button" class="btn btn-danger mr-1 mr-lg-3 ewaists_btn" onclick="eremove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
-                            <div class="input-group ml-1 normal_width">
-                                <select class="form-control ewaists" name="ewaists[]">
-                                    <option>Seleccionar</option>
-                                    @foreach (\App\Waist::all() as $waist)
-                                    <option value="{{$waist->id}}">{{$waist->name}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <div class="normal_width">
-                                <input type="number" class="form-control estock_quantity text-center ml-4" name="estock_quantity[]" placeholder="Cantidad en stock" min="0">
-                            </div>
-                        </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-2 mb-3">
                         <button type="button" class="btn btn-success" onclick="eappend_waist()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
@@ -332,11 +307,6 @@
                     <div id="ephotos">
                         <div class="row d-flex justify-content-center mt-4">
                             <label class="text-primary negrita mb-0" style="font-size:30px;">Fotos *</label>
-                        </div>
-                        <div class="row d-flex justify-content-center">
-                            <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto ephotos_btn" onclick="eremove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
-                            <input name="ephotos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto ephotos" style="color:transparent; max-height: 30px;" onchange="file_input(this)"/>
-                            <img class="ephotos_img" style="max-width:355px; max-height:200px"/>
                         </div>
                     </div>
                     <div class="row d-flex justify-content-center mt-2 mb-3">
@@ -398,6 +368,9 @@
 
 <script type="text/javascript">    
     function edit_product(id){
+        clear_categories();
+        clear_waists();
+        clear_photos();
         $('#eid').val(id);
         $.ajaxSetup({
             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
@@ -414,29 +387,31 @@
                 $('#ecredit_price').val(r['product']['credit_price']);
                 if (r['product']['without_stock_sales'] == 1){
                     $('#ewithout_stock_sales').prop("checked", true);
+                }else{
+                    $('#ewithout_stock_sales').prop("checked", false);
                 };
                 if (r['product']['visible'] == 1){
                     $('#evisible').prop("checked", true);
-                };
+                }else{
+                    $('#evisible').prop("checked", false);
+                }
                 
                 r['categories'].forEach(function(valor, indice, array) {
-                    $('.ecategories').last().val(valor['id']);
                     eappend_category();
+                    $('.ecategories').last().val(valor['id']);
                 });
-                $('.ecategories_btn').last().parent().remove();
                 
                 r['waists'].forEach(function(valor, indice, array) {
+                    eappend_waist();
                     $('.ewaists').last().val(valor['id']);
                     $('.estock_quantity').last().val(valor['stock_quantity']);
-                    eappend_waist();
                 });
-                $('.ewaists_btn').last().parent().remove();
                 
                 r['photos'].forEach(function(valor, indice, array) {
-                    $('.ephotos_img').last().prop('src', '../img/product-img/'.concat(valor['name']));
                     eappend_photo();
+                    $('.ephotos_img').last().prop('src', '../img/product-img/'.concat(valor['name']));
+                    $('.ephotos_names').last().val(valor['name']);
                 });
-                $('.ephotos_btn').last().parent().remove();
             }
         });
     }
@@ -522,10 +497,10 @@
     }
     function eappend_category(){
         $('#ecategories').append(
-            `<div class="row d-flex justify-content-center mt-2">
+            `<div class="row d-flex justify-content-center mt-2 erow">
                 <button type="button" class="btn btn-danger mr-3 ecategories_btn" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <div class="input-group ml-1 mr-5 normal_width">
-                    <select class="form-control ecategories" name="ecategory[]">
+                    <select class="form-control ecategories" name="ecategories[]">
                         <option value="null">Seleccionar</option>
                         @foreach (\App\Category::all() as $category)
                         <option value="{{$category->id}}">{{$category->name}}</option>
@@ -539,7 +514,7 @@
     }
     function eappend_waist(){
         $('#ewaists').append(
-            `<div class="row d-flex justify-content-center mt-2 pr-5">
+            `<div class="row d-flex justify-content-center mt-2 pr-5 erow">
                 <button type="button" class="btn btn-danger mr-1 mr-lg-3 ewaists_btn" onclick="eremove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <div class="input-group ml-1 normal_width">
                     <select class="form-control ewaists" name="ewaists[]">
@@ -559,13 +534,13 @@
     }
     function eappend_photo(){
         $('#ephotos').append(
-            `<div class="row d-flex justify-content-center">
+            `<div class="row d-flex justify-content-center erow">
                 <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto ephotos_btn" onclick="eremove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <input name="ephotos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto ephotos" style="color:transparent; max-height: 30px;" onchange="file_input(this)"/>
                 <img class="ephotos_img" style="max-width:355px; max-height:200px"/>
+                <input name="ephotos_names[]" class="ephotos_names" type="text" style="display:none;"/>
             </div>`);
     }
-    
     
     
     function file_input(input){
@@ -576,8 +551,27 @@
         reader.onload = function(e) {
             var result = e.target.result;
             $(input).next().prop('src', result);
+            $(input).next().next().val(result);
         }
         reader.readAsDataURL(file);
+    }
+    
+    function clear_categories(){
+        $('#ecategories .erow').each(function(id, element){
+            $(element).remove();
+        });
+    }
+    
+    function clear_waists(){
+        $('#ewaists .erow').each(function(id, element){
+            $(element).remove();
+        });
+    }
+    
+    function clear_photos(){
+        $('#ephotos .erow').each(function(id, element){
+            $(element).remove();
+        });
     }
 </script>
 

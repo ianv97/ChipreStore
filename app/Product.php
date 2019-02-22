@@ -27,6 +27,6 @@ class Product extends Model
     }
     
     public function products_waists(){
-        return $this->hasMany(ProductsWaists::class);
+        return $this->hasMany(ProductsWaist::class);
     }
 }
