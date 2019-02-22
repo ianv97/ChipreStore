@@ -45,6 +45,7 @@ class Product extends Controller
             }else{
                 $visible = 0;
             }
+            
             \App\Product::Create([
                 'name' => $data['name'],
                 'description' => $data['description'],
@@ -104,50 +105,49 @@ class Product extends Controller
                     'ecost_price' => 'nullable',
                     'esale_price' => 'required',
                     'ecredit_price' => 'nullable',
+                    'ewaists' => 'required',
                     'estock_quantity' => 'required',
-                    'ewithout_stock_sales' => 'required',
                     'ecategories' => 'nullable',
-                    'ephotos' => 'required'
+                    'ephotos_names' => 'required',
+                    'ewithout_stock_sales' => 'nullable',
+                    'evisible' => 'nullable'
                 ], [
                     'ename.required' => 'Debe ingresar el nombre del producto',
                     'esale_price.required' => 'Debe ingresar el precio de venta del producto',
+                    'ewaists.required' => 'Debe seleccionar al menos un talle del producto',
                     'estock_quantity.required' => 'Debe ingresar la cantidad en stock del producto',
-                    'ephotos.required' => 'Debe seleccionar alguna foto del producto'
+                    'ephotos_names.required' => 'Debe seleccionar alguna foto del producto'
                 ]);
-                $product = \App\Category::find($data['eid']);
+                
+                if(isset($data['ewithout_stock_sales'])){
+                    $without_stock = 1;
+                }else{
+                    $without_stock = 0;
+                }
+                if(isset($data['evisible'])){
+                    $visible = 1;
+                }else{
+                    $visible = 0;
+                }
+                
+                
+                $product = \App\Product::find($data['eid']);
                 $product->name = $data['ename'];
                 $product->description = $data['edescription'];
                 $product->cost_price = $data['ecost_price'];
                 $product->sale_price = $data['esale_price'];
                 $product->credit_price = $data['ecredit_price'];
-                $product->stock_quantity = $data['estock_quantity'];
-                $product->without_stock_sales = $data['ewithout_stock_sales'];
+                $product->without_stock_sales = $without_stock;
+                $product->visible = $visible;
                 $product->save();
                 
-                $photos = $product->photos;
-                $inputlength = sizeof($data['ephotos']);
-                $count = 0;
-                foreach($photos as $photo){
-                    if ($count < $inputlength){ //Actualización
-                        $photo->name = $data['ephotos'][$count];
-                        $photo->save();
-                        $count += 1;
-                    }else{ //Eliminación
-                        $photo->delete();
-                    }
-                };
-                $length = sizeof($photos);
-                while ($inputlength > $length){ //Inserción
-                    \App\ProductPhoto::Create([
-                        'name' => $data['ephotos'][$count],
-                        'product_id' => $product_id
-                    ]);
-                    $count += 1;
-                    $length += 1;
-                };
                 
-                $categories_product = $product->categories_product;
-                $inputlength = sizeof($data['ecategories']);
+                $categories_product = $product->categories_products;
+                if (isset($data['ecategories'])){
+                    $inputlength = sizeof($data['ecategories']);
+                }else{
+                    $inputlength = 0;
+                }
                 $count = 0;
                 foreach($categories_product as $category_product){
                     if ($count < $inputlength){ //Actualización
@@ -162,14 +162,72 @@ class Product extends Controller
                 while ($inputlength > $length){ //Inserción
                     \App\CategoriesProduct::Create([
                         'category_id' => $data['ecategories'][$count],
-                        'product_id' => $product_id
+                        'product_id' => $data['eid']
+                    ]);
+                    $count += 1;
+                    $length += 1;
+                };
+                
+                
+                $product_waists = $product->products_waists;
+                $inputlength = sizeof($data['ewaists']);
+                $count = 0;
+                foreach($product_waists as $product_waist){
+                    if ($count < $inputlength){ //Actualización
+                        $product_waist->waist_id = $data['ewaists'][$count];
+                        $product_waist->save();
+                        $count += 1;
+                    }else{ //Eliminación
+                        $product_waist->delete();
+                    }
+                };
+                $length = sizeof($product_waists);
+                while ($inputlength > $length){ //Inserción
+                    \App\ProductsWaist::Create([
+                        'product_id' => $data['eid'],
+                        'waist_id' => $data['ewaists'][$count],
+                        'stock_quantity' => $data['estock_quantity'][$count],
+                    ]);
+                    $count += 1;
+                    $length += 1;
+                };
+                
+
+                $files = $_FILES['ephotos'];
+                $photos = $product->photos;
+                $inputlength = sizeof($files["tmp_name"]);
+                $count = 0;
+                foreach($photos as $photo){
+                    if ($count < $inputlength){ //Actualización
+                        if ($files['tmp_name'][$count] != ''){ //Si realmente hubo un cambio de foto
+                            $explode_name = explode(".", $files['name'][$count]);
+                            $filename = str_replace(' ', '', $data['ename']) . $count . '.' . end($explode_name);
+                            move_uploaded_file($files['tmp_name'][$count], $_SERVER['DOCUMENT_ROOT'].'/img/product-img/'.$filename);
+                            $photo->name = $filename;
+                        }else{
+                            $photo->name = $data['ephotos_names'][$count];
+                            $photo->save();
+                        }
+                        $count += 1;
+                    }else{ //Eliminación
+                        $photo->delete();
+                    }
+                };
+                $length = sizeof($photos);
+                while ($inputlength > $length){ //Inserción
+                    $explode_name = explode(".", $files['name'][$count]);
+                    $filename = str_replace(' ', '', $data['ename']) . $count . '.' . end($explode_name);
+                    move_uploaded_file($files['tmp_name'][$count], $_SERVER['DOCUMENT_ROOT'].'/img/product-img/'.$filename);
+                    \App\ProductPhoto::Create([
+                        'name' => $filename,
+                        'product_id' => $data['eid']
                     ]);
                     $count += 1;
                     $length += 1;
                 };
                 
             });
-            return redirect(action('Category@list_categories'))
+            return redirect(action('Product@list_products'))
                     ->with('success', 'Producto modificado con éxito');;
         }
     }
