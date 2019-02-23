@@ -19,8 +19,12 @@ class Session extends Controller
     
     function admin_login(){
         session_start();
-        if (isset($_SESSION['id'])){
-            return redirect(action('User@index'));
+        if (isset($_SESSION['role'])){
+            if ($_SESSION['role'] == 'Administrador'){
+                return redirect(action('User@index'));
+            }else{
+                return view('admin/login');
+            }
         }else{
             return view('admin/login');
         }

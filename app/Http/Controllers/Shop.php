@@ -36,4 +36,35 @@ class Shop extends Controller
         setcookie("product[".$_SESSION['product']."][".$_POST['waist']."][qty]", $_POST['qty'], time()+60);
         return redirect()->action('Shop@cart');
     }
+    
+    function order(){
+        if (!isset($_SESSION)){
+            session_start();
+        }
+        \DB::transaction(function(){
+            $data = request()->validate([
+                'product_id' => 'required',
+                'waist_id' => 'required',
+                'qty' => 'required',
+                'subtotal' => 'required',
+                'total' => 'required'
+            ]);
+            
+            \App\Sale::Create([
+                'date' => date("Y-m-d"),
+                'total' => $data['total'],
+                'customer_id' => $_SESSION['id']
+            ]);
+            $sale_id = \DB::getPdo()->lastInsertId();
+            
+            \App\SaleLine::Create([
+                'product_id' => $data['product_id'],
+                'waist_id' => $data['waist_id'],
+                'quantity' => $data['qty'],
+                'sale_id' => $sale_id,
+                'subtotal' => $data['subtotal']
+            ]);
+        });
+        return redirect(action('Shop@cart'))->with('success', 'Su pedido fue registrado exitosamente');;;
+    }
 }

@@ -18,9 +18,12 @@ class CreateCustomersTable extends Migration
             $table->string('email', 50)->unique();
             $table->string('password');
             $table->string('name', 60);
-            $table->unsignedInteger('dni')->nullable();
+            $table->unsignedInteger('city_id');
             $table->string('address');
+            $table->string('phone', 20);
             $table->timestamps();
+            
+            $table->foreign('city_id')->references('id')->on('cities');
         });
     }
 

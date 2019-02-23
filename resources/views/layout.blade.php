@@ -56,7 +56,7 @@ if(!isset($_SESSION)){
         </div>
     </div>
 
-    <aside class="header-area clearfix mt-0">
+    <aside class="header-area clearfix mt-0" style="border-style: solid; border-width: 0px 3px 0px 0px; border-color:#000">
         <!-- Close Icon -->
         <div class="nav-close">
             <i class="fa fa-close" aria-hidden="true"></i>
@@ -100,7 +100,7 @@ if(!isset($_SESSION)){
         </div>
         @else
         <div class="mb-10">
-            <label>-{{$_SESSION['name']}}-</label>
+            <label>{{$_SESSION['name']}}</label>
         </div>
         <div class="cart-fav-search mb-10">
             <a href="#"><i class="fa fa-truck"></i> Mis pedidos</a>
@@ -120,12 +120,11 @@ if(!isset($_SESSION)){
         </div>
     </aside>
     
-    
     @yield('body')
 </div>
     
     
-    <footer class="footer_area clearfix mt-100">
+    <footer class="footer_area clearfix">
         <div class="container">
             <div class="row align-items-center">
                 <!-- Single Widget Area -->

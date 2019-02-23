@@ -11,8 +11,11 @@ Route::get('/', 'Shop@index');
 Route::get('/products', 'Shop@products');
 Route::get('/product_details/{id}', 'Shop@product_details');
 Route::get('/cart', 'Shop@cart');
-Route::get('/checkout', 'Shop@checkout');
 Route::post('/cart', 'Shop@add_to_cart');
+Route::get('/checkout', 'Shop@checkout');
+Route::post('/checkout', 'Shop@order');
+
+Route::post('/signup', 'Customer@signup');
 
 Route::get('/login','Session@login');
 Route::post('/login','Session@authenticate');

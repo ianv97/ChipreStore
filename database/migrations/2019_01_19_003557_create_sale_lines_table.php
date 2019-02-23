@@ -18,10 +18,12 @@ class CreateSaleLinesTable extends Migration
             $table->unsignedInteger('quantity');
             $table->unsignedDecimal('subtotal');
             $table->unsignedInteger('product_id')->nullable();
+            $table->unsignedInteger('waist_id')->nullable();
             $table->unsignedInteger('sale_id');
             $table->timestamps();
             
             $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
+            $table->foreign('waist_id')->references('id')->on('waists')->onDelete('set null');
             $table->foreign('sale_id')->references('id')->on('sales');
         });
     }

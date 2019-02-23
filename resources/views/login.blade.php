@@ -9,30 +9,30 @@
 <div class="cart-table-area section-padding-100">
     <div class="container-fluid">
         @if (!isset($_SESSION['id']))
-        <div class="col-12 col-lg-10 mx-auto">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto">
             <div class="form-structor">
-                <form action="#" method="post">
+                <form method="post" action="{{action('Customer@signup')}}">
                     {{ csrf_field() }}
                     <div class="signup">
                         <h2 class="form-title" id="signup">Registrarse</h2>
                         <div class="form-holder row justify-content-center signup-form">
                             <div class="col-8 my-3 webflow-style-input">
-                                <input type="email" id="email" placeholder="Email" required>
+                                <input type="email" id="email" name="email" placeholder="Email" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
-                                <input type="password" id="password" placeholder="Contraseña" required>
+                                <input type="password" id="password" name="password" placeholder="Contraseña" required>
                             </div>
                             <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                <input type="password" id="repeat_password" placeholder="Repita su contraseña" required>
+                                <input type="password" id="repeat_password" name="repeat_password" placeholder="Repita su contraseña" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
-                                <input type="text" id="first_name" placeholder="Nombre" required>
+                                <input type="text" id="first_name" name="first_name" placeholder="Nombre" required>
                             </div>
                             <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                <input type="text" id="last_name" value="" placeholder="Apellido" required>
+                                <input type="text" id="last_name" name="last_name" placeholder="Apellido" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
-                                <select class="w-100" id="province" required>
+                                <select class="w-100" id="province" name="province" required>
                                     <option></option>
                                     @foreach (\App\Province::all() as $province)
                                     <option value="{{$province->id}}">{{$province->name}}</option>
@@ -40,21 +40,21 @@
                                 </select>
                             </div>
                             <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                <select class="w-100" id="city" required>
+                                <select class="w-100" id="city" name="city" required>
                                     <option></option>
                                 </select>
                             </div>
                             <div class="col-8 mb-3 webflow-style-input">
-                                <input type="text" id="address" placeholder="Dirección" required>
+                                <input type="text" id="address" name="address" placeholder="Dirección" required>
                             </div>
                             <div class="col-md-6 mb-3 webflow-style-input">
-                                <input type="text" id="phone" placeholder="Teléfono" required>
+                                <input type="text" id="phone" name="phone" placeholder="Teléfono" required>
                             </div>
                         </div>
-                        <button class="submit-btn">Registrarse</button>
+                        <button type="submit" class="submit-btn">Registrarse</button>
                     </div>
                 </form>
-                <form action="{{action('Session@authenticate')}}" method="post">
+                <form method="post" action="{{action('Session@authenticate')}}">
                     {{ csrf_field() }}
                     <div class="login slide-up">
                         <div class="center">
@@ -72,7 +72,7 @@
                                 </label>
                                 @endforeach
                             </div>
-                            <button class="submit-btn">Ingresar</button>
+                            <button type="submit" class="submit-btn">Ingresar</button>
                         </div>
                     </div>
                 </form>
@@ -125,10 +125,10 @@ loginBtn.addEventListener('click', (e) => {
 	let parent = e.target.parentNode.parentNode;
 	Array.from(e.target.parentNode.parentNode.classList).find((element) => {
 		if(element !== "slide-up") {
-			parent.classList.add('slide-up')
+			parent.classList.add('slide-up');
 		}else{
-			signupBtn.parentNode.classList.add('slide-up')
-			parent.classList.remove('slide-up')
+			signupBtn.parentNode.classList.add('slide-up');
+			parent.classList.remove('slide-up');
 		}
 	});
 });
@@ -137,10 +137,10 @@ signupBtn.addEventListener('click', (e) => {
 	let parent = e.target.parentNode;
 	Array.from(e.target.parentNode.classList).find((element) => {
 		if(element !== "slide-up") {
-			parent.classList.add('slide-up')
+			parent.classList.add('slide-up');
 		}else{
-			loginBtn.parentNode.parentNode.classList.add('slide-up')
-			parent.classList.remove('slide-up')
+			loginBtn.parentNode.parentNode.classList.add('slide-up');
+			parent.classList.remove('slide-up');
 		}
 	});
 });
@@ -156,6 +156,12 @@ signupBtn.addEventListener('click', (e) => {
 @keyframes gradient {
   0% {background-position: 0 0;}
   100% {background-position: 100% 0;}
+}
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    transition-delay: 3600s;
 }
 .webflow-style-input {
   border-radius: 2px;
@@ -242,7 +248,6 @@ signupBtn.addEventListener('click', (e) => {
 }
 .form-structor .signup .form-holder {
   border-radius: 15px;
-  background-color: #fff;
   overflow: hidden;
   margin-top: 50px;
   opacity: 1;
