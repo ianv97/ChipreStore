@@ -21,6 +21,7 @@ Route::post('/admin/login','Session@admin_authenticate');
 Route::get('/logout', 'Session@logout');
 
 Route::post('/ajax/find_product', 'Ajax@find_product');
+Route::post('/ajax/find_cities', 'Ajax@find_cities');
 
 Route::get('/admin', 'User@index');
 Route::get('/admin/change_password', 'User@edit_password');

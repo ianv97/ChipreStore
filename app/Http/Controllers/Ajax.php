@@ -27,4 +27,12 @@ Class Ajax extends Controller {
                 ->get();
         return response()->json(array('product'=>$product, 'categories'=>$categories, 'waists'=>$waists, 'photos'=>$photos));
     }
+    
+    function find_cities(){
+        $cities = \DB::table('cities')
+                ->where('province_id', $_POST['province_id'])
+                ->select('id', 'name')
+                ->get();
+        return response()->json($cities);
+    }
 }

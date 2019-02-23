@@ -74,7 +74,7 @@ if(!isset($_SESSION)){
                 }
             }
         ?>
-         
+        
         <!-- Nav -->
         <nav class="amado-nav">
             <ul>
@@ -86,11 +86,30 @@ if(!isset($_SESSION)){
             </ul>
         </nav>
         <!-- Button Group -->
-        <div class="amado-btn-group mt-30 mb-30">
+        <div class="amado-btn-group mt-30 mb-50">
             <a href="#" class="btn amado-btn mb-15">En descuento</a>
             <a href="#" class="btn amado-btn">Lo nuevo</a>
         </div>
-        <!-- Cart Menu -->
+        <hr>
+        @if (!isset($_SESSION['id']))
+        <div class="cart-fav-search mb-10">
+            <a href="{{action('Session@login')}}"><i class="fa fa-user-plus"></i> Registrarse</a>
+        </div>
+        <div class="cart-fav-search mb-30">
+            <a href="{{action('Session@login')}}"><i class="fa fa-sign-in"></i> Ingresar</a>
+        </div>
+        @else
+        <div class="mb-10">
+            <label>-{{$_SESSION['name']}}-</label>
+        </div>
+        <div class="cart-fav-search mb-10">
+            <a href="#"><i class="fa fa-truck"></i> Mis pedidos</a>
+        </div>
+        <div class="cart-fav-search mb-30">
+            <a href="{{action('Session@logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+        </div>
+        @endif
+        
         <div class="cart-fav-search mb-30">
             <a href="#" class="search-nav"><img src="/img/core-img/search.png"> Búsqueda</a>
         </div>
