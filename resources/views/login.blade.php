@@ -11,7 +11,7 @@
         @if (!isset($_SESSION['id']))
         <div class="col-12 col-lg-10 col-xl-8 mx-auto">
             <div class="form-structor">
-                <form method="post" action="{{action('Customer@signup')}}">
+                <form method="post" action="{{action('CustomerController@signup')}}">
                     {{ csrf_field() }}
                     <div class="signup">
                         <h2 class="form-title" id="signup">Registrarse</h2>
@@ -179,7 +179,7 @@ input:-webkit-autofill:active {
 .webflow-style-input input::-webkit-input-placeholder {
   color: #7881A1;
 }
-    
+
 @import url("https://fonts.googleapis.com/css?family=Fira+Sans");
 
 .signup-form{

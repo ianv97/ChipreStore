@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class Customer extends Controller
+class CustomerController extends Controller
 {
     function signup(){
         $data = request()->validate([
@@ -45,5 +45,22 @@ class Customer extends Controller
             return redirect(action('Session@login'))
                     ->withErrors(['repeat_password' => 'Las contraseñas ingresadas no coinciden']);;
         }
+    }
+    function index(){
+        $customers = Customer::orderBy('id','ASC')->paginate(25);
+
+        return view('admin.customers_list')->with('customers',$customers); //agregar nombre de la vista de ADMINISTRACION
+    }
+
+    function create(){
+        return view('admin.customers_list'); //Agregar nombre de vista de formulario de registro
+    }
+
+    function signupOtro(Request $request){
+        $customer= new Customer($request->all());
+        $customer->password = bcrypt($request->password);
+        $customer->save();
+
+        return redirect()->route('customers.index');
     }
 }

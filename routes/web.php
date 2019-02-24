@@ -15,7 +15,7 @@ Route::post('/cart', 'Shop@add_to_cart');
 Route::get('/checkout', 'Shop@checkout');
 Route::post('/checkout', 'Shop@order');
 
-Route::post('/signup', 'Customer@signup');
+Route::post('/signup', 'CustomerController@signup');
 
 Route::get('/login','Session@login');
 Route::post('/login','Session@authenticate');
@@ -47,4 +47,4 @@ Route::post('/admin/new_product', 'Product@new_product');
 Route::post('/admin/edit_product', 'Product@edit_product');
 
 Route::get('/admin/offers_list','OfferController@index')->name('admin.offers.index');
-Route::post('/admin/create','OfferController@create')->name('admin.offers.create');
+Route::post('/admin/offers/create','OfferController@store')->name('admin.offers.create');

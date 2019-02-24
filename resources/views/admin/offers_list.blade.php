@@ -27,7 +27,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                   
+
                     @foreach ($offers as $offer)
                     <tr>
                         <td class="negrita">{{$offer->id}}</td>
@@ -68,19 +68,19 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Registrar Oferta</h2>
                 </div>
-                <form method="POST" action="route('admin.offers.create')" enctype="multipart/form-data">
+                <form method="POST" action="{{route('admin.offers.create')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="row d-flex justify-content-center mt-4">
                         <div class="normal_width">
                             <input type="text" class="form-control" name="name" value="{{old('name')}}" placeholder="Nombre *">
                         </div>
                     </div>
-                    
+
                     <div class="row d-flex justify-content-center mt-4">
                             <textarea class="form-control col-12 col-lg-10 col-xl-8" name="min_quantity" rows='3' placeholder="Descripción">{{old('min_quantity')}}</textarea>
                     </div>
-                    
-                    
+
+
                     <div id="categories">
                         <div class="row d-flex justify-content-center mt-4">
                             <label class="text-primary negrita mb-0" style="font-size:30px;">Categorías</label>
@@ -117,8 +117,8 @@
                     <div class="row d-flex justify-content-center mt-2 mb-3">
                         <button type="button" class="btn btn-success" onclick="append_category()" style="height:40px; border-radius:20px;"><span class="fas fa-plus-square"></span></button>
                     </div>
-                    
-                    
+
+
                     <div class="row d-flex justify-content-center mt-4 mb-0">
                         <label class="text-white negrita col-4 col-lg-3">Porcentaje de descuento</label>
                     </div>
@@ -128,8 +128,8 @@
                             <input type="number" class="form-control" id="cost_price" name="discount_percentage" min="0" step="0.01" placeholder="0.00" value="{{old('discount_percentage')}}">
                         </div>
                     </div>
-                    
-                    
+
+
                     <div id="waists">
                         <div class="row d-flex justify-content-center mt-4">
                             <label class="text-primary negrita mb-0" style="font-size:30px;">Talles - Stock *</label>
@@ -137,7 +137,7 @@
                         <div class="row d-flex justify-content-center mt-2 pr-5">
                             <button type="button" class="btn btn-danger mr-1 mr-lg-3" onclick="remove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                             <div class="input-group ml-1 normal_width">
-                                <select class="form-control" name="waists[]">
+                                <select class="form-control" name="products[]">
                                     <option>Seleccionar</option>
                                     @foreach ($products as $product)
                                     <option value="{{$product->id}}">{{$product->name}}</option>
@@ -151,15 +151,15 @@
                     </div>
 
 
-                    
+
                     <div class="row d-flex justify-content-center mt-2">
                         <label class="text-white negrita mt-1" for="visible">Visible en la tienda</label>
                         <label class="switch  mx-3">
-                            <input type="checkbox" id="visible" name="visible" @if (!empty(old('visible'))) checked="true" @endif>
+                            <input type="checkbox" id="visible" name="state" @if (!empty(old('state'))) checked="true" @endif>
                             <span class="slider round"></span>
                         </label>
                     </div>
-                    
+
                     <div class="row d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary btn-lg mt-4 negrita">Registrar</button>
                     </div>
@@ -190,7 +190,7 @@
                 <form method="POST" action="{{ action('Waist@edit_waist')}}" enctype="multipart/form-data" id="editform">
                     {{ csrf_field() }}
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
-                    
+
                     <div class="row d-flex justify-content-center my-4">
                         <div class="normal_width">
                             <input type="text" class="form-control" name="ename" id="ename" value="{{old('ename')}}" placeholder="Nombre *">
@@ -220,17 +220,17 @@
     @if ($errors->get('name'))
         $('#new_waist_modal').modal('show');
     @endif
-    
+
     @if ($errors->get('ename'))
         $('#edit_waist_modal').modal('show');
     @endif
-    
+
     @foreach ($errors->all() as $error)
         toastr.error("{{ $error }}");
     @endforeach
 </script>
 
-<script type="text/javascript">    
+<script type="text/javascript">
     function edit_waist(id, name, state){
         $('#eid').val(id);
         $('#ename').val(name);
@@ -247,7 +247,7 @@ $('#deletebtn').popover({
     title: "<div class='d-flex justify-content-center'><label>Está por eliminar un talle ¿Desea continuar?</label></div>",
     content: "<div class='d-flex justify-content-center'><button type='submit' form='editform' class='btn btn-warning' name='delete_waist'>Confirmar</button></div>",
     html: true,
-    placement: "right"}); 
+    placement: "right"});
 </script>
 
 <script src="../js/datatable.js"></script>
@@ -318,5 +318,5 @@ $(document).ready(function () {
 
 });
 </script>
-  
+
 @endsection
