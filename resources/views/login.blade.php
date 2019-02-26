@@ -2,13 +2,13 @@
 
 @section('head')
 <meta name="csrf-token" content="{{ csrf_token() }}">
-<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet">
+<link rel="stylesheet" href="../css/toastr.min.css">
 @endsection
 
 @section('body')
 <div class="cart-table-area section-padding-100">
     <div class="container-fluid">
-        @if (!isset($_SESSION['id']))
         <div class="col-12 col-lg-10 col-xl-8 mx-auto">
             <div class="form-structor">
                 <form method="post" action="{{action('CustomerController@signup')}}">
@@ -20,10 +20,10 @@
                                 <input type="email" id="email" name="email" placeholder="Email" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
-                                <input type="password" id="password" name="password" placeholder="Contraseña" required>
+                                <input type="password" id="password" name="password" pattern=".{6,}" placeholder="Contraseña" required>
                             </div>
                             <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                <input type="password" id="repeat_password" name="repeat_password" placeholder="Repita su contraseña" required>
+                                <input type="password" id="repeat_password" name="repeat_password" pattern=".{6,}" placeholder="Repita su contraseña" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
                                 <input type="text" id="first_name" name="first_name" placeholder="Nombre" required>
@@ -78,14 +78,22 @@
                 </form>
             </div>
         </div>
-        @endif
     </div>
 </div>
 @endsection
 
 @section('footer')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+<script src="js/toastr.min.js"></script>
 <script>
+    @if (session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+    @foreach ($errors->all() as $error)
+        toastr.error("{{ $error }}");
+    @endforeach
+    
+    
     $(document).ready(function() {
         $('#province').select2({
             placeholder: "Provincia",

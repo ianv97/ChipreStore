@@ -8,7 +8,7 @@ class User extends Controller
 {
     function index(){
         session_start();
-        if (isset($_SESSION['id'])){
+        if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/index');
         }else{
             return redirect(action('Session@admin_login'));
@@ -17,7 +17,7 @@ class User extends Controller
     
     function edit_password(){
         session_start();
-        if (isset($_SESSION['id'])){
+        if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/change_password');
         }else{
             return redirect(action('Session@admin_login'));

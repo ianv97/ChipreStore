@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 class Category extends Controller{
     function list_categories(){
         session_start();
-        if (isset($_SESSION['id'])){
+        if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/categories_list');
         }else{
             return redirect(action('Session@admin_login'));

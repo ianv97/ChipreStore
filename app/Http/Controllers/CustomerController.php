@@ -31,19 +31,29 @@ class CustomerController extends Controller
             'address.required' => 'Debe ingresar una dirección'
         ]);
         if ($data['password'] == $data['repeat_password']){
-            \App\Customer::Create([
-                'email' => $data['email'],
-                'password' => bcrypt($data['password']),
-                'name' => $data['last_name'] . ', ' . $data['first_name'],
-                'city_id' => $data['city'],
-                'address' => $data['address'],
-                'phone' => $data['phone'],
-            ]);
+            try{
+                \App\Customer::Create([
+                    'email' => $data['email'],
+                    'password' => bcrypt($data['password']),
+                    'name' => $data['last_name'] . ', ' . $data['first_name'],
+                    'city_id' => $data['city'],
+                    'address' => $data['address'],
+                    'phone' => $data['phone'],
+                ]);
+            }catch (\Illuminate\Database\QueryException $e){
+                if($e->errorInfo[1] == 1062){
+                    $error = 'Ya existe un usuario registrado con el email ingresado';
+                }else{
+                    $error = 'Error en el registro';
+                }
+                return redirect(action('Session@login'))
+                    ->withErrors(['db' => $error]);
+            };
             return redirect(action('Session@login'))
-                    ->with('success', 'Usuario registrado con éxito');;
+                    ->with('success', 'Usuario registrado con éxito');
         }else{
             return redirect(action('Session@login'))
-                    ->withErrors(['repeat_password' => 'Las contraseñas ingresadas no coinciden']);;
+                    ->withErrors(['repeat_password' => 'Las contraseñas ingresadas no coinciden']);
         }
     }
     function index(){

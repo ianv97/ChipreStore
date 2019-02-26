@@ -1,10 +1,6 @@
 
 @extends('admin/layout')
 
-@section('head')
-<link rel="stylesheet" href="../css/datatable.css">
-@endsection
-
 @section('body')
 <!-- TABLA DE CATEGORÍAS -->
 <div class="justify-content-center">
@@ -17,7 +13,7 @@
             </button>
             </div>
         </div>
-        <div class="table-responsive">
+        <div id="responsive_table" class="container-fluid">
             <table class="table table-hover text-center" id="categories_table">
                 <thead class="bg-dark" style="color:white; font-weight:bold;">
                     <tr>
@@ -203,14 +199,10 @@ $('#deletebtn').popover({
     placement: "right"}); 
 </script>
 
-<script src="../js/datatable.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
-
 <!--DATATABLES-->
 <script type="text/javascript">
 $(document).ready(function () {
+    $('#responsive_table').addClass('table-responsive');
 
     // Setup - add a text input to each footer cell
     $('#categories_table tfoot th').each(function () {

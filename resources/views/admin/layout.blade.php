@@ -12,7 +12,7 @@
         <link rel="stylesheet" href="../css/sidebar.css">
         <link rel="stylesheet" href="../css/estilos.css">
         <link rel="stylesheet" href="../css/toastr.min.css">
-        <style>.menuopt:hover{color:#007bff !important;}</style>
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/r-2.2.2/datatables.min.css"/><style>.menuopt:hover{color:#007bff !important;}</style>
         @yield('head')
     </head>
 
@@ -134,6 +134,8 @@
         <script src="../js/mCustomScrollbar.min.js"></script>
         <script src="../js/sidebar.js"></script>
         <script src="../js/toastr.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/r-2.2.2/datatables.min.js"></script>
         @yield('footer')
     </footer>
 </html>

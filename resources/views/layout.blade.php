@@ -7,13 +7,11 @@ if(!isset($_SESSION)){
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="">
+    <meta name="description" content="Chipre Store">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <!-- Title  -->
     <title>Chipre Store</title>
-    <!-- Favicon  -->
     <link rel="shortcut icon" href="/img/logo.ico">
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/css/Template/core-style.css">
@@ -91,23 +89,23 @@ if(!isset($_SESSION)){
             <a href="#" class="btn amado-btn">Lo nuevo</a>
         </div>
         <hr>
-        @if (!isset($_SESSION['id']))
-        <div class="cart-fav-search mb-10">
-            <a href="{{action('Session@login')}}"><i class="fa fa-user-plus"></i> Registrarse</a>
-        </div>
-        <div class="cart-fav-search mb-30">
-            <a href="{{action('Session@login')}}"><i class="fa fa-sign-in"></i> Ingresar</a>
-        </div>
+        @if (isset($_SESSION['role']) and $_SESSION['role'] == 'Cliente')
+            <div class="mb-10">
+                <label>{{$_SESSION['name']}}</label>
+            </div>
+            <div class="cart-fav-search mb-10">
+                <a href="#"><i class="fa fa-truck"></i> Mis pedidos</a>
+            </div>
+            <div class="cart-fav-search mb-30">
+                <a href="{{action('Session@logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+            </div>
         @else
-        <div class="mb-10">
-            <label>{{$_SESSION['name']}}</label>
-        </div>
-        <div class="cart-fav-search mb-10">
-            <a href="#"><i class="fa fa-truck"></i> Mis pedidos</a>
-        </div>
-        <div class="cart-fav-search mb-30">
-            <a href="{{action('Session@logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
-        </div>
+            <div class="cart-fav-search mb-10">
+                <a href="{{action('Session@login')}}"><i class="fa fa-user-plus"></i> Registrarse</a>
+            </div>
+            <div class="cart-fav-search mb-30">
+                <a href="{{action('Session@login')}}"><i class="fa fa-sign-in"></i> Ingresar</a>
+            </div>
         @endif
         
         <div class="cart-fav-search mb-30">

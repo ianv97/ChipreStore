@@ -10,7 +10,7 @@ class Session extends Controller
 {
     function login(){
         session_start();
-        if (isset($_SESSION['id'])){
+        if (isset($_SESSION['role']) and $_SESSION['role'] == 'Cliente'){
             return redirect(action('Shop@index'));
         }else{
             return view('login');
@@ -19,12 +19,8 @@ class Session extends Controller
     
     function admin_login(){
         session_start();
-        if (isset($_SESSION['role'])){
-            if ($_SESSION['role'] == 'Administrador'){
-                return redirect(action('User@index'));
-            }else{
-                return view('admin/login');
-            }
+        if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
+            return redirect(action('User@index'));
         }else{
             return view('admin/login');
         }

@@ -1,7 +1,6 @@
 @extends('admin/layout')
 
 @section('head')
-<link rel="stylesheet" href="../css/datatable.css">
 <meta name="csrf-token" content="{{ csrf_token() }}">
 @endsection
 
@@ -17,7 +16,7 @@
             </button>
             </div>
         </div>
-        <div class="table-responsive">
+        <div id="responsive_table" class="container-fluid">
             <table class="table table-hover text-center" id="products_table">
                 <thead class="bg-dark" style="color:white; font-weight:bold;">
                     <tr>
@@ -113,9 +112,9 @@
                             while (!empty(old('categories.'.$n))){ ?>
                             <div class="row d-flex justify-content-center mt-2">
                                 <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
-                                <div class="input-group ml-1 mr-5 normal_width">
-                                    <select class="form-control" name="categories[]" value="{{old('categories.'.$n)}}">
-                                        <option>Seleccionar</option>
+                                <div class="ml-1 mr-5 normal_width">
+                                    <select class="new_categories" name="categories[]" value="{{old('categories.'.$n)}}">
+                                        <option></option>
                                         @foreach (\App\Category::all() as $category)
                                         <option value="{{$category->id}}">{{$category->name}}</option>
                                         @endforeach
@@ -128,7 +127,7 @@
                             <button type="button" class="btn btn-danger mr-3" onclick="remove_category(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                             <div class="input-group ml-1 mr-5 normal_width">
                                 <select class="form-control" name="categories[]">
-                                    <option>Seleccionar</option>
+                                    <option value="null">Seleccionar</option>
                                     @foreach (\App\Category::all() as $category)
                                     <option value="{{$category->id}}">{{$category->name}}</option>
                                     @endforeach
@@ -173,7 +172,7 @@
                             <button type="button" class="btn btn-danger mr-1 mr-lg-3" onclick="remove_waist(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                             <div class="input-group ml-1 normal_width">
                                 <select class="form-control" name="waists[]">
-                                    <option>Seleccionar</option>
+                                    <option value="null">Seleccionar</option>
                                     @foreach (\App\Waist::all() as $waist)
                                     <option value="{{$waist->id}}">{{$waist->name}}</option>
                                     @endforeach
@@ -348,7 +347,7 @@
 
 
 @section('footer')
-<script type="text/javascript">
+<script type="text/javascript">    
     @if (session('success'))
         toastr.success("{{ session('success') }}");
     @endif
@@ -583,14 +582,11 @@ $('#deletebtn').popover({
     placement: "right"}); 
 </script>
 
-<script src="../js/datatable.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/dataTables.buttons.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.bootstrap4.min.js"></script>
-<script src="https://cdn.datatables.net/buttons/1.5.2/js/buttons.colVis.min.js"></script>
 
 <!--DATATABLES-->
 <script type="text/javascript">
 $(document).ready(function () {
+    $('#responsive_table').addClass('table-responsive');
 
     // Setup - add a text input to each footer cell
     $('#products_table tfoot th').each(function () {
