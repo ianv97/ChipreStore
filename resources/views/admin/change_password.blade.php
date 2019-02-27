@@ -8,7 +8,7 @@
 
 @section('body')
 <div class="container-login100">
-    <div class="wrap-login100" style="background-color:#3c8dbc;">
+    <div class="wrap-login100 bg-dark">
         <form class="login100-form validate-form" method="POST" action="{{action('User@change_password')}}">
             <span class="login100-form-title" style="color:#ffffff;">
                 Cambio de Contraseña

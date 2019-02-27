@@ -106,6 +106,12 @@
                                         <span class="menuopt">Usuarios</span>
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="{{action('SaleController@list_sales')}}">
+                                        <i class="fas fa-money-bill"></i>
+                                        <span class="menuopt">Ventas</span>
+                                    </a>
+                                </li>
                             @endif
                                 
                             </ul>

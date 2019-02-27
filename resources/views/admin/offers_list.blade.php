@@ -24,7 +24,7 @@
                     <tr>
                         <th style="padding-left:30px;">Id</th>
                         <th style="padding-left:30px;">Oferta</th>
-                        <th style="padding-left:30px;">% Descuento</th>
+                        <th style="padding-left:30px;">Descuento</th>
                         <th style="padding-left:30px;">Estado</th>
                         <td style="padding-left:15px;">Editar</th>
                     </tr>
@@ -34,7 +34,7 @@
                     <tr>
                         <td class="negrita">{{$offer->id}}</td>
                         <td class="negrita">{{$offer->name}}</td>
-                        <td class="negrita">{{$offer->discount_percentage}}</td>
+                        <td class="negrita">{{number_format($offer->discount_percentage, 0)}}%</td>
                         <td class="negrita">@if ($offer->state == 1) Habilitada @else Deshabilitada @endif</td>
                         <td>
                             <span class="btn btn-danger" class="btn btn-warning border-radius" onclick="edit_offer('{{$offer->id}}',
@@ -181,7 +181,7 @@
                 </div>
                 <form method="POST" action="{{action('OfferController@edit_offer')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
-                    <input type="text"  id="eid" name="eid" hidden>
+                    <input type="hidden"  id="eid" name="eid"  value="{{old('eid')}}">
                     <div class="row d-flex justify-content-center mt-4">
                         <div class="normal_width">
                             <input type="text" class="form-control" id="ename" name="ename" value="{{old('ename')}}" placeholder="Nombre *" required>

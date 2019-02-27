@@ -41,9 +41,9 @@
                         <td class="negrita">{{$product->description}}</td>
                         <?php $categories=''; foreach ($product->categories_products as $category_product){$categories .= $category_product->category->name . ', ';}?>
                         <td class="negrita">{{substr($categories, 0, -2)}}</td>
-                        <td class="negrita">{{$product->cost_price}}</td>
-                        <td class="negrita">{{$product->sale_price}}</td>
-                        <td class="negrita">{{$product->credit_price}}</td>
+                        <td class="negrita">${{number_format($product->cost_price, 2, ',', '.')}}</td>
+                        <td class="negrita">${{number_format($product->sale_price, 2, ',', '.')}}</td>
+                        <td class="negrita">${{number_format($product->credit_price, 2, ',', '.')}}</td>
                         <td class="negrita">@if ($product->without_stock_sales==1)Sí @else No @endif</td>
                         <td class="negrita">@if ($product->visible==1)Sí @else No @endif</td>
                         <td>

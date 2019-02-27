@@ -98,9 +98,6 @@
                             <label class="btn btn-danger negrita">
                                 <input type="radio" name="role" value="Stock"> Stock
                             </label>
-                            <label class="btn btn-danger negrita">
-                                <input type="radio" name="role" value="Consultas"> Consultas
-                            </label>
                         </div>
                     </div>
                     
@@ -165,9 +162,6 @@
                             <label class="btn btn-danger negrita" id="erole2btn">
                                 <input type="radio" name="erole" id="erole2" value="Stock"> Stock
                             </label>
-                            <label class="btn btn-danger negrita" id="erole3btn">
-                                <input type="radio" name="erole" id="erole3" value="Consultas"> Consultas
-                            </label>
                         </div>
                     </div>
                     
@@ -212,7 +206,6 @@
         switch("{{old('erole')}}"){
             case 'Administrador': $('#erole1').prop('checked', true); $('#erole1btn').click(); break;
             case 'Stock': $('#erole2').prop('checked', true); $('#erole2btn').click(); break;
-            case 'Consultas': $('#erole3').prop('checked', true); $('#erole3btn').click(); break;
         }
         $('#edit_user_modal').modal('show');
     @endif

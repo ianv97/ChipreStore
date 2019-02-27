@@ -15,8 +15,11 @@ class CreateSalesTable extends Migration
     {
         Schema::create('sales', function (Blueprint $table) {
             $table->increments('id');
-            $table->timestamp('date');
+            $table->dateTime('date');
             $table->unsignedDecimal('total');
+            $table->string('state', 20);
+            $table->unsignedInteger('city_id');
+            $table->string('address');
             $table->unsignedInteger('customer_id')->nullable();
             $table->timestamps();
             

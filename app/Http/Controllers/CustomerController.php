@@ -56,14 +56,26 @@ class CustomerController extends Controller
                     ->withErrors(['repeat_password' => 'Las contraseñas ingresadas no coinciden']);
         }
     }
+    
+    function list_purchases(){
+        if (!isset($_SESSION)){
+            session_start();
+        }
+        if (isset($_SESSION['role'])){
+            if ($_SESSION['role'] = 'Cliente'){
+                return view('purchases_list')->with('purchases', \App\Sale::where('customer_id', $_SESSION['id'])->get());
+            }else{
+                return redirect(action('Session@login'));
+            }
+        }else{
+            return redirect(action('Session@login'));
+        }
+    }
+    
     function index(){
         $customers = Customer::orderBy('id','ASC')->paginate(25);
 
         return view('admin.customers_list')->with('customers',$customers); //agregar nombre de la vista de ADMINISTRACION
-    }
-
-    function create(){
-        return view('admin.customers_list'); //Agregar nombre de vista de formulario de registro
     }
 
     function signupOtro(Request $request){

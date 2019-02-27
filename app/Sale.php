@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sale extends Model
 {
     protected $fillable = [
-        'date', 'total', 'customer_id'
+        'date', 'total', 'state', 'city_id', 'address', 'customer_id'
     ];
     
     public function customer() {
@@ -16,6 +16,10 @@ class Sale extends Model
     
     public function sale_lines(){
         return $this->hasMany(SaleLine::class);
+    }
+    
+    public function city(){
+        return $this->belongsTo(City::class);
     }
     
     public function transactions(){

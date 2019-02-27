@@ -94,7 +94,7 @@ if(!isset($_SESSION)){
                 <label>{{$_SESSION['name']}}</label>
             </div>
             <div class="cart-fav-search mb-10">
-                <a href="#"><i class="fa fa-truck"></i> Mis pedidos</a>
+                <a href="{{action('CustomerController@list_purchases')}}"><i class="fa fa-truck"></i> Mis compras</a>
             </div>
             <div class="cart-fav-search mb-30">
                 <a href="{{action('Session@logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
@@ -121,59 +121,60 @@ if(!isset($_SESSION)){
     @yield('body')
 </div>
     
-    
-    <footer class="footer_area clearfix">
-        <div class="container">
-            <div class="row align-items-center">
-                <!-- Single Widget Area -->
-                <div class="col-12 col-lg-4">
-                    <div class="single_widget_area">
-                        <!-- Logo -->
-                        <div class="footer-logo mr-50">
-                            <a href="index.html"><img src="/img/logo.svg"></a>
-                        </div>
+@yield('modal')
+
+<footer class="footer_area clearfix">
+    <div class="container">
+        <div class="row align-items-center">
+            <!-- Single Widget Area -->
+            <div class="col-12 col-lg-4">
+                <div class="single_widget_area">
+                    <!-- Logo -->
+                    <div class="footer-logo mr-50">
+                        <a href="index.html"><img src="/img/logo.svg"></a>
                     </div>
                 </div>
-                <!-- Single Widget Area -->
-                <div class="col-12 col-lg-8">
-                    <div class="single_widget_area">
-                        <!-- Footer Menu -->
-                        <div class="footer_menu">
-                            <nav class="navbar navbar-expand-lg justify-content-end">
-                                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
-                                <div class="collapse navbar-collapse" id="footerNavContent">
-                                    <ul class="navbar-nav ml-auto">
-                                        <li class="nav-item active">
-                                            <a class="nav-link" href="{{action('Shop@index')}}">Inicio</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{action('Shop@products')}}">Productos</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{action('Shop@cart')}}">Carrito ({{$cart}})</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" href="{{action('Shop@checkout')}}">Finalizar compra</a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </nav>
-                        </div>
+            </div>
+            <!-- Single Widget Area -->
+            <div class="col-12 col-lg-8">
+                <div class="single_widget_area">
+                    <!-- Footer Menu -->
+                    <div class="footer_menu">
+                        <nav class="navbar navbar-expand-lg justify-content-end">
+                            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#footerNavContent" aria-controls="footerNavContent" aria-expanded="false" aria-label="Toggle navigation"><i class="fa fa-bars"></i></button>
+                            <div class="collapse navbar-collapse" id="footerNavContent">
+                                <ul class="navbar-nav ml-auto">
+                                    <li class="nav-item active">
+                                        <a class="nav-link" href="{{action('Shop@index')}}">Inicio</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{action('Shop@products')}}">Productos</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{action('Shop@cart')}}">Carrito ({{$cart}})</a>
+                                    </li>
+                                    <li class="nav-item">
+                                        <a class="nav-link" href="{{action('Shop@checkout')}}">Finalizar compra</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </nav>
                     </div>
                 </div>
             </div>
         </div>
-        
-        <script src="/js/Template/jquery/jquery-2.2.4.min.js"></script>
-        <script src="/js/Template/popper.min.js"></script>
-        <script src="/js/Template/bootstrap.min.js"></script>
-        <script src="/js/Template/plugins.js"></script>
-        <script src="/js/Template/active.js"></script>
-        @yield('footer')
-    </footer>
+    </div>
+
+    <script src="/js/Template/jquery/jquery-2.2.4.min.js"></script>
+    <script src="/js/Template/popper.min.js"></script>
+    <script src="/js/Template/bootstrap.min.js"></script>
+    <script src="/js/Template/plugins.js"></script>
+    <script src="/js/Template/active.js"></script>
+    @yield('footer')
+</footer>
     
     
 </body>

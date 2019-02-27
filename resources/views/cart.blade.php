@@ -52,10 +52,10 @@
                                             <td class="subtotal" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
                                                 <span>${{number_format($subtotal, 2, ',', '.')}}</span>
                                             </td>
-                                            <input type="text" form="order-form" name="product_id" value="{{$product->id}}" hidden>
-                                            <input type="text" form="order-form" name="waist_id" value="{{$waist->id}}" hidden>
-                                            <input type="text" form="order-form" name="qty" value="{{$cookie_waist['qty']}}" hidden>
-                                            <input type="text" form="order-form" name="subtotal" value="{{$subtotal}}" hidden>
+                                            <input type="text" form="order-form" name="product_id[]" value="{{$product->id}}" hidden>
+                                            <input type="text" form="order-form" name="waist_id[]" value="{{$waist->id}}" hidden>
+                                            <input type="text" form="order-form" name="qty[]" value="{{$cookie_waist['qty']}}" hidden>
+                                            <input type="text" form="order-form" name="subtotal[]" value="{{$subtotal}}" hidden>
                                         </tr>
                                         <?php $total+= $product->sale_price * $cookie_waist['qty'];
                                     }

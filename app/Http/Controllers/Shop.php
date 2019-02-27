@@ -51,21 +51,23 @@ class Shop extends Controller
                         'subtotal' => 'required',
                         'total' => 'required'
                     ]);
-
+                    date_default_timezone_set('America/Argentina/Buenos_Aires');
                     \App\Sale::Create([
-                        'date' => now(),
+                        'date' => date("Y-m-d H:i:s"),
+                        'state' => 'Envío pendiente',
                         'total' => $data['total'],
                         'customer_id' => $_SESSION['id']
                     ]);
                     $sale_id = \DB::getPdo()->lastInsertId();
-
-                    \App\SaleLine::Create([
-                        'product_id' => $data['product_id'],
-                        'waist_id' => $data['waist_id'],
-                        'quantity' => $data['qty'],
-                        'sale_id' => $sale_id,
-                        'subtotal' => $data['subtotal']
-                    ]);
+                    for ($i=0; $i<count($data['product_id']); $i++){
+                        \App\SaleLine::Create([
+                            'product_id' => $data['product_id'][$i],
+                            'waist_id' => $data['waist_id'][$i],
+                            'quantity' => $data['qty'][$i],
+                            'sale_id' => $sale_id,
+                            'subtotal' => $data['subtotal'][$i]
+                        ]);
+                    }
                 });
                 return redirect(action('Shop@cart'))->with('success', 'Su pedido fue registrado exitosamente');;;
             }else{
