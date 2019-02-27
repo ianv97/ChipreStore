@@ -97,15 +97,14 @@
                         </div>
                     </div>
                 </form>
-                    <div id="products">
-                        <div class="row d-flex justify-content-center mt-4">
-                            <label class="text-primary negrita mb-0" style="font-size:30px;">Productos</label>
-                        </div>
-                        <div class="row d-flex justify-content-center mt-2 pr-5">
-                            <table class="table table-responsive" id='products_table'>
-                            </table>
-                        </div>
-            
+                    <div class="row d-flex justify-content-center mt-4">
+                        <label class="text-primary negrita mb-0" style="font-size:30px;">Productos</label>
+                    </div>
+                    <div class="row d-flex justify-content-center mt-2 pr-5">
+                        <table class="table table-responsive" id='products_table'>
+                        </table>
+                    </div>
+                    <div id="total">
                     </div>
             </div>
             <div class="modal-footer justify-content-center">
@@ -180,6 +179,11 @@
                          </td>
                      </tr>`));
                 });
+                $('#total').children().remove();
+                $('#total').append(`
+                    <div class="row d-flex justify-content-center">
+                        <label class="negrita" style="font-size:20px;">Total: $`.concat(r[0]['total'], `</label>
+                    </div>`));
             }
         });
     }

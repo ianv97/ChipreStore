@@ -41,7 +41,7 @@ Class Ajax extends Controller {
                         ->join('waists', 'sale_lines.waist_id', '=', 'waists.id')
                         ->join('products', 'sale_lines.product_id', '=', 'products.id')
                         ->join('product_photos', 'product_photos.product_id', '=', 'products.id')
-                        ->select('sale_lines.quantity as qty', 'sale_lines.subtotal', 'products.name as product', 'waists.name as waist', 'product_photos.name as photo')
+                        ->select('sales.total', 'sale_lines.quantity as qty', 'sale_lines.subtotal', 'products.name as product', 'waists.name as waist', 'product_photos.name as photo')
                         ->whereRaw('product_photos.name IN (SELECT MIN(product_photos.name) FROM product_photos GROUP BY product_photos.product_id)')
                         ->where('sale_lines.sale_id', $_POST['sale_id'])->get();
         return response()->json($sale_lines);
@@ -57,7 +57,7 @@ Class Ajax extends Controller {
                         ->join('waists', 'sale_lines.waist_id', '=', 'waists.id')
                         ->join('products', 'sale_lines.product_id', '=', 'products.id')
                         ->join('product_photos', 'product_photos.product_id', '=', 'products.id')
-                        ->select('sale_lines.quantity as qty', 'sale_lines.subtotal', 'products.name as product', 'waists.name as waist', 'product_photos.name as photo')
+                        ->select('sales.total', 'sale_lines.quantity as qty', 'sale_lines.subtotal', 'products.name as product', 'waists.name as waist', 'product_photos.name as photo')
                         ->whereRaw('product_photos.name IN (SELECT MIN(product_photos.name) FROM product_photos GROUP BY product_photos.product_id)')
                         ->where('sale_lines.sale_id', $_POST['sale_id'])
                         ->where('sales.customer_id', $_SESSION['id'])->get();

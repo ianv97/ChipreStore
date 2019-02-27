@@ -4,13 +4,14 @@
 @section('head')
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/dt-1.10.18/b-1.5.4/b-colvis-1.5.4/r-2.2.2/datatables.min.css"/>
+    <link rel="stylesheet" href="../css/toastr.min.css">
 @endsection
 
 @section('body')
 <!-- TABLA DE COMPRAS -->
 <div id="responsive_table" class="container-fluid" style="width: calc(100% - 220px);">
     <table class="table table-hover text-center" id="purchases_table">
-        <thead class="bg-dark" style="color:white; font-weight:bold;">
+        <thead style="background-color: #252525; color:white; font-weight:bold;">
             <tr>
                 <th style="padding-left:30px;">Fecha</th>
                 <th style="padding-left:30px;">Total</th>
@@ -31,7 +32,7 @@
                 <td class="negrita">{{$purchase->city->name}}</td>
                 <td class="negrita">{{$purchase->address}}</td>
                 <td>
-                    <span class="btn btn-danger" class="btn btn-warning border-radius" onclick="purchase_details('{{$purchase->id}}')" data-toggle="modal" data-target="#edit_purchase_modal">
+                    <span class="btn btn-primary" onclick="purchase_details('{{$purchase->id}}')" data-toggle="modal" data-target="#edit_purchase_modal">
                             <i class="fa fa-info"></i>
                     </span>
                 </td>
@@ -39,7 +40,7 @@
             @endforeach
         </tbody>
         <tfoot>
-            <tr class="bg-danger">
+            <tr style="background-color: #fbb710;">
                 <th>Fecha</th>
                 <th>Total ($)</th>
                 <th>Estado</th>
@@ -67,15 +68,14 @@
                 </button>
             </div>
             <div class="modal-body bg-white">
-                <div id="products">
-                    <div class="row d-flex justify-content-center">
-                        <label class="text-primary negrita mb-0" style="font-size:30px;">Productos</label>
-                    </div>
-                    <div class="row d-flex justify-content-center mt-2 pr-5">
-                        <table class="table table-responsive" id='products_table'>
-                        </table>
-                    </div>
-
+                <div class="row d-flex justify-content-center">
+                    <label class="text-primary negrita mb-0" style="font-size:30px;">Productos</label>
+                </div>
+                <div class="row d-flex justify-content-center mt-2 pr-5">
+                    <table class="table table-responsive" id='products_table'>
+                    </table>
+                </div>
+                <div id="total">
                 </div>
             </div>
         </div>
@@ -84,7 +84,12 @@
 @endsection
 
 @section('footer')
-<script type="text/javascript">    
+<script src="js/toastr.min.js"></script>
+<script type="text/javascript"> 
+    @if (session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+    
     function purchase_details(id, state, purchase_lines, products){
         $('#eid').val(id);
         switch (state) {
@@ -136,6 +141,11 @@
                          </td>
                      </tr>`));
                 });
+                $('#total').children().remove();
+                $('#total').append(`
+                    <div class="row d-flex justify-content-center">
+                        <label class="negrita" style="font-size:20px;">Total: $`.concat(r[0]['total'], `</label>
+                    </div>`));
             }}
         });
     }

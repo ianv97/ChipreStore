@@ -41,38 +41,43 @@ class Shop extends Controller
         if (!isset($_SESSION)){
             session_start();
         }
-        if (isset($_SESSION['role'])){
-            if ($_SESSION['role'] = 'Cliente'){
-                \DB::transaction(function(){
-                    $data = request()->validate([
-                        'product_id' => 'required',
-                        'waist_id' => 'required',
-                        'qty' => 'required',
-                        'subtotal' => 'required',
-                        'total' => 'required'
+        if (isset($_SESSION['role']) and $_SESSION['role'] == 'Cliente'){
+            \DB::transaction(function(){
+                $data = request()->validate([
+                    'product_id' => 'required',
+                    'waist_id' => 'required',
+                    'qty' => 'required',
+                    'subtotal' => 'required',
+                    'total' => 'required',
+                    'city' => 'required',
+                    'address' => 'required'
+                ], [
+                    'product_id.required' => 'Debe agregar un producto al carrito',
+                    'waist_id.required' => 'Debe agregar un producto al carrito',
+                    'qty.required' => 'Debe agregar un producto al carrito',
+                    'subtotal.required' => 'Debe agregar un producto al carrito',
+                ]);
+                date_default_timezone_set('America/Argentina/Buenos_Aires');
+                \App\Sale::Create([
+                    'date' => date("Y-m-d H:i:s"),
+                    'state' => 'Envío pendiente',
+                    'city_id' => $data['city'],
+                    'address' => $data['address'],
+                    'total' => $data['total'],
+                    'customer_id' => $_SESSION['id']
+                ]);
+                $sale_id = \DB::getPdo()->lastInsertId();
+                for ($i=0; $i<count($data['product_id']); $i++){
+                    \App\SaleLine::Create([
+                        'product_id' => $data['product_id'][$i],
+                        'waist_id' => $data['waist_id'][$i],
+                        'quantity' => $data['qty'][$i],
+                        'sale_id' => $sale_id,
+                        'subtotal' => $data['subtotal'][$i]
                     ]);
-                    date_default_timezone_set('America/Argentina/Buenos_Aires');
-                    \App\Sale::Create([
-                        'date' => date("Y-m-d H:i:s"),
-                        'state' => 'Envío pendiente',
-                        'total' => $data['total'],
-                        'customer_id' => $_SESSION['id']
-                    ]);
-                    $sale_id = \DB::getPdo()->lastInsertId();
-                    for ($i=0; $i<count($data['product_id']); $i++){
-                        \App\SaleLine::Create([
-                            'product_id' => $data['product_id'][$i],
-                            'waist_id' => $data['waist_id'][$i],
-                            'quantity' => $data['qty'][$i],
-                            'sale_id' => $sale_id,
-                            'subtotal' => $data['subtotal'][$i]
-                        ]);
-                    }
-                });
-                return redirect(action('Shop@cart'))->with('success', 'Su pedido fue registrado exitosamente');;;
-            }else{
-                return redirect(action('Session@login'));
-            }
+                }
+            });
+            return redirect(action('CustomerController@list_purchases'))->with('success', 'Su compra fue registrada exitosamente');;;
         }else{
             return redirect(action('Session@login'));
         }

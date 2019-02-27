@@ -103,7 +103,7 @@
             placeholder: "Ciudad",
             allowClear: true
         });
-        $('#checkout').addClass('active');
+//        $('#checkout').addClass('active');
     });
 
    $('#province').change(function(){
