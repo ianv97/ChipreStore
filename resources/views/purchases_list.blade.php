@@ -27,14 +27,14 @@
             <tr>
                 <td class="negrita">{{$purchase->date}}</td>
                 <td class="negrita">${{number_format($purchase->total, 2, ',', '.')}}</td>
-                <td class="negrita">{{$purchase->state}}</td>
+                <td class="negrita">@if ($purchase->state == 'Pago pendiente')<a class="text-primary" style="font-size:16px; text-decoration: underline;" href="{{$purchase->payment_link}}">{{$purchase->state}}</a>@else{{$purchase->state}}@endif</td>
                 <td class="negrita">{{$purchase->city->province->name}}</td>
                 <td class="negrita">{{$purchase->city->name}}</td>
                 <td class="negrita">{{$purchase->address}}</td>
                 <td>
-                    <span class="btn btn-primary" onclick="purchase_details('{{$purchase->id}}')" data-toggle="modal" data-target="#edit_purchase_modal">
+                    <button class="btn btn-primary" onclick="purchase_details('{{$purchase->id}}')" data-toggle="modal" data-target="#edit_purchase_modal">
                             <i class="fa fa-info"></i>
-                    </span>
+                    </button>
                 </td>
             </tr>
             @endforeach

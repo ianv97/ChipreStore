@@ -7,7 +7,20 @@ use Illuminate\Http\Request;
 class Shop extends Controller
 {
     function index(){
-        return view('index');
+        $categories = \DB::select(\DB::raw('SELECT categories.id as cid, categories.name AS cname, MIN(products.sale_price) AS price,
+(SELECT product_photos.name FROM product_photos
+INNER JOIN products ON product_photos.product_id = products.id
+INNER JOIN categories_products ON categories_products.product_id = products.id
+WHERE categories_products.category_id = cid
+AND products.visible = 1
+ORDER BY RAND() LIMIT 1) AS photo
+FROM categories
+INNER JOIN categories_products ON categories.id = categories_products.category_id
+INNER JOIN products ON products.id = categories_products.product_id
+INNER JOIN product_photos ON products.id = product_photos.product_id
+WHERE categories.state = 1 AND products.visible =1
+GROUP BY cid, cname;'));
+        return view('index')->with('categories', $categories);
     }
     
     function products(){
@@ -136,7 +149,9 @@ class Shop extends Controller
             $preference->binary_mode = true;
             $preference->external_reference = $sale_id;
             $preference->save();
-            
+            $sale = \App\Sale::find($sale_id);
+            $sale->payment_link = $preference->init_point;
+            $sale->save();
             return redirect($preference->init_point);
         }else{
             return redirect(action('Session@login'));
@@ -185,7 +200,13 @@ class Shop extends Controller
         if($paid_amount >= $merchant_order->total_amount){
             $sale = \App\Sale::find($_GET["external_reference"]);
             $sale->state = 'Envío pendiente';
+            $sale->payment_link = null;
             $sale->save();
+            foreach ($sale->sale_lines as $sale_line){
+                $product_waist = \App\ProductsWaist::where('product_id', $sale_line->product_id)->where('waist_id', $sale_line->waist_id)->first();
+                $product_waist->stock_quantity -= $sale_line->quantity;
+                $product_waist->save();
+            }
             return redirect(action('CustomerController@list_purchases'))->with('success', 'Su compra fue procesada exitosamente. En breve le enviaremos sus productos.');
         }else{
             return redirect(action('CustomerController@list_purchases'))->withErrors(['payment' => 'No se pudo procesar el pago correctamente']);

@@ -20,6 +20,7 @@ class CreateSalesTable extends Migration
             $table->string('state', 20);
             $table->unsignedInteger('city_id');
             $table->string('address');
+            $table->string('payment_link')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
             $table->timestamps();
             
