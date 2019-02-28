@@ -41,7 +41,11 @@ class Session extends Controller
             $_SESSION['name'] = $customer->name;
             $_SESSION['email'] = $data['email'];
             $_SESSION['role'] = 'Cliente';
-            return redirect(action('Shop@index'));
+            if (isset($_COOKIE["product"])){
+                return redirect(action('Shop@cart'));
+            }else{
+                return redirect(action('Shop@index'));
+            }
         }else{
             return redirect(action('Session@login'))->withErrors(['auth' => 'El email y/o contraseña ingresados son incorrectos.']);
         }

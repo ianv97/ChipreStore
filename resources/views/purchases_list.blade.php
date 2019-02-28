@@ -188,7 +188,7 @@ $(document).ready(function () {
           ],
         "autoWidth": false,
         "language": {
-            "emptyTable": "Tabla vacía",
+            "emptyTable": "Aún no haz efectuado ninguna compra",
             "lengthMenu": "Mostrar _MENU_ compras por página",
             "zeroRecords": "No hay coincidencias con el criterio de búsqueda",
             "info": "Mostrando _START_ a _END_ de _TOTAL_ compras",

@@ -22,7 +22,7 @@
                     <table class="table table-responsive">
                         <thead>
                             <tr>
-                                <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;"></th>
+                                <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%; padding-top:0;"><form method="post" action="{{action("Shop@empty_cart")}}">{{ csrf_field() }}<button type="submit" class="btn btn-danger"><i class="fa fa-cart-arrow-down"></i> Vaciar carrito</button></form></th>
                                 <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">Nombre</th>
                                 <th style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">Talle</th>
                                 <th style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">Precio</th>
@@ -60,7 +60,11 @@
                                                 <span>${{number_format($subtotal, 2, ',', '.')}}</span>
                                             </td>
                                             <input type="text" form="order-form" name="product_id[]" value="{{$product->id}}" hidden>
+                                            <input type="text" form="order-form" name="product_name[]" value="{{$product->name}}" hidden>
+                                            <input type="text" form="order-form" name="product_description[]" value="{{$product->description}}" hidden>
+                                            <input type="text" form="order-form" name="product_photo[]" value="http://chipre.test/img/product-img/{{$product->photos[0]->name}}" hidden>
                                             <input type="text" form="order-form" name="waist_id[]" value="{{$waist->id}}" hidden>
+                                            <input type="text" form="order-form" name="waist_name[]" value="{{$waist->name}}" hidden>
                                             <input type="text" form="order-form" name="qty[]" value="{{$cookie_waist['qty']}}" hidden>
                                             <input type="text" form="order-form" name="subtotal[]" value="{{$subtotal}}" hidden>
                                         </tr>
@@ -148,38 +152,40 @@
         toastr.error("{{ $error }}");
         <?php break; ?>
     @endforeach
+   
+    $('#cart').addClass('active');
     
-   $(document).ready(function() {
-        $('#province').select2({
-            placeholder: "Provincia",
-            allowClear: true
-        });
-        $('#city').select2({
-            placeholder: "Ciudad",
-            allowClear: true
-        });
-        $('#cart').addClass('active');
-        $('#province').val({{$customer->city->province->id}}).trigger('change');
-    });
+    @if (isset($_SESSION['role']) and $_SESSION['role']=='Cliente')
+    $(document).ready(function() {
+         $('#province').select2({
+             placeholder: "Provincia",
+             allowClear: true
+         });
+         $('#city').select2({
+             placeholder: "Ciudad",
+             allowClear: true
+         });
+         $('#province').val({{$customer->city->province->id}}).trigger('change');
+     });
 
-   $('#province').change(function(){
-        $('#city').children().remove();
-        $('#city').append('<option></option>');
-        $.ajaxSetup({
-            headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
-        });
-        $.ajax({
-          type:"POST",
-          data:"province_id=" + $('#province').val(),
-          url:"/ajax/find_cities",
-            success:function(r){
-                r.forEach(function(city) {
-                    $('#city').append("<option ".concat("value=",city['id'], ">", city['name'], "</option>"));
-                });
-                $('#city').val({{$customer->city->id}}).trigger('change');
-                $('#address').val('{{$customer->address}}');
-            }
-        });
+    $('#province').change(function(){
+         $('#city').children().remove();
+         $('#city').append('<option></option>');
+         $.ajaxSetup({
+             headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}
+         });
+         $.ajax({
+           type:"POST",
+           data:"province_id=" + $('#province').val(),
+           url:"/ajax/find_cities",
+             success:function(r){
+                 r.forEach(function(city) {
+                     $('#city').append("<option ".concat("value=",city['id'], ">", city['name'], "</option>"));
+                 });
+                 $('#city').val({{$customer->city->id}}).trigger('change');
+                 $('#address').val('{{$customer->address}}');
+             }
+         });
     });
     
     $('.ship_radio').change(function(){
@@ -198,7 +204,7 @@
             }
         }
     })
-    
+    @endif
     function complete_inputs(){
         $('#icity').val($('#city').val());
         $('#iaddress').val($('#address').val());

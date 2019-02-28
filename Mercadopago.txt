@@ -1,0 +1,27 @@
+https://www.mercadopago.com.ar/developers/es/plugins_sdks/sdks/official/php/
+https://www.mercadopago.com.ar/developers/es/guides/payments/web-checkout/receive-payments/
+
+https://www.mercadopago.com.ar/developers/es/guides/notifications/ipn
+https://www.mercadopago.com.ar/developers/es/guides/payments/web-checkout/testing
+
+
+USUARIOS DE PRUEBA
+VENDEDOR
+'code' => int 201
+  'body' => 
+    array (size=5)
+      'id' => int 411221938
+      'nickname' => string 'TETE4635805'
+      'password' => string 'qatest183'
+      'site_status' => string 'active'
+      'email' => string 'test_user_3181859@testuser.com'
+
+COMPRADOR
+  'code' => int 201
+  'body' => 
+    array (size=5)
+      'id' => int 411219174
+      'nickname' => string 'TETE6543110'
+      'password' => string 'qatest2771'
+      'site_status' => string 'active'
+      'email' => string 'test_user_59681935@testuser.com'

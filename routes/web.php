@@ -16,6 +16,9 @@ Route::get('/checkout', 'Shop@checkout');
 Route::post('/checkout', 'Shop@order');
 Route::get('/purchases', 'CustomerController@list_purchases');
 Route::post('/signup', 'CustomerController@signup');
+Route::post('/empty_cart', 'Shop@empty_cart');
+//Route::get('/create_test_user', 'Shop@create_test_user');
+Route::get('/success', 'Shop@approve_payment');
 
 Route::get('/login','Session@login');
 Route::post('/login','Session@authenticate');

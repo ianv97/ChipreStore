@@ -66,7 +66,7 @@ $_SESSION['product'] = $product->id;
                     <form class="cart clearfix" method="post" action="{{action('Shop@add_to_cart')}}">
                         {{ csrf_field() }}
                         <div class="row mb-50">
-                            <div class="input-group d-flex" style="width: 100px;">
+                            <div class="input-group d-flex ml-3" style="width: 100px;">
                                 <select class="form-control" name="waist" id="waist" onchange="check_stock()">
                                     <option>Talle</option>
                                     @foreach ($product->products_waists as $waist)
@@ -83,7 +83,7 @@ $_SESSION['product'] = $product->id;
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" id="add_to_cart" name="add_to_cart" class="btn amado-btn">Añadir al carrito</button>
+                        <button type="submit" id="add_to_cart" name="add_to_cart" class="btn amado-btn" style="font-size:20px; border-radius:20px;"><i class="fa fa-cart-plus"></i> Añadir al carrito</button>
                     </form>
 
                 </div>
