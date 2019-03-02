@@ -20,25 +20,6 @@ if(!isset($_SESSION)){
 </head>
 
 <body>
-<!-- Search Wrapper -->
-<div class="search-wrapper py-5">
-    <div class="search-close">
-        <i class="fa fa-close" aria-hidden="true"></i>
-    </div>
-    <div class="container">
-        <div class="row">
-            <div class="col-12">
-                <div class="search-content">
-                    <form action="#" method="get">
-                        <input type="search" name="search" id="search" placeholder="Ingresa tu búsqueda...">
-                        <button type="submit"><img src="/img/core-img/search.png" alt=""></button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <!-- ##### Main Content Wrapper Start ##### -->
 <div class="main-content-wrapper d-flex clearfix">
     
@@ -80,7 +61,6 @@ if(!isset($_SESSION)){
                 <li id="products"><a href="{{action('Shop@products')}}">Productos</a></li>
                 <li id="product_details"><a href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a></li>
                 <li id="cart"><a href="{{action('Shop@cart')}}" class="cart-nav"><img src="/img/core-img/cart.png"> Carrito <span>({{$cart}})</span></a></li>
-                <li id="checkout"><a href="{{action('Shop@checkout')}}">Finalizar compra</a></li>
             </ul>
         </nav>
         <!-- Button Group -->
@@ -108,9 +88,6 @@ if(!isset($_SESSION)){
             </div>
         @endif
         
-        <div class="cart-fav-search mb-30">
-            <a href="#" class="search-nav"><img src="/img/core-img/search.png"> Búsqueda</a>
-        </div>
         <!-- Social Buttons -->
         <div class="social-info d-flex justify-content-between mx-4">
             <a href="https://www.instagram.com/chiprestore/"><i class="fa fa-instagram" aria-hidden="true"></i></a>
@@ -123,7 +100,7 @@ if(!isset($_SESSION)){
     
 @yield('modal')
 
-<footer class="footer_area clearfix">
+<footer class="footer_area clearfix" style="border-style: solid; border-width: 5px 0px 0px 0px; border-color:#000">
     <div class="container">
         <div class="row align-items-center">
             <!-- Single Widget Area -->
@@ -155,9 +132,6 @@ if(!isset($_SESSION)){
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{action('Shop@cart')}}">Carrito ({{$cart}})</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{action('Shop@checkout')}}">Finalizar compra</a>
                                     </li>
                                 </ul>
                             </div>

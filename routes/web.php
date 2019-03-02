@@ -8,11 +8,11 @@
 
 
 Route::get('/', 'Shop@index');
-Route::get('/products', 'Shop@products');
+//Route::get('/products', 'Shop@products');
+Route::get('/products/{category_filter?}', 'Shop@products');
 Route::get('/product_details/{id}', 'Shop@product_details');
 Route::get('/cart', 'Shop@cart');
 Route::post('/cart', 'Shop@add_to_cart');
-Route::get('/checkout', 'Shop@checkout');
 Route::post('/checkout', 'Shop@order');
 Route::get('/purchases', 'CustomerController@list_purchases');
 Route::post('/signup', 'CustomerController@signup');

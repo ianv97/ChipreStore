@@ -2,10 +2,9 @@
 @section('body')
     <div class="products-catagories-area clearfix">
         <div class="amado-pro-catagory clearfix">
-
             @foreach ($categories as $category)
                 <div class="single-products-catagory clearfix">
-                    <a href="/products">
+                    <a href="/products/{{$category->cname}}">
                         <img src="img/product-img/{{$category->photo}}">
                         <div class="hover-content">
                             <div class="line"></div>

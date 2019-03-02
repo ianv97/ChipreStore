@@ -3,11 +3,10 @@ session_start();
 $_SESSION['product'] = $product->id;
 ?>
 
-@extends('layout');
+@extends('layout')
 @section('body')
 <div class="single-product-area section-padding-100 clearfix">
     <div class="container-fluid">
-
         <div class="row">
             <div class="col-12 col-lg-7">
                 <div class="single_product_thumb">
@@ -59,7 +58,7 @@ $_SESSION['product'] = $product->id;
                     </div>
 
                     <div class="short_overview my-5">
-                        <p>{{$product->description}}</p>
+                        <?php echo ('<p>'.implode("\n<br>", explode("\n", str_replace(array("\r\n", "\r"), "\n", $product->description))).'</p>'); ?>
                     </div>
 
                     <!-- Add to Cart Form -->

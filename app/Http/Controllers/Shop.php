@@ -23,13 +23,16 @@ GROUP BY cid, cname;'));
         return view('index')->with('categories', $categories);
     }
     
-    function products(){
-        return view('products');
+    function products($category_filter = null){
+        $categories = \App\Category::where('state', 1)->get();
+        $waists = \App\Waist::all();
+        $products = \App\Product::where('visible', 1)->paginate(15);
+        return view('products')->with('categories', $categories)->with('waists', $waists)->with('products', $products)->with('category_filter', $category_filter);
     }
     
     function product_details($id){
         $product = \App\Product::find($id);
-        return view('product_details', compact('product'));
+        return view('product_details')->with('product', $product);
     }
     
     function cart(){
