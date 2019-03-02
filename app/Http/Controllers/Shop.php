@@ -26,7 +26,7 @@ GROUP BY cid, cname;'));
     function products($category_filter = null){
         $categories = \App\Category::where('state', 1)->get();
         $waists = \App\Waist::all();
-        $products = \App\Product::where('visible', 1)->paginate(15);
+        $products = \App\Product::where('visible', 1)->paginate(12);
         return view('products')->with('categories', $categories)->with('waists', $waists)->with('products', $products)->with('category_filter', $category_filter);
     }
     
@@ -145,12 +145,14 @@ GROUP BY cid, cname;'));
             );
             $preference->back_urls = array(
                 "success" => "http://chipre.test/success",
-                "failure" => "http://chipre.test/success",
-                "pending" => "http://chipre.test/success"
+                "failure" => "http://chipre.test/purchases",
+                "pending" => "http://chipre.test/purchases"
             );
             $preference->auto_return = "approved";
             $preference->binary_mode = true;
             $preference->external_reference = $sale_id;
+            $preference->expiration_date_from = date('c');
+            $preference->expiration_date_to = date('c', strtotime('+7 days'));
             $preference->save();
             $sale = \App\Sale::find($sale_id);
             $sale->payment_link = $preference->init_point;

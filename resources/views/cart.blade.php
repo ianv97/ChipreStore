@@ -36,8 +36,18 @@
                                 foreach($_COOKIE["product"] as $cookie_product){
                                     foreach($cookie_product as $cookie_waist){
                                         $product = \App\Product::find($cookie_waist['id']);
+                                        $discount = 0;
+                                        foreach($product->categories_products as $cat_prod){
+                                            foreach ($cat_prod->category->offers as $offer){
+                                               $discount += $offer->discount_percentage;
+                                            }
+                                        }
+                                        foreach ($product->products_offers as $product_offer){
+                                            $discount += $product_offer->offer->discount_percentage;
+                                        }
+                                        $price = $product->sale_price - ($product->sale_price * ($discount/100));
                                         $waist = \App\Waist::find($cookie_waist['waist']);
-                                        $subtotal = $product->sale_price * $cookie_waist['qty'];?>
+                                        $subtotal = $price * $cookie_waist['qty'];?>
                                         <tr>
                                             <td class="cart_product_img" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
                                                 <a href="{{action('Shop@product_details', ['id'=>$cookie_waist['id']])}}">
@@ -51,7 +61,7 @@
                                                 <span>{{$waist->name}}</span>
                                             </td>
                                             <td class="price" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
-                                                <span>${{number_format($product->sale_price, 2, ',', '.')}}</span>
+                                                <span>${{number_format($price, 2, ',', '.')}}</span>
                                             </td>
                                             <td class="qty" style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">
                                                 <span>{{$cookie_waist['qty']}}</span>
@@ -68,7 +78,7 @@
                                             <input type="text" form="order-form" name="qty[]" value="{{$cookie_waist['qty']}}" hidden>
                                             <input type="text" form="order-form" name="subtotal[]" value="{{$subtotal}}" hidden>
                                         </tr>
-                                        <?php $total+= $product->sale_price * $cookie_waist['qty'];
+                                        <?php $total+= $price * $cookie_waist['qty'];
                                     }
                                 }
                             }else{ ?>

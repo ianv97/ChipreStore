@@ -5,6 +5,16 @@ $_SESSION['product'] = $product->id;
 
 @extends('layout')
 @section('body')
+<?php $discount = 0;
+foreach($product->categories_products as $cat_prod){
+    foreach ($cat_prod->category->offers as $offer){
+       $discount += $offer->discount_percentage;
+    }
+}
+foreach ($product->products_offers as $product_offer){
+    $discount += $product_offer->offer->discount_percentage;
+}
+?>
 <div class="single-product-area section-padding-100 clearfix">
     <div class="container-fluid">
         <div class="row">
@@ -49,7 +59,11 @@ $_SESSION['product'] = $product->id;
                     <!-- Product Meta Data -->
                     <div class="product-meta-data">
                         <div class="line"></div>
-                        <p class="product-price">${{$product->sale_price}}</p>
+                        @if ($discount > 0)
+                            <p class="product-price"><span class="tachado mr-2">${{number_format($product->sale_price, 2, ',', '.')}}</span><span class="fa fa-angle-double-right mr-2"></span>${{number_format($product->sale_price - ($product->sale_price * ($discount/100)), 2, ',', '.')}}</p>
+                        @else
+                            <p class="product-price">${{number_format($product->sale_price, 2, ',', '.')}}</p>
+                        @endif
                         <a href="product-details.html">
                             <h6>{{$product->name}}</h6>
                         </a>

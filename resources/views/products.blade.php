@@ -31,7 +31,7 @@
     <div class="container-fluid">
        <div class="row">
            <nav class="navbar col-12" style="background-color: #212529;">
-                <div class="form-inline my-2 ml-4">
+                <div class="form-inline my-2 mx-auto">
                     <input class="form-control mr-1" id="search_input" type="search" placeholder="Búsqueda" style="max-width: 80%;">
                     <button class="btn btn-outline-warning fa fa-search"></button>
                 </div>
@@ -71,7 +71,9 @@
                             $discount += $product_offer->offer->discount_percentage;
                         }?>
                         @if ($discount > 0)
-                        <p class="product-price"><span class="crossed mr-2">${{number_format($product->sale_price, 2, ',', '.')}}</span><span class="fa fa-angle-double-right mr-2"></span>${{number_format($product->sale_price - ($product->sale_price * ($discount/100)), 2, ',', '.')}}</p>
+                        <i class="fa fa-circle discounti" style="position:absolute; top:-110px; right:10px; font-size: 90px; color: #fbb710; z-index: 100;"></i>
+                        <label class="discountl" style="position:absolute; top:-85px; right:11px; font-size: 30px; font-weight: 600; color: #212529; z-index: 105;">-{{$discount}}%</label>
+                        <p class="product-price"><span class="tachado mr-2">${{number_format($product->sale_price, 2, ',', '.')}}</span><span class="fa fa-angle-double-right mr-2"></span>${{number_format($product->sale_price - ($product->sale_price * ($discount/100)), 2, ',', '.')}}</p>
                         @else
                             <p class="product-price">${{number_format($product->sale_price, 2, ',', '.')}}</p>
                         @endif
@@ -134,5 +136,9 @@
        $('.category_selector[value="{{$category_filter}}"]').click();
     @endif
 </script>
+<style>
+    .product:hover .discounti{color:#212529 !important;}
+    .product:hover .discountl{color:#fbb710 !important;}
+</style>
 
 @endsection

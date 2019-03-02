@@ -22,7 +22,7 @@
   margin: 0;
   padding: 0; }
 
-.crossed {
+.tachado{
     background: 
        linear-gradient(to top left,
            rgba(251,183,16,0) 0%,
@@ -31,7 +31,6 @@
            rgba(251,183,16,0) calc(50% + 3px),
            rgba(251,183,16,0) 100%);
 }
-.tachado{text-decoration:line-through;}
 .centrado{
   position:absolute;
   top:50%;
