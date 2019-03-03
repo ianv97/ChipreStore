@@ -38,9 +38,8 @@
                         <td class="negrita">@if ($offer->state == 1) Habilitada @else Deshabilitada @endif</td>
                         <td>
                             <span class="btn btn-danger" class="btn btn-warning border-radius" onclick="edit_offer('{{$offer->id}}',
-                                  '{{$offer->name}}', '{{$offer->category}}',{{json_encode($offer->products_offers)}},
-                                  '{{$offer->min_quantity}}', '{{$offer->discount_percentage}}', '{{$offer->start_date}}',
-                                  '{{$offer->end_date}}')" data-toggle="modal" data-target="#edit_offer_modal">
+                                  '{{$offer->name}}', @if (isset($offer->category))'{{$offer->category->id}}'@else''@endif,{{json_encode($offer->products_offers)}},
+                                  '{{$offer->discount_percentage}}', '{{$offer->state}}')" data-toggle="modal" data-target="#edit_offer_modal">
                                     <i class="fas fa-user-edit"></i>
                             </span>
                         </td>
@@ -77,7 +76,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Registrar Oferta</h2>
                 </div>
-                <form method="POST" action="{{route('admin.offers.create')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{action('OfferController@new_offer')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="row d-flex justify-content-center mt-4">
                         <div class="normal_width">
@@ -117,34 +116,16 @@
                     </div>
 
                     <div class="row d-flex justify-content-center mt-4 mb-0">
-                        <label class="text-white negrita col-6 col-sm-5 col-lg-3">Cantidad mínima</label>
-                        <label class="text-white negrita col-5 col-sm-4 col-md-3 col-lg-2 mr-5">Descuento *</label>
+                        <label class="text-white negrita small_width">Descuento *</label>
                     </div>
                     <div class="row d-flex justify-content-center mt-0">
-                        <div class="input-group col-6 col-sm-5 col-lg-3">
-                            <input type="number" class="form-control" id="min_quantity" name="min_quantity" min="1" step="1" placeholder="1" value="{{old('min_quantity')}}">
-                            <span class="input-group-text">Productos</span>
-                        </div>
-                        <div class="input-group col-5 col-sm-4 col-md-3 col-lg-2 mr-5">
+                        <div class="input-group small_width">
                             <input type="number" class="form-control" id="discount_percentage" name="discount_percentage" min="1" max="99" step="1" placeholder="0" value="{{old('discount_percentage')}}" required>
                             <span class="input-group-text">%</span>
                         </div>
                     </div>
-                    
-                    <div class="row d-flex justify-content-center mt-4 mb-0">
-                        <label class="text-white negrita col-6 col-sm-5 col-lg-3">Fecha de inicio</label>
-                        <label class="text-white negrita col-6 col-sm-5 col-lg-3">Fecha de fin</label>
-                    </div>
-                    <div class="row d-flex justify-content-center mt-0">
-                        <div class="input-group col-6 col-sm-5 col-lg-3">
-                            <input type="date" class="form-control" id="start_date" name="start_date" value="{{old('start_date')}}">
-                        </div>
-                        <div class="input-group col-6 col-sm-5 col-lg-3">
-                            <input type="date" class="form-control" id="end_date" name="end_date" value="{{old('end_date')}}">
-                        </div>
-                    </div>
 
-                    <div class="row d-flex justify-content-center mt-4">
+                    <div class="row d-flex justify-content-center mt-4 ml-2">
                         <label class="text-white negrita mt-1" id="state_label" for="state">@if (!empty(old('estate'))) Habilitada @else Deshabilitada @endif</label>
                         <label class="switch  mx-3">
                             <input type="checkbox" id="state" name="state" onchange="toggle_state()" @if (!empty(old('state'))) checked="true" @endif>
@@ -179,7 +160,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Editar Oferta</h2>
                 </div>
-                <form method="POST" action="{{action('OfferController@edit_offer')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{action('OfferController@edit_offer')}}" id="editform" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <input type="hidden"  id="eid" name="eid"  value="{{old('eid')}}">
                     <div class="row d-flex justify-content-center mt-4">
@@ -209,49 +190,32 @@
                     </div>
 
                     <div class="row d-flex justify-content-center mt-4 mb-0">
-                        <label class="text-white negrita col-6 col-sm-5 col-lg-3">Cantidad mínima</label>
-                        <label class="text-white negrita col-5 col-sm-4 col-md-3 col-lg-2 mr-5">Descuento *</label>
+                        <label class="text-white negrita small_width">Descuento *</label>
                     </div>
                     <div class="row d-flex justify-content-center mt-0">
-                        <div class="input-group col-6 col-sm-5 col-lg-3">
-                            <input type="number" class="form-control" id="emin_quantity" name="emin_quantity" min="1" step="1" placeholder="1" value="{{old('emin_quantity')}}">
-                            <span class="input-group-text">Productos</span>
-                        </div>
-                        <div class="input-group col-5 col-sm-4 col-md-3 col-lg-2 mr-5">
+                        <div class="input-group small_width">
                             <input type="number" class="form-control" id="ediscount_percentage" name="ediscount_percentage" min="1" max="99" step="1" placeholder="0" value="{{old('ediscount_percentage')}}" required>
                             <span class="input-group-text">%</span>
                         </div>
                     </div>
-                    
-                    <div class="row d-flex justify-content-center mt-4 mb-0">
-                        <label class="text-white negrita col-6 col-sm-5 col-lg-3">Fecha de inicio</label>
-                        <label class="text-white negrita col-6 col-sm-5 col-lg-3">Fecha de fin</label>
-                    </div>
-                    <div class="row d-flex justify-content-center mt-0">
-                        <div class="input-group col-6 col-sm-5 col-lg-3">
-                            <input type="date" class="form-control" id="estart_date" name="estart_date" value="{{old('estart_date')}}">
-                        </div>
-                        <div class="input-group col-6 col-sm-5 col-lg-3">
-                            <input type="date" class="form-control" id="eend_date" name="eend_date" value="{{old('eend_date')}}">
-                        </div>
-                    </div>
 
-                    <div class="row d-flex justify-content-center mt-4">
+                    <div class="row d-flex justify-content-center mt-4 ml-2">
                         <label class="text-white negrita mt-1" id="estate_label" for="estate">@if (!empty(old('estate'))) Habilitada @else Deshabilitada @endif</label>
                         <label class="switch  mx-3">
                             <input type="checkbox" id="estate" name="estate" onchange="toggle_estate()" @if (!empty(old('estate'))) checked="true" @endif>
                             <span class="slider round"></span>
                         </label>
                     </div>
-
-                    <div class="row d-flex justify-content-center">
-                        <button type="submit" class="btn btn-primary btn-lg mt-4 negrita">Registrar</button>
-                    </div>
                 </form>
+            </div>
+            <div class="modal-footer justify-content-center">
+                <div style="margin-right:10vw;">
+                    <button type="button" class="btn btn-danger negrita" id="deletebtn"><i class="fa fa-times"></i> Eliminar</button>
+                </div>
+                <button type="submit" form="editform" class="btn btn-success negrita"><i class="fa fa-check"></i> Guardar</button>
             </div>
         </div>
     </div>
-</div>
 </div>
 @endsection
 
@@ -262,11 +226,11 @@
         toastr.success("{{ session('success') }}");
     @endif
 
-    @if ($errors->get('name') or $errors->get('category') or $errors->get('products') or $errors->get('min_quantity') or $errors->get('discount_percentage') or $errors->get('start_date') or $errors->get('end_date'))
+    @if ($errors->get('name') or $errors->get('category') or $errors->get('products') or $errors->get('min_quantity') or $errors->get('discount_percentage'))
         $('#new_offer_modal').modal('show');
     @endif
 
-    @if ($errors->get('ename') or $errors->get('ecategory') or $errors->get('eproducts') or $errors->get('emin_quantity') or $errors->get('ediscount_percentage') or $errors->get('estart_date') or $errors->get('eend_date'))
+    @if ($errors->get('ename') or $errors->get('ecategory') or $errors->get('eproducts') or $errors->get('emin_quantity') or $errors->get('ediscount_percentage'))
         $('#edit_offer_modal').modal('show');
     @endif
 
@@ -297,21 +261,18 @@
 </script>
 
 <script type="text/javascript">
-    function edit_offer(id, name, category, products_offers, min_quantity, discount_percentage, start_date, end_date, state){
+    function edit_offer(id, name, category, products_offers, discount_percentage, state){
         $('#eproducts .erow').each(function(id, element){
             $(element).remove();
         });
         $('#eid').val(id);
         $('#ename').val(name);
-        $('#ecategory').val(category);
-        $('#emin_quantity').val(min_quantity);
+        $('#ecategory').val(category).trigger('change');
         $('#ediscount_percentage').val(discount_percentage);
-        $('#estart_date').val(start_date);
-        $('#eend_date').val(end_date);
         var i;
         for (i = 0; i < products_offers.length; ++i) {
             eappend_product();
-            $('#eproducts .eproducts').last().val(products_offers[i]['product_id'])
+            $('#eproducts .eproducts').last().val(products_offers[i]['product_id']).trigger('change');
         }
         if (state == 0){
             $('#estate').prop("checked", false);
@@ -367,7 +328,7 @@
             `<div class="row d-flex justify-content-center mt-2 pr-5 erow">
                 <button type="button" class="btn btn-danger mr-1 mr-lg-3" onclick="remove_product(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
                 <div class="ml-1 col-10 col-sm-8 col-md-7 col-lg-5 col-xl-4">
-                    <select class="eproducts" name="eproducts[]">
+                    <select class="eproducts" name="eproducts[]" required>
                         <option></option>
                         @foreach ($products as $product)
                         <option value="{{$product->id}}">{{$product->name}}</option>

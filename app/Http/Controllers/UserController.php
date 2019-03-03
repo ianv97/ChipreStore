@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class User extends Controller
+class UserController extends Controller
 {
     function index(){
         session_start();
         if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/index');
         }else{
-            return redirect(action('Session@admin_login'));
+            return redirect(action('SessionController@admin_login'));
         }
     }
     
@@ -20,7 +20,7 @@ class User extends Controller
         if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/change_password');
         }else{
-            return redirect(action('Session@admin_login'));
+            return redirect(action('SessionController@admin_login'));
         }
     }
     
@@ -40,12 +40,12 @@ class User extends Controller
             if (password_verify($data['oldpassword'], $user->password)){
                 $user->password = bcrypt($data['newpassword1']);
                 $user->save();
-                return redirect(action('User@edit_password'))->with('success', 'Contraseña modificada con éxito.');
+                return redirect(action('UserController@edit_password'))->with('success', 'Contraseña modificada con éxito.');
             }else{
-                return redirect(action('User@edit_password'))->withErrors(['oldpassword' => 'La contraseña ingresada es incorrecta']);;
+                return redirect(action('UserController@edit_password'))->withErrors(['oldpassword' => 'La contraseña ingresada es incorrecta']);;
             }
         }else{
-            return redirect(action('User@edit_password'))->withErrors(['newpassword2' => 'Las contraseñas nuevas no coinciden']);
+            return redirect(action('UserController@edit_password'))->withErrors(['newpassword2' => 'Las contraseñas nuevas no coinciden']);
         }
     }
     
@@ -58,7 +58,7 @@ class User extends Controller
         $user = \App\User::find($_SESSION['id']);
         $user->photo = $filename;
         $user->save();
-        return redirect(action('User@index'));
+        return redirect(action('UserController@index'));
     }
     
     function list_users(){
@@ -66,7 +66,7 @@ class User extends Controller
         if (isset($_SESSION['id']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/users_list');
         }else{
-            return redirect(action('Session@admin_login'));
+            return redirect(action('SessionController@admin_login'));
         }
     }
     
@@ -94,10 +94,10 @@ class User extends Controller
                 'name' => $data['last_name'] . ', ' . $data['first_name'],
                 'password' => bcrypt($data['password1'])
             ]);
-            return redirect(action('User@list_users'))
+            return redirect(action('UserController@list_users'))
                     ->with('success', 'Usuario registrado con éxito');;
         }else{
-            return redirect(action('User@list_users'))
+            return redirect(action('UserController@list_users'))
                     ->withErrors(['password2' => 'Las contraseñas ingresadas no coinciden']);;
         }
     }
@@ -107,7 +107,7 @@ class User extends Controller
             $data = request('eid');
             $user = \App\User::find($data);
             $user->delete();
-            return redirect(action('User@list_users'))
+            return redirect(action('UserController@list_users'))
                     ->with('success', 'Usuario eliminado con éxito');;
         }else{
             $data = request()->validate([
@@ -128,7 +128,7 @@ class User extends Controller
             $user->email = $data['eemail'];
             $user->name = $data['elast_name'] . ', ' . $data['efirst_name'];
             $user->save();
-            return redirect(action('User@list_users'))
+            return redirect(action('UserController@list_users'))
                     ->with('success', 'Usuario actualizado con éxito');;
         }
     }

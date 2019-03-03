@@ -57,10 +57,10 @@ if(!isset($_SESSION)){
         <!-- Nav -->
         <nav class="amado-nav">
             <ul>
-                <li id="index"><a href="{{action('Shop@index')}}">Inicio</a></li>
-                <li id="products"><a href="{{action('Shop@products')}}">Productos</a></li>
-                <li id="product_details"><a href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a></li>
-                <li id="cart"><a href="{{action('Shop@cart')}}" class="cart-nav"><img src="/img/core-img/cart.png"> Carrito <span>({{$cart}})</span></a></li>
+                <li id="index"><a href="{{action('ShopController@index')}}">Inicio</a></li>
+                <li id="products"><a href="{{action('ShopController@products')}}">Productos</a></li>
+                <li id="product_details"><a href="@if (isset($_SESSION['product'])) {{action('ShopController@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a></li>
+                <li id="cart"><a href="{{action('ShopController@cart')}}" class="cart-nav"><img src="/img/core-img/cart.png"> Carrito <span>({{$cart}})</span></a></li>
             </ul>
         </nav>
         <!-- Button Group -->
@@ -77,14 +77,14 @@ if(!isset($_SESSION)){
                 <a href="{{action('CustomerController@list_purchases')}}"><i class="fa fa-truck"></i> Mis compras</a>
             </div>
             <div class="cart-fav-search mb-30">
-                <a href="{{action('Session@logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
+                <a href="{{action('SessionController@logout')}}"><i class="fa fa-sign-out"></i> Cerrar Sesión</a>
             </div>
         @else
             <div class="cart-fav-search mb-10">
-                <a href="{{action('Session@login')}}"><i class="fa fa-user-plus"></i> Registrarse</a>
+                <a href="{{action('SessionController@login')}}"><i class="fa fa-user-plus"></i> Registrarse</a>
             </div>
             <div class="cart-fav-search mb-30">
-                <a href="{{action('Session@login')}}"><i class="fa fa-sign-in"></i> Ingresar</a>
+                <a href="{{action('SessionController@login')}}"><i class="fa fa-sign-in"></i> Ingresar</a>
             </div>
         @endif
         
@@ -122,16 +122,16 @@ if(!isset($_SESSION)){
                             <div class="collapse navbar-collapse" id="footerNavContent">
                                 <ul class="navbar-nav ml-auto">
                                     <li class="nav-item active">
-                                        <a class="nav-link" href="{{action('Shop@index')}}">Inicio</a>
+                                        <a class="nav-link" href="{{action('ShopController@index')}}">Inicio</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{action('Shop@products')}}">Productos</a>
+                                        <a class="nav-link" href="{{action('ShopController@products')}}">Productos</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="@if (isset($_SESSION['product'])) {{action('Shop@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a>
+                                        <a class="nav-link" href="@if (isset($_SESSION['product'])) {{action('ShopController@product_details', ['id'=>$_SESSION['product']])}} @else # @endif">Detalles</a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{action('Shop@cart')}}">Carrito ({{$cart}})</a>
+                                        <a class="nav-link" href="{{action('ShopController@cart')}}">Carrito ({{$cart}})</a>
                                     </li>
                                 </ul>
                             </div>

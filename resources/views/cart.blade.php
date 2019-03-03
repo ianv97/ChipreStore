@@ -22,7 +22,7 @@
                     <table class="table table-responsive">
                         <thead>
                             <tr>
-                                <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%; padding-top:0;"><form method="post" action="{{action("Shop@empty_cart")}}">{{ csrf_field() }}<button type="submit" class="btn btn-danger"><i class="fa fa-cart-arrow-down"></i> Vaciar carrito</button></form></th>
+                                <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%; padding-top:0;"><form method="post" action="{{action("ShopController@empty_cart")}}">{{ csrf_field() }}<button type="submit" class="btn btn-danger"><i class="fa fa-cart-arrow-down"></i> Vaciar carrito</button></form></th>
                                 <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">Nombre</th>
                                 <th style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">Talle</th>
                                 <th style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">Precio</th>
@@ -39,18 +39,22 @@
                                         $discount = 0;
                                         foreach($product->categories_products as $cat_prod){
                                             foreach ($cat_prod->category->offers as $offer){
-                                               $discount += $offer->discount_percentage;
+                                                if ($offer->state == 1){
+                                                    $discount += $offer->discount_percentage;
+                                                }
                                             }
                                         }
                                         foreach ($product->products_offers as $product_offer){
-                                            $discount += $product_offer->offer->discount_percentage;
+                                            if ($product_offer->offer->state == 1){
+                                                $discount += $product_offer->offer->discount_percentage;
+                                            }
                                         }
                                         $price = $product->sale_price - ($product->sale_price * ($discount/100));
                                         $waist = \App\Waist::find($cookie_waist['waist']);
                                         $subtotal = $price * $cookie_waist['qty'];?>
                                         <tr>
                                             <td class="cart_product_img" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
-                                                <a href="{{action('Shop@product_details', ['id'=>$cookie_waist['id']])}}">
+                                                <a href="{{action('ShopController@product_details', ['id'=>$cookie_waist['id']])}}">
                                                     <img src="img/product-img/{{$product->photos[0]->name}}" style="max-height: 200px;">
                                                 </a>
                                             </td>
@@ -70,13 +74,6 @@
                                                 <span>${{number_format($subtotal, 2, ',', '.')}}</span>
                                             </td>
                                             <input type="text" form="order-form" name="product_id[]" value="{{$product->id}}" hidden>
-                                            <input type="text" form="order-form" name="product_name[]" value="{{$product->name}}" hidden>
-                                            <input type="text" form="order-form" name="product_description[]" value="{{$product->description}}" hidden>
-                                            <input type="text" form="order-form" name="product_photo[]" value="http://chipre.test/img/product-img/{{$product->photos[0]->name}}" hidden>
-                                            <input type="text" form="order-form" name="waist_id[]" value="{{$waist->id}}" hidden>
-                                            <input type="text" form="order-form" name="waist_name[]" value="{{$waist->name}}" hidden>
-                                            <input type="text" form="order-form" name="qty[]" value="{{$cookie_waist['qty']}}" hidden>
-                                            <input type="text" form="order-form" name="subtotal[]" value="{{$subtotal}}" hidden>
                                         </tr>
                                         <?php $total+= $price * $cookie_waist['qty'];
                                     }
@@ -96,7 +93,7 @@
                 <div class="cart-summary">
                     <h5>Resumen</h5>
                     <ul class="summary-table">
-                        <form method="post" action="{{action('Shop@order')}}" id="order-form" onsubmit="complete_inputs()">
+                        <form method="post" action="{{action('ShopController@order')}}" id="order-form" onsubmit="complete_inputs()">
                         {{ csrf_field() }}
                         @if (isset($_SESSION['role']) and $_SESSION['role']=='Cliente')
                             <?php $customer = \App\Customer::find($_SESSION['id']) ?>

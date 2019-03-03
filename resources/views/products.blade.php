@@ -45,7 +45,9 @@
                  foreach($product->categories_products as $cat_prod){
                      echo ($cat_prod->category->name.' ');
                      foreach ($cat_prod->category->offers as $offer){
-                        $discount += $offer->discount_percentage;
+                        if ($offer->state == 1){
+                            $discount += $offer->discount_percentage;
+                        }
                      }
                  }
                  foreach($product->products_waists as $prod_waist){
@@ -53,7 +55,7 @@
                  }?>" name="{{$product->name}}">
                  <!--Product Image--> 
                 <div class="product-img" style="max-height:500px;">
-                    <a href="{{action('Shop@product_details', ['id'=>$product->id])}}">
+                    <a href="{{action('ShopController@product_details', ['id'=>$product->id])}}">
                         <img src="/img/product-img/{{$product->photos[0]->name}}">
                          <!--Hover Thumb--> 
                         @if (isset($product->photos[1]))
@@ -68,7 +70,9 @@
                         <div class="line"></div>
                         <?php
                         foreach ($product->products_offers as $product_offer){
-                            $discount += $product_offer->offer->discount_percentage;
+                            if ($product_offer->offer->state == 1){
+                                $discount += $product_offer->offer->discount_percentage;
+                            }
                         }?>
                         @if ($discount > 0)
                         <i class="fa fa-circle discounti" style="position:absolute; top:-110px; right:10px; font-size: 90px; color: #fbb710; z-index: 100;"></i>
@@ -77,7 +81,7 @@
                         @else
                             <p class="product-price">${{number_format($product->sale_price, 2, ',', '.')}}</p>
                         @endif
-                        <a href="{{action('Shop@product_details', ['id'=>$product->id])}}">
+                        <a href="{{action('ShopController@product_details', ['id'=>$product->id])}}">
                             <h6 class="product_name" style="font-weight:600;">{{$product->name}}</h6>
                         </a>
                     </div>

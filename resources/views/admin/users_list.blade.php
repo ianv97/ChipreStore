@@ -87,7 +87,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Registrar Usuario</h2>
                 </div>
-                <form method="POST" action="{{ action('User@new_user')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{ action('UserController@new_user')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     
                     <div class="row d-flex justify-content-center mt-3">
@@ -151,7 +151,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Editar Usuario</h2>
                 </div>
-                <form method="POST" action="{{ action('User@edit_user')}}" enctype="multipart/form-data" id="editform">
+                <form method="POST" action="{{ action('UserController@edit_user')}}" enctype="multipart/form-data" id="editform">
                     {{ csrf_field() }}
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
                     <div class="row d-flex justify-content-center mt-3">

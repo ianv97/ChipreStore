@@ -15,7 +15,7 @@
                     <img src="../img/logo.jpg" alt=""/>
                 </div>
                 <h3>Sección administrativa</h3>
-                <form method="POST" action="{{action('Session@admin_authenticate')}}">
+                <form method="POST" action="{{action('SessionController@admin_authenticate')}}">
                     {{ csrf_field() }}
                     <div class="form-group">
                         <input type="text" name="email" class="form-control" placeholder="Email *" data-rule="email" data-msg="Por favor ingrese un email válido." />

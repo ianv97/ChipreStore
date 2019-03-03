@@ -46,13 +46,13 @@ class CustomerController extends Controller
                 }else{
                     $error = 'Error en el registro';
                 }
-                return redirect(action('Session@login'))
+                return redirect(action('SessionController@login'))
                     ->withErrors(['db' => $error]);
             };
-            return redirect(action('Session@login'))
+            return redirect(action('SessionController@login'))
                     ->with('success', 'Usuario registrado con éxito');
         }else{
-            return redirect(action('Session@login'))
+            return redirect(action('SessionController@login'))
                     ->withErrors(['repeat_password' => 'Las contraseñas ingresadas no coinciden']);
         }
     }
@@ -65,10 +65,10 @@ class CustomerController extends Controller
             if ($_SESSION['role'] = 'Cliente'){
                 return view('purchases_list')->with('purchases', \App\Sale::where('customer_id', $_SESSION['id'])->get());
             }else{
-                return redirect(action('Session@login'));
+                return redirect(action('SessionController@login'));
             }
         }else{
-            return redirect(action('Session@login'));
+            return redirect(action('SessionController@login'));
         }
     }
     

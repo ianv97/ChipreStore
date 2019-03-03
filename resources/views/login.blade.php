@@ -54,7 +54,7 @@
                         <button type="submit" class="submit-btn">Registrarse</button>
                     </div>
                 </form>
-                <form method="post" action="{{action('Session@authenticate')}}">
+                <form method="post" action="{{action('SessionController@authenticate')}}">
                     {{ csrf_field() }}
                     <div class="login slide-up">
                         <div class="center">
@@ -103,7 +103,6 @@
             placeholder: "Ciudad",
             allowClear: true
         });
-//        $('#checkout').addClass('active');
     });
 
    $('#province').change(function(){
@@ -194,11 +193,11 @@ input:-webkit-autofill:active {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  background-image: radial-gradient(circle at 0% 0%, #373b52, #252736 51%, #1d1e26);
+  background-color: #212529;
 }
 .form-structor {
   font-family: "Fira Sans", Helvetica, Arial, sans-serif;
-  background-color: #222;
+  background-color: #fbb710;
   border-radius: 15px;
   height: 750px;
   width: 100%;
@@ -213,7 +212,7 @@ input:-webkit-autofill:active {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #000000;
+  background-color: #fbb710;
 }
 .form-structor .signup {
   position: absolute;
@@ -244,9 +243,10 @@ input:-webkit-autofill:active {
   -webkit-transition: all .3s ease;
 }
 .form-structor .signup .form-title {
-  color: #fff;
+  color: #212529;
   font-size: 1.7em;
   text-align: center;
+  font-weight: 600;
 }
 .form-structor .signup .form-title span {
   color: rgba(0, 0, 0, 0.4);
@@ -282,7 +282,7 @@ input:-webkit-autofill:active {
 }
 .form-structor .signup .submit-btn {
   background-color: #fff;
-  color: #000;
+  color: #212529;
   border: 0;
   border-radius: 15px;
   display: block;
@@ -298,14 +298,14 @@ input:-webkit-autofill:active {
 }
 .form-structor .signup .submit-btn:hover {
   transition: all .3s ease;
-  background-image: radial-gradient(circle at 0% 0%, #373b52, #252736 51%, #1d1e26);
-  color: #fff;
+  background-color: #212529;
+  color: #fbb710;
 }
 .login{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  background-image: radial-gradient(circle at 0% 0%, #373b52, #252736 51%, #1d1e26);
+  background-color: #212529;
 }
 .form-structor .login {
   position: absolute;
@@ -322,7 +322,7 @@ input:-webkit-autofill:active {
   left: 50%;
   top: -20px;
   -webkit-transform: translate(-50%, 0);
-  background-image: radial-gradient(circle at 0% 0%, #373b52, #252736 51%, #1d1e26);
+  background-color: #212529;
   width: 200%;
   height: 250px;
   border-radius: 50%;
@@ -351,7 +351,7 @@ input:-webkit-autofill:active {
 }
 .form-structor .login .center .form-holder {
   border-radius: 15px;
-  background-color: #000;
+  background-color: transparent;
   overflow: hidden;
   margin-top: 50px;
   opacity: 1;
@@ -394,8 +394,8 @@ input:-webkit-autofill:active {
 }
 .form-structor .login .center .submit-btn:hover {
   transition: all .3s ease;
-  background-color: #000;
-  color: #fff;
+  background-color: #fbb710;
+  color: #212529;
 }
 .form-structor .login.slide-up {
   top: 90%;

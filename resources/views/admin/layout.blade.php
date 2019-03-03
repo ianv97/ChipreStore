@@ -35,7 +35,7 @@
                         <div class="sidebar-header">
                             <div class="user-pic bhover">
                                 <img id="userphoto" class="img-responsive img-rounded cursor" src="../img/users/{{$_SESSION['photo']}}">
-                                <form method="post" action="{{action('User@change_photo')}}" id="userphotoform" name="userphotoform" enctype="multipart/form-data" style="display: none;">
+                                <form method="post" action="{{action('UserController@change_photo')}}" id="userphotoform" name="userphotoform" enctype="multipart/form-data" style="display: none;">
                                     {{ csrf_field() }}
                                     <input type="file" id="userphotofile" name="userphotofile" accept=".jpeg,.jpg,.png">
                                 </form>
@@ -51,7 +51,7 @@
                                 </span>
                             </div>
                             <div class="user-info" style="margin-top:10px;">
-                                <a href="{{ action('User@edit_password')}}">
+                                <a href="{{ action('UserController@edit_password')}}">
                                     <i class="fa fa-unlock"></i>
                                     <span>Cambiar contraseña</span>
                                 </a>
@@ -64,36 +64,27 @@
                                     <span>General</span>
                                 </li>
                                 <li>
-                                    <a href="{{action('Category@list_categories')}}">
+                                    <a href="{{action('CategoryController@list_categories')}}">
                                         <i class="fas fa-object-group"></i>
                                         <span class="menuopt">Categorías</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{action('Waist@list_waists')}}">
+                                    <a href="{{action('WaistController@list_waists')}}">
                                         <i class="fas fa-tape"></i>
                                         <span class="menuopt">Talles</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{action('Product@list_products')}}">
+                                    <a href="{{action('ProductController@list_products')}}">
                                         <i class="fas fa-tshirt"></i>
                                         <span class="menuopt">Productos</span>
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="{{route('admin.offers.index')}}">
+                                    <a href="{{action('OfferController@list_offers')}}">
                                         <i class="fas fa-dollar-sign"></i>
                                         <span class="menuopt">Ofertas</span>
-                                    </a>
-                                </li>
-                                <li class="header-menu">
-                                    <span>Tienda</span>
-                                </li>
-                                <li>
-                                    <a href="#">
-                                        <i class="fas fa-newspaper"></i>
-                                        <span class="menuopt">Publicaciones</span>
                                     </a>
                                 </li>
                             @if ($_SESSION['role'] == 'Administrador')
@@ -101,7 +92,7 @@
                                     <span>Administrador</span>
                                 </li>
                                 <li>
-                                    <a href="{{action('User@list_users')}}">
+                                    <a href="{{action('UserController@list_users')}}">
                                         <i class="fas fa-users"></i>
                                         <span class="menuopt">Usuarios</span>
                                     </a>
@@ -118,7 +109,7 @@
                         </div>
                         <div class="sidebar-header">
                             <li style="list-style-type:none;">
-                                <a href="{{ action('Session@logout') }}" class="thover nosub" style="color:#ef6603">
+                                <a href="{{ action('SessionController@logout') }}" class="thover nosub" style="color:#ef6603">
                                     <i class="fa fa-sign-out-alt"></i>
                                     <span>Cerrar Sesión</span>
                                 </a>

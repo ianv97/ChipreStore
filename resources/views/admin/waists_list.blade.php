@@ -65,7 +65,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Registrar Talle</h2>
                 </div>
-                <form method="POST" action="{{ action('Waist@new_waist')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{action('WaistController@new_waist')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="row d-flex justify-content-center mt-4">
                         <div class="normal_width">
@@ -99,7 +99,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Editar Talle</h2>
                 </div>
-                <form method="POST" action="{{ action('Waist@edit_waist')}}" enctype="multipart/form-data" id="editform">
+                <form method="POST" action="{{action('WaistController@edit_waist')}}" enctype="multipart/form-data" id="editform">
                     {{ csrf_field() }}
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
                     

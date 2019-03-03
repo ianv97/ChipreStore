@@ -90,7 +90,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Registrar Producto</h2>
                 </div>
-                <form method="POST" action="{{action('Product@new_product')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{action('ProductController@new_product')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="row d-flex justify-content-center mt-4">
                         <div class="normal_width">
@@ -245,7 +245,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Editar Producto</h2>
                 </div>
-                <form method="POST" action="{{action('Product@edit_product')}}" enctype="multipart/form-data" id="editform">
+                <form method="POST" action="{{action('ProductController@edit_product')}}" enctype="multipart/form-data" id="editform">
                     {{ csrf_field() }}
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
                     

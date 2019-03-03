@@ -8,11 +8,15 @@ $_SESSION['product'] = $product->id;
 <?php $discount = 0;
 foreach($product->categories_products as $cat_prod){
     foreach ($cat_prod->category->offers as $offer){
-       $discount += $offer->discount_percentage;
+        if ($offer->state == 1){
+            $discount += $offer->discount_percentage;
+        }
     }
 }
 foreach ($product->products_offers as $product_offer){
-    $discount += $product_offer->offer->discount_percentage;
+    if ($product_offer->offer->state == 1){
+        $discount += $product_offer->offer->discount_percentage;
+    }
 }
 ?>
 <div class="single-product-area section-padding-100 clearfix">
@@ -76,7 +80,7 @@ foreach ($product->products_offers as $product_offer){
                     </div>
 
                     <!-- Add to Cart Form -->
-                    <form class="cart clearfix" method="post" action="{{action('Shop@add_to_cart')}}">
+                    <form class="cart clearfix" method="post" action="{{action('ShopController@add_to_cart')}}">
                         {{ csrf_field() }}
                         <div class="row mb-50">
                             <div class="input-group d-flex ml-3" style="width: 100px;">

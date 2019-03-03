@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-Class Ajax extends Controller {
+Class AjaxController extends Controller {
     function find_product() {
         $product = \DB::table('products')
                 ->where('products.id', $_POST['product_id'])
@@ -63,10 +63,10 @@ Class Ajax extends Controller {
                         ->where('sales.customer_id', $_SESSION['id'])->get();
                 return response()->json($purchase_lines);
             }else{
-                return response(action('Session@login'));
+                return response(action('SessionController@login'));
             }
         }else{
-            return response(action('Session@login'));
+            return response(action('SessionController@login'));
         }
     }
 }

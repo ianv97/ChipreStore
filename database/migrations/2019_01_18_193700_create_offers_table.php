@@ -16,9 +16,6 @@ class CreateOffersTable extends Migration
         Schema::create('offers', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name', 60);
-            $table->unsignedInteger('min_quantity');
-            $table->date('start_date')->nullable();
-            $table->date('end_date')->nullable();
             $table->unsignedDecimal('discount_percentage');
             $table->boolean('state');
             $table->unsignedInteger('category_id')->nullable();

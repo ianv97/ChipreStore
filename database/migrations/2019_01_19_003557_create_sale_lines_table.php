@@ -24,7 +24,7 @@ class CreateSaleLinesTable extends Migration
             
             $table->foreign('product_id')->references('id')->on('products')->onDelete('set null');
             $table->foreign('waist_id')->references('id')->on('waists')->onDelete('set null');
-            $table->foreign('sale_id')->references('id')->on('sales');
+            $table->foreign('sale_id')->references('id')->on('sales')->onDelete('cascade');
         });
     }
 

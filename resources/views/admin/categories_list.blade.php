@@ -68,7 +68,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Registrar Categoría</h2>
                 </div>
-                <form method="POST" action="{{ action('Category@new_category')}}" enctype="multipart/form-data">
+                <form method="POST" action="{{ action('CategoryController@new_category')}}" enctype="multipart/form-data">
                     {{ csrf_field() }}
                     <div class="row d-flex justify-content-center mt-4">
                         <div class="normal_width">
@@ -111,7 +111,7 @@
                 <div class="row align-middle d-flex justify-content-center">
                     <h2 class="negrita nosub text-white">Editar Categoría</h2>
                 </div>
-                <form method="POST" action="{{ action('Category@edit_category')}}" enctype="multipart/form-data" id="editform">
+                <form method="POST" action="{{ action('CategoryController@edit_category')}}" enctype="multipart/form-data" id="editform">
                     {{ csrf_field() }}
                     <input type="hidden" name="eid" id="eid" value="{{old('eid')}}">
                     

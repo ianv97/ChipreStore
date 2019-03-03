@@ -4,13 +4,13 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Category extends Controller{
+class CategoryController extends Controller{
     function list_categories(){
         session_start();
         if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/categories_list');
         }else{
-            return redirect(action('Session@admin_login'));
+            return redirect(action('SessionController@admin_login'));
         }
     }
     
@@ -30,7 +30,7 @@ class Category extends Controller{
             'name' => $data['name'],
             'state' => $state
         ]);
-        return redirect(action('Category@list_categories'))
+        return redirect(action('CategoryController@list_categories'))
                 ->with('success', 'Categoría registrada con éxito');;
     }
     
@@ -39,7 +39,7 @@ class Category extends Controller{
             $data = request('eid');
             $category = \App\Category::find($data);
             $category->delete();
-            return redirect(action('Category@list_categories'))
+            return redirect(action('CategoryController@list_categories'))
                     ->with('success', 'Categoría eliminada con éxito');;
         }else{
             $data = request()->validate([
@@ -58,50 +58,8 @@ class Category extends Controller{
             $category->name = $data['ename'];
             $category->state = $state;
             $category->save();
-            return redirect(action('Category@list_categories'))
+            return redirect(action('CategoryController@list_categories'))
                     ->with('success', 'Categoría modificada con éxito');;
         }
     }
-    
-    
-//    public function index(Request $request){
-//        $categories = Category::search($request->name)->orderBy('name','ASC')->paginate(15);
-//        return view('admin.pages.tables.categories')->with('categories',$categories);
-//    }
-//
-//    public function create(){
-//        return view('admin.pages.createCategory');
-//    }
-//
-//    public function store(CategoryRequest $request){
-//        $category= new Category($request->all());
-//        $category->save();
-//
-//        //Flash::success("Se ha registrado correctamente" . $category->name);
-//
-//        return redirect()->route('categories.index');
-//    }
-//
-//    public function destroy($id){
-//        $category = Category::find($id);
-//        $category->delete();
-//
-//        //Flash::error('Usuario'." ". $category->name ." ".'Eliminado Exitosamente');
-//        return redirect()->route('categories.index');
-//    }
-//
-//    public function edit($id){
-//        $category = Category::find($id);
-//        return view('admin.pages.editCategory')->with('category',$category);
-//    }
-//
-//    public function update(Request $request, $id){
-//        $category = Category::find($id);
-//        $category->fill($request->all());
-//        $category->save();
-//
-//        //Flash::success("Se ha modificado con exito");
-//        return redirect()->route('categories.index');
-//    }
-
 }

@@ -6,12 +6,12 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Customer;
 
-class Session extends Controller
+class SessionController extends Controller
 {
     function login(){
         session_start();
         if (isset($_SESSION['role']) and $_SESSION['role'] == 'Cliente'){
-            return redirect(action('Shop@index'));
+            return redirect(action('ShopController@index'));
         }else{
             return view('login');
         }
@@ -20,7 +20,7 @@ class Session extends Controller
     function admin_login(){
         session_start();
         if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
-            return redirect(action('User@index'));
+            return redirect(action('UserController@index'));
         }else{
             return view('admin/login');
         }
@@ -42,12 +42,12 @@ class Session extends Controller
             $_SESSION['email'] = $data['email'];
             $_SESSION['role'] = 'Cliente';
             if (isset($_COOKIE["product"])){
-                return redirect(action('Shop@cart'));
+                return redirect(action('ShopController@cart'));
             }else{
-                return redirect(action('Shop@index'));
+                return redirect(action('ShopController@index'));
             }
         }else{
-            return redirect(action('Session@login'))->withErrors(['auth' => 'El email y/o contraseña ingresados son incorrectos.']);
+            return redirect(action('SessionController@login'))->withErrors(['auth' => 'El email y/o contraseña ingresados son incorrectos.']);
         }
     }
     
@@ -71,15 +71,15 @@ class Session extends Controller
                 $_SESSION['photo'] = 'user.jpg';
             }
             $_SESSION['role'] = $user->role;
-            return redirect(action('User@index'));
+            return redirect(action('UserController@index'));
         }else{
-            return redirect(action('Session@admin_login'))->withErrors(['auth' => 'El email y/o contraseña ingresados son incorrectos.']);
+            return redirect(action('SessionController@admin_login'))->withErrors(['auth' => 'El email y/o contraseña ingresados son incorrectos.']);
         }
     }
     
     function logout(){
         session_start();
         session_destroy();
-        return redirect(action('Shop@index'));
+        return redirect(action('ShopController@index'));
     }
 }

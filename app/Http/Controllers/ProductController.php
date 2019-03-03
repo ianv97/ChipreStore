@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class Product extends Controller
+class ProductController extends Controller
 {
     function list_products(){
         session_start();
-        if (isset($_SESSION['id'])){
+        if (isset($_SESSION['role']) and $_SESSION['role'] == 'Administrador'){
             return view('admin/products_list');
         }else{
-            return redirect(action('Session@admin_login'));
+            return redirect(action('SessionController@admin_login'));
         }
     }
     
@@ -85,7 +85,7 @@ class Product extends Controller
                 $i += 1;
             }
         });
-        return redirect(action('Product@list_products'))
+        return redirect(action('ProductController@list_products'))
                 ->with('success', 'Producto registrado con éxito');;
     }
     
@@ -94,7 +94,7 @@ class Product extends Controller
             $data = request('eid');
             $product = \App\Product::find($data);
             $product->delete();
-            return redirect(action('Product@list_products'))
+            return redirect(action('ProductController@list_products'))
                     ->with('success', 'Producto eliminado con éxito');;
         }else{
             \DB::transaction(function(){
@@ -227,7 +227,7 @@ class Product extends Controller
                 };
                 
             });
-            return redirect(action('Product@list_products'))
+            return redirect(action('ProductController@list_products'))
                     ->with('success', 'Producto modificado con éxito');;
         }
     }

@@ -108,7 +108,8 @@
                     </div>
             </div>
             <div class="modal-footer justify-content-center">
-                <button type="submit" form="editform" class="btn btn-success negrita"><i class="fa fa-check"></i> Guardar</button>
+                <button type="button" class="btn btn-danger negrita" id="deletebtn" style="display:none;"><i class="fa fa-times"></i> Eliminar</button>
+                <button type="submit" form="editform" class="btn btn-success negrita" id="savebtn" style="display:none;"><i class="fa fa-check"></i> Guardar</button>
             </div>
         </div>
     </div>
@@ -186,6 +187,13 @@
                     </div>`));
             }
         });
+        if (state == 'Pago pendiente'){
+            $('#deletebtn').show();
+            $('#savebtn').hide();
+        }else{
+            $('#deletebtn').hide();
+            $('#savebtn').show();
+        }
     }
 </script>
 
