@@ -29,7 +29,7 @@ CREATE TABLE `categories` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `categories` (
 
 LOCK TABLES `categories` WRITE;
 /*!40000 ALTER TABLE `categories` DISABLE KEYS */;
-INSERT INTO `categories` VALUES (1,'Jeans','1','2019-02-01 21:26:00','2019-02-01 21:26:00'),(2,'Camisas','1','2019-02-01 21:26:07','2019-02-01 21:26:07');
+INSERT INTO `categories` VALUES (1,'Jeans','1','2019-02-01 21:26:00','2019-02-01 21:26:00'),(2,'Camisas','1','2019-02-01 21:26:07','2019-02-01 21:26:07'),(3,'Chombas','1','2019-03-01 21:34:33','2019-03-01 21:34:46');
 /*!40000 ALTER TABLE `categories` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -60,7 +60,7 @@ CREATE TABLE `categories_products` (
   KEY `categories_products_product_id_foreign_idx` (`product_id`),
   CONSTRAINT `categories_products_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `categories_products_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -69,7 +69,7 @@ CREATE TABLE `categories_products` (
 
 LOCK TABLES `categories_products` WRITE;
 /*!40000 ALTER TABLE `categories_products` DISABLE KEYS */;
-INSERT INTO `categories_products` VALUES (1,1,8,'2019-02-21 21:34:17','2019-02-21 21:34:40'),(2,2,7,'2019-02-21 21:33:43','2019-02-21 21:33:43'),(3,2,9,'2019-02-28 14:34:20','2019-02-28 14:34:20');
+INSERT INTO `categories_products` VALUES (1,1,8,'2019-02-21 21:34:17','2019-02-21 21:34:40'),(2,2,7,'2019-02-21 21:33:43','2019-02-21 21:33:43'),(3,2,9,'2019-02-28 14:34:20','2019-02-28 14:34:20'),(4,3,10,'2019-03-01 21:40:34','2019-03-01 21:40:34');
 /*!40000 ALTER TABLE `categories_products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -167,10 +167,7 @@ DROP TABLE IF EXISTS `offers`;
 CREATE TABLE `offers` (
   `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(60) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `min_quantity` int(10) unsigned NOT NULL,
-  `start_date` date DEFAULT NULL,
-  `end_date` date DEFAULT NULL,
-  `discount_percentage` decimal(8,2) unsigned NOT NULL,
+  `discount_percentage` int(2) unsigned NOT NULL,
   `state` tinyint(1) unsigned NOT NULL,
   `category_id` int(10) unsigned DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
@@ -178,7 +175,7 @@ CREATE TABLE `offers` (
   PRIMARY KEY (`id`),
   KEY `offers_category_id_foreign` (`category_id`),
   CONSTRAINT `offers_category_id_foreign` FOREIGN KEY (`category_id`) REFERENCES `categories` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -187,7 +184,7 @@ CREATE TABLE `offers` (
 
 LOCK TABLES `offers` WRITE;
 /*!40000 ALTER TABLE `offers` DISABLE KEYS */;
-INSERT INTO `offers` VALUES (1,'20%OFF Camisas',0,NULL,NULL,20.00,1,NULL,'2019-02-25 19:26:16','2019-02-25 19:26:16');
+INSERT INTO `offers` VALUES (1,'20%OFF Camisas',20,1,2,'2019-02-25 19:26:16','2019-03-03 14:24:24');
 /*!40000 ALTER TABLE `offers` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -231,7 +228,7 @@ CREATE TABLE `product_photos` (
   PRIMARY KEY (`id`),
   KEY `product_photos_product_id_foreign` (`product_id`),
   CONSTRAINT `product_photos_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -240,7 +237,7 @@ CREATE TABLE `product_photos` (
 
 LOCK TABLES `product_photos` WRITE;
 /*!40000 ALTER TABLE `product_photos` DISABLE KEYS */;
-INSERT INTO `product_photos` VALUES (2,'CamisaPrototypeAzul1.jpg',7,'2019-02-02 00:55:42','2019-02-28 14:30:48'),(4,'JeanQuickSilverNegro0.jpg',8,NULL,NULL),(5,'JeanQuickSilverNegro1.jpg',8,NULL,NULL),(10,'CamisaTommyHilfigerNegra0.jpg',9,'2019-02-28 14:34:21','2019-02-28 14:34:21');
+INSERT INTO `product_photos` VALUES (2,'CamisaPrototypeAzul1.jpg',7,'2019-02-02 00:55:42','2019-02-28 14:30:48'),(4,'JeanQuickSilverNegro0.jpg',8,NULL,NULL),(5,'JeanQuickSilverNegro1.jpg',8,NULL,NULL),(10,'CamisaTommyHilfigerNegra0.jpg',9,'2019-02-28 14:34:21','2019-02-28 14:34:21'),(11,'ChombaLacosteHombreEdiciónEspecialPh05300.jpg',10,'2019-03-01 21:40:34','2019-03-01 21:40:34'),(12,'ChombaLacosteHombreEdiciónEspecialPh05301.jpg',10,'2019-03-01 21:40:34','2019-03-01 21:40:34');
 /*!40000 ALTER TABLE `product_photos` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -263,7 +260,7 @@ CREATE TABLE `products` (
   `updated_at` timestamp NULL DEFAULT NULL,
   `visible` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -272,7 +269,7 @@ CREATE TABLE `products` (
 
 LOCK TABLES `products` WRITE;
 /*!40000 ALTER TABLE `products` DISABLE KEYS */;
-INSERT INTO `products` VALUES (7,'Camisa Prototype Azul','Camisa Prototype Azul',500.00,830.00,NULL,0,'2019-02-02 00:55:42','2019-02-22 00:43:49',1),(8,'Jean QuickSilver Negro','Jean QuickSilver Negro',700.00,1200.00,NULL,0,NULL,NULL,1),(9,'Camisa Tommy Hilfiger Negra',NULL,NULL,1500.00,NULL,0,'2019-02-28 14:34:20','2019-02-28 14:35:51',1);
+INSERT INTO `products` VALUES (7,'Camisa Prototype Azul','Camisa Prototype Azul',500.00,830.00,NULL,0,'2019-02-02 00:55:42','2019-02-22 00:43:49',1),(8,'Jean QuickSilver Negro','Jean QuickSilver Negro',700.00,1200.00,NULL,0,'2019-02-05 00:55:42','2019-03-03 14:19:38',1),(9,'Camisa Tommy Hilfiger Negra',NULL,NULL,1500.00,NULL,0,'2019-02-28 14:34:20','2019-02-28 14:35:51',1),(10,'Chomba Lacoste Hombre Edición Especial Ph0530','Diseño de la tela: Geométrico\r\nGénero: Hombre\r\nMaterial de la remera: Pique\r\nTipo de manga: Corta\r\nTipo de cuello: Polo',NULL,2149.00,NULL,0,'2019-03-01 21:40:34','2019-03-01 21:40:34',1);
 /*!40000 ALTER TABLE `products` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -284,15 +281,17 @@ DROP TABLE IF EXISTS `products_offers`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `products_offers` (
+  `id` int(10) NOT NULL AUTO_INCREMENT,
   `product_id` int(10) unsigned NOT NULL,
   `offer_id` int(10) unsigned NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`product_id`),
+  PRIMARY KEY (`id`),
   KEY `products_offers_offer_id_foreign` (`offer_id`),
+  KEY `products_offers_product_id_idx` (`product_id`),
   CONSTRAINT `products_offers_offer_id_foreign` FOREIGN KEY (`offer_id`) REFERENCES `offers` (`id`) ON DELETE CASCADE,
-  CONSTRAINT `products_offers_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `products_offers_product_id` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -323,7 +322,7 @@ CREATE TABLE `products_waists` (
   KEY `products_waists_waist_id_foreign` (`waist_id`),
   CONSTRAINT `products_waists_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE,
   CONSTRAINT `products_waists_waist_id_foreign` FOREIGN KEY (`waist_id`) REFERENCES `waists` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -332,7 +331,7 @@ CREATE TABLE `products_waists` (
 
 LOCK TABLES `products_waists` WRITE;
 /*!40000 ALTER TABLE `products_waists` DISABLE KEYS */;
-INSERT INTO `products_waists` VALUES (6,2,7,2,'2019-02-02 00:55:42','2019-02-02 00:55:42'),(8,5,8,4,NULL,NULL),(9,1,8,1,NULL,'2019-02-28 14:10:54'),(10,3,7,3,'2019-02-21 21:00:33','2019-02-21 21:00:33'),(11,3,9,3,'2019-02-28 14:34:20','2019-02-28 14:34:20'),(12,4,9,4,'2019-02-28 14:34:20','2019-02-28 14:34:20');
+INSERT INTO `products_waists` VALUES (6,0,7,2,'2019-02-02 00:55:42','2019-03-03 12:51:58'),(8,5,8,1,NULL,'2019-03-03 14:23:24'),(9,1,8,4,NULL,'2019-03-03 14:23:24'),(10,3,7,3,'2019-02-21 21:00:33','2019-02-21 21:00:33'),(11,2,9,3,'2019-02-28 14:34:20','2019-03-03 12:51:58'),(12,4,9,4,'2019-02-28 14:34:20','2019-02-28 14:34:20'),(13,4,10,2,'2019-03-01 21:40:34','2019-03-01 22:25:01'),(14,4,10,3,'2019-03-01 21:40:34','2019-03-02 21:30:51'),(15,5,10,4,'2019-03-01 21:40:34','2019-03-01 21:40:34');
 /*!40000 ALTER TABLE `products_waists` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -405,13 +404,13 @@ CREATE TABLE `sale_lines` (
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   PRIMARY KEY (`id`),
+  KEY `sale_lines_waist_id_foreign_key_idx` (`waist_id`),
   KEY `sale_lines_product_id_foreign` (`product_id`),
   KEY `sale_lines_sale_id_foreign` (`sale_id`),
-  KEY `sale_lines_waist_id_foreign_key_idx` (`waist_id`),
-  CONSTRAINT `sale_lines_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE SET NULL,
-  CONSTRAINT `sale_lines_sale_id_foreign` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`),
-  CONSTRAINT `sale_lines_waist_id_foreign_key` FOREIGN KEY (`waist_id`) REFERENCES `waists` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+  CONSTRAINT `sale_lines_product_id_foreign` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE SET NULL ON UPDATE CASCADE,
+  CONSTRAINT `sale_lines_sale_id_foreign` FOREIGN KEY (`sale_id`) REFERENCES `sales` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `sale_lines_waist_id_foreign_key` FOREIGN KEY (`waist_id`) REFERENCES `waists` (`id`) ON DELETE SET NULL ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -420,6 +419,7 @@ CREATE TABLE `sale_lines` (
 
 LOCK TABLES `sale_lines` WRITE;
 /*!40000 ALTER TABLE `sale_lines` DISABLE KEYS */;
+INSERT INTO `sale_lines` VALUES (13,1,900.00,9,3,15,'2019-03-03 12:51:45','2019-03-03 12:51:45'),(14,2,1328.00,7,2,15,'2019-03-03 12:51:45','2019-03-03 12:51:45');
 /*!40000 ALTER TABLE `sale_lines` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -444,7 +444,7 @@ CREATE TABLE `sales` (
   PRIMARY KEY (`id`),
   KEY `sales_customer_id_foreign` (`customer_id`),
   CONSTRAINT `sales_customer_id_foreign` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE SET NULL
-) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -453,6 +453,7 @@ CREATE TABLE `sales` (
 
 LOCK TABLES `sales` WRITE;
 /*!40000 ALTER TABLE `sales` DISABLE KEYS */;
+INSERT INTO `sales` VALUES (15,'2019-03-03 12:51:45',2228.00,'Envío pendiente',429,'García Merou 456',NULL,1,'2019-03-03 12:51:45','2019-03-03 12:51:58');
 /*!40000 ALTER TABLE `sales` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -557,4 +558,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-02-28 15:34:08
+-- Dump completed on 2019-03-03 22:01:50
