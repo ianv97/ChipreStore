@@ -27,11 +27,11 @@
 </div>
 
 
-<div class="amado_product_area">
+<div class="amado_product_area pt-0">
     <div class="container-fluid">
        <div class="row">
            <nav class="navbar col-12" style="background-color: #212529;">
-                <div class="form-inline my-2 mx-auto">
+                <div class="form-inline my-2 mx-auto justify-content-center">
                     <input class="form-control mr-1" id="search_input" type="search" placeholder="Búsqueda" style="max-width: 80%;">
                     <button class="btn btn-outline-warning fa fa-search"></button>
                 </div>
@@ -40,7 +40,7 @@
 
         <div class="row">
             @foreach ($products as $product)
-            <div class="single-product-wrapper px-0 col-12 col-sm-6 col-md-12 col-xl-4 product all
+            <div class="single-product-wrapper px-0 col-12 col-sm-6 col-md-12 col-lg-6 col-xl-4 product all
                  <?php $discount = 0;
                  foreach($product->categories_products as $cat_prod){
                      echo ($cat_prod->category->name.' ');
@@ -99,6 +99,7 @@
 
 @section('footer')
 <script>
+    $('#products').addClass('active');
     $('.category_selector').click(function(){
         $('.category_selector').removeClass('active');
         $(this).addClass('active');

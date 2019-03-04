@@ -63,10 +63,9 @@ if(!isset($_SESSION)){
                 <li id="cart"><a href="{{action('ShopController@cart')}}" class="cart-nav"><img src="/img/core-img/cart.png"> Carrito <span>({{$cart}})</span></a></li>
             </ul>
         </nav>
-        <!-- Button Group -->
         <div class="amado-btn-group mt-30 mb-50">
-            <a href="#" class="btn amado-btn mb-15">En descuento</a>
-            <a href="#" class="btn amado-btn">Lo nuevo</a>
+            <a href="{{action('ShopController@discount_products')}}" class="btn amado-btn mb-15" id="discount_products">En descuento</a>
+            <a href="{{action('ShopController@new_products')}}" class="btn amado-btn" id="new_products">Lo nuevo</a>
         </div>
         <hr>
         @if (isset($_SESSION['role']) and $_SESSION['role'] == 'Cliente')
