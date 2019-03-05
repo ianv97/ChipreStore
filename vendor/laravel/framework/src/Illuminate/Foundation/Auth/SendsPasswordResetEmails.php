@@ -7,15 +7,6 @@ use Illuminate\Support\Facades\Password;
 
 trait SendsPasswordResetEmails
 {
-    /**
-     * Display the form to request a password reset link.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function showLinkRequestForm()
-    {
-        return view('auth.passwords.email');
-    }
 
     /**
      * Send a reset link to the given user.

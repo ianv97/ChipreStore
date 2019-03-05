@@ -59,5 +59,14 @@ Route::get('/admin/sales_list','SaleController@list_sales');
 Route::post('/admin/edit_sale','SaleController@edit_sale');
 
 
+Route::post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
+Route::get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
+Route::post('password/reset', 'Auth\ResetPasswordController@reset');
+
+Route::post('customer/password/email', 'Auth\CustomerForgotPasswordController@sendResetLinkEmail')->name('customer.password.email');
+Route::get('customer/password/reset/{token}', 'Auth\CustomerResetPasswordController@showResetForm')->name('customer.password.reset');
+Route::post('customer/password/reset', 'Auth\CustomerResetPasswordController@reset');
+
 
 //Route::get('/create_test_user', 'Shop@create_test_user');
+//Auth::routes();

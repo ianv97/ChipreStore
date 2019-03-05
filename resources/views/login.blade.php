@@ -17,19 +17,19 @@
                         <h2 class="form-title" id="signup">Registrarse</h2>
                         <div class="form-holder row justify-content-center signup-form">
                             <div class="col-8 my-3 webflow-style-input">
-                                <input type="email" id="email" name="email" placeholder="Email" required>
+                                <input type="email" id="email" name="email" placeholder="Email" value="{{old('email')}}" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
-                                <input type="password" id="password" name="password" pattern=".{6,}" placeholder="Contraseña" required>
+                                <input type="password" id="password" name="password" pattern=".{6,}" placeholder="Contraseña" oninvalid="setCustomValidity('Debe contener al menos 6 caracteres.')" oninput="setCustomValidity('')" required>
                             </div>
                             <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                <input type="password" id="repeat_password" name="repeat_password" pattern=".{6,}" placeholder="Repita su contraseña" required>
+                                <input type="password" id="repeat_password" name="repeat_password" pattern=".{6,}" placeholder="Repita su contraseña" oninvalid="setCustomValidity('Debe contener al menos 6 caracteres.')" oninput="setCustomValidity('')" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
-                                <input type="text" id="first_name" name="first_name" placeholder="Nombre" required>
+                                <input type="text" id="first_name" name="first_name" placeholder="Nombre" value="{{old('first_name')}}" required>
                             </div>
                             <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                <input type="text" id="last_name" name="last_name" placeholder="Apellido" required>
+                                <input type="text" id="last_name" name="last_name" placeholder="Apellido" value="{{old('last_name')}}" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
                                 <select class="w-100" id="province" name="province" required>
@@ -45,10 +45,10 @@
                                 </select>
                             </div>
                             <div class="col-8 mb-3 webflow-style-input">
-                                <input type="text" id="address" name="address" placeholder="Dirección" required>
+                                <input type="text" id="address" name="address" placeholder="Dirección" value="{{old('address')}}" required>
                             </div>
                             <div class="col-md-6 mb-3 webflow-style-input">
-                                <input type="text" id="phone" name="phone" placeholder="Teléfono" required>
+                                <input type="text" id="phone" name="phone" placeholder="Teléfono" value="{{old('phone')}}" required>
                             </div>
                         </div>
                         <button type="submit" class="submit-btn">Registrarse</button>
@@ -73,8 +73,14 @@
                                 @endforeach
                             </div>
                             <button type="submit" class="submit-btn">Ingresar</button>
+                            <div class="form-group d-flex mx-auto justify-content-center">
+                                <a href="#" class="btnForgetPwd">¿Olvidó su contraseña?</a>
+                            </div>
                         </div>
                     </div>
+                </form>
+                <form method='POST' action="{{route('customer.password.email')}}" id="reset_password">
+                    {{ csrf_field() }}
                 </form>
             </div>
         </div>
@@ -86,8 +92,20 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 <script src="js/toastr.min.js"></script>
 <script>
+    $('.btnForgetPwd').popover({
+    title: "<div class='d-flex justify-content-center'><label>Ingrese su email</label></div>",
+    content: "\
+        <input type='email' name='email' form='reset_password' class='form-control d-flex justify-content-center' placeholder='Email' required/>\n\
+        <button type='submit' form='reset_password' class='btn btn-primary d-flex mx-auto justify-content-center mt-1'>Confirmar</button>\n\
+    </div>",
+    html: true,
+    placement: "bottom"});
+    
     @if (session('success'))
         toastr.success("{{ session('success') }}");
+    @endif
+    @if (session('status'))
+        toastr.success("{{ session('status') }}");
     @endif
     @foreach ($errors->all() as $error)
         toastr.error("{{ $error }}");
@@ -156,6 +174,24 @@ signupBtn.addEventListener('click', (e) => {
 
 
 <style>
+.btnForgetPwd{
+    color: #ffffff;
+    font-size:0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+.btnForgetPwd:hover{
+    color: #fbb710;
+    font-size:0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+}
+.btnForgetPwd:focus{
+    color: #fbb710;
+    font-size:0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+}
 @-webkit-keyframes gradient {
   0% {background-position: 0 0;}
   100% {background-position: 100% 0;}

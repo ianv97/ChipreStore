@@ -21,6 +21,7 @@ class CreateCustomersTable extends Migration
             $table->unsignedInteger('city_id');
             $table->string('address');
             $table->string('phone', 20);
+            $table->rememberToken();
             $table->timestamps();
             
             $table->foreign('city_id')->references('id')->on('cities');

@@ -3,8 +3,9 @@
 <head>
     <title>Chipre Store</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="../img/logo.ico" rel="shortcut icon">
-    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link rel="shortcut icon" href="../img/logo.ico">
+    <link rel="stylesheet" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/toastr.min.css">
 </head>
 
 <body>
@@ -18,7 +19,7 @@
                 <form method="POST" action="{{action('SessionController@admin_authenticate')}}">
                     {{ csrf_field() }}
                     <div class="form-group">
-                        <input type="text" name="email" class="form-control" placeholder="Email *" data-rule="email" data-msg="Por favor ingrese un email válido." />
+                        <input type="email" name="email" class="form-control" placeholder="Email" required/>
                     </div>
                     @foreach ($errors->get('email') as $message)
                     <label class="mt-0 mb-2 text-white">
@@ -26,7 +27,7 @@
                     </label>
                     @endforeach
                     <div class="form-group">
-                        <input type="password" name="password" class="form-control" placeholder="Contraseña *"/>
+                        <input type="password" name="password" class="form-control" placeholder="Contraseña" required/>
                     </div>
                     @foreach ($errors->get('password') as $message)
                     <label class="mt-0 mb-2 text-white">
@@ -41,9 +42,13 @@
                     <div class="form-group">
                         <button type="submit" class="btnSubmit"> Ingresar </button>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group d-flex mx-auto justify-content-center">
                         <a href="#" class="btnForgetPwd">¿Olvidó su contraseña?</a>
                     </div>
+                </form>
+                
+                <form method='POST' action="{{route('password.email')}}" id="reset_password">
+                    {{ csrf_field() }}
                 </form>
             </div>
         </div>
@@ -51,6 +56,24 @@
 </body>
 
 
+<script src="../js/jquery3.min.js"></script>
+<script src="../js/popper.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/toastr.min.js"></script>
+<script>
+$('.btnForgetPwd').popover({
+    title: "<div class='d-flex justify-content-center'><label>Ingrese su email</label></div>",
+    content: "\
+        <input type='email' name='email' form='reset_password' class='form-control d-flex justify-content-center' placeholder='Email' required/>\n\
+        <button type='submit' form='reset_password' class='btn btn-primary d-flex mx-auto justify-content-center mt-1'>Confirmar</button>\n\
+    </div>",
+    html: true,
+    placement: "bottom"});
+    
+    @if (session('status'))
+        toastr.success("{{ session('status') }}");
+    @endif
+</script>
 
 
 <style>
@@ -72,7 +95,7 @@
     }
     .login-form{
         padding: 9% 9% 1% 9%;
-        background: #343a40;
+        background-color: rgba(0, 0, 0, 0.75);
         box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
     }
     .login-form h3{
@@ -100,9 +123,12 @@
         color: #ffffff;
         font-weight: 600;
         text-decoration: none;
-        margin-left: 26%;
     }
     .btnForgetPwd:hover{
+        text-decoration: none;
+        color: #007bff;
+    }
+    .btnForgetPwd:focus{
         text-decoration: none;
         color: #007bff;
     }

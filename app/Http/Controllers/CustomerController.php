@@ -32,7 +32,7 @@ class CustomerController extends Controller
         ]);
         if ($data['password'] == $data['repeat_password']){
             try{
-                \App\Customer::Create([
+                $customer= \App\Customer::Create([
                     'email' => $data['email'],
                     'password' => bcrypt($data['password']),
                     'name' => $data['last_name'] . ', ' . $data['first_name'],
@@ -40,14 +40,15 @@ class CustomerController extends Controller
                     'address' => $data['address'],
                     'phone' => $data['phone'],
                 ]);
+                $customer->setRememberToken(\Illuminate\Support\Str::random(60));
+                $customer->save();
             }catch (\Illuminate\Database\QueryException $e){
                 if($e->errorInfo[1] == 1062){
                     $error = 'Ya existe un usuario registrado con el email ingresado';
                 }else{
                     $error = 'Error en el registro';
                 }
-                return redirect(action('SessionController@login'))
-                    ->withErrors(['db' => $error]);
+                return back()->withErrors(['db' => $error]);
             };
             return redirect(action('SessionController@login'))
                     ->with('success', 'Usuario registrado con éxito');

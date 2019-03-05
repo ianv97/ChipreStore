@@ -4,8 +4,11 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ResetsPasswords;
+use Illuminate\Http\Request;
+use Password;
+use Auth;
 
-class ResetPasswordController extends Controller
+class CustomerResetPasswordController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
@@ -25,7 +28,7 @@ class ResetPasswordController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/admin';
+    protected $redirectTo = '/login';
 
     /**
      * Create a new controller instance.
@@ -34,6 +37,21 @@ class ResetPasswordController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('guest');
+        $this->middleware('guest:customer');
+    }
+    
+    protected function guard(){
+        return Auth::guard('customer');
+    }
+    
+    protected function broker(){
+        return Password::broker('customers');
+    }
+    
+    public function showResetForm(Request $request, $token = null)
+    {
+        return view('auth.passwords.customer_reset')->with(
+            ['token' => $token, 'email' => $request->email]
+        );
     }
 }

@@ -88,12 +88,14 @@ class UserController extends Controller
             'password2.required' => 'Debe repetir la contraseña'
         ]);
         if ($data['password1'] == $data['password2']){
-            \App\User::Create([
+            $user = \App\User::Create([
                 'role' => $data['role'],
                 'email' => $data['email'],
                 'name' => $data['last_name'] . ', ' . $data['first_name'],
                 'password' => bcrypt($data['password1'])
             ]);
+            $user->setRememberToken(\Illuminate\Support\Str::random(60));
+            $user->save();
             return redirect(action('UserController@list_users'))
                     ->with('success', 'Usuario registrado con éxito');;
         }else{
