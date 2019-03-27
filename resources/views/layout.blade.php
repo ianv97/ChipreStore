@@ -7,11 +7,12 @@ if(!isset($_SESSION)){
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="Chipre Store">
+    <meta name="description" content="Chipre Store - Tienda de ropa online. Ropa importada al mejor precio. Aceptamos todas las tarjetas. Camisas, remeras, chombas, jeans, bermudas, shorts, mallas, gorras.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- The above 4 meta tags *must* come first in the head; any other head content must come *after* these tags -->
-    <title>Chipre Store</title>
+    <title>Chipre Store - Tienda de ropa online</title>
+    <link rel="canonical" href="chiprestore.com">
     <link rel="shortcut icon" href="/img/logo.ico">
     <!-- Core Style CSS -->
     <link rel="stylesheet" href="/css/Template/core-style.css">
@@ -20,6 +21,7 @@ if(!isset($_SESSION)){
 </head>
 
 <body>
+    <h1 style="display: none;">Chipre Store - Tienda de ropa online</h1>
 <!-- ##### Main Content Wrapper Start ##### -->
 <div class="main-content-wrapper d-flex clearfix">
     

@@ -59,7 +59,7 @@ class ResetPasswordNotification extends Notification
 
         return (new MailMessage)
             ->greeting('Hola ' . $notifiable->firstName)
-            ->subject('Reestablecer contraseña en ChipreStore')
+            ->subject('ChipreStore - Reestablecer contraseña')
             ->line('Estás recibiendo este email porque se ha solicitado un reestablecimiento de contraseña para tu cuenta en ChipreStore.')
             ->action('Reestablecer contraseña', url(config('app.url').route('password.reset', $this->token, false)))
             ->line('Si no fuiste tú quien solicitó reestablecer su contraseña, ignora este mensaje.')

@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta charset="UTF-8">
+        <meta name="description" content="Chipre Store - Tienda de ropa online. Ropa importada al mejor precio. Aceptamos todas las tarjetas. Camisas, remeras, chombas, jeans, bermudas, shorts, mallas, gorras.">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>ChipreStore | Administración</title>
+        <title>Chipre Store | Administración</title>
+        <link rel="canonical" href="chiprestore.com">
         <link rel="shortcut icon" href="../img/logo.ico">
         <link rel="stylesheet" href="../css/bootstrap.min.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.3/css/all.css" integrity="sha384-UHRtZLI+pbxtHCWp1t77Bi1L4ZtiqrqD80Kn4Z8NTSRyMA2Fd33n5dQ8lWUE00s/" crossorigin="anonymous">

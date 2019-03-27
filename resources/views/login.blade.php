@@ -26,10 +26,10 @@
                                 <input type="password" id="repeat_password" name="repeat_password" pattern=".{6,}" placeholder="Repita su contraseña" oninvalid="setCustomValidity('Debe contener al menos 6 caracteres.')" oninput="setCustomValidity('')" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
-                                <input type="text" id="first_name" name="first_name" placeholder="Nombre" value="{{old('first_name')}}" required>
+                                <input type="text" id="first_name" name="first_name" placeholder="Nombre" pattern="[A-Za-z]{2,25}" value="{{old('first_name')}}" oninvalid="setCustomValidity('Debe contener más de 2 caracteres (solo letras).')" oninput="setCustomValidity('')" required>
                             </div>
                             <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                <input type="text" id="last_name" name="last_name" placeholder="Apellido" value="{{old('last_name')}}" required>
+                                <input type="text" id="last_name" name="last_name" placeholder="Apellido" pattern="[A-Za-z]{2,25}" value="{{old('last_name')}}" oninvalid="setCustomValidity('Debe contener más de 2 caracteres (solo letras).')" oninput="setCustomValidity('')" required>
                             </div>
                             <div class="col-5 mb-3 webflow-style-input">
                                 <select class="w-100" id="province" name="province" required>

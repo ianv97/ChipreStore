@@ -28,6 +28,14 @@ class Customer extends Authenticatable{
         return $this->belongsTo(City::class);
     }
     
+    public function getLastNameAttribute(){
+        return substr($this->name, 0, strpos($this->name, ','));
+    }
+    
+    public function getFirstNameAttribute(){
+        return substr($this->name, strpos($this->name, ',') + 2);
+    }
+    
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new CustomerResetPasswordNotification($token));

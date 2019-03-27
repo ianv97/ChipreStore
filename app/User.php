@@ -26,7 +26,6 @@ class User extends Authenticatable{
         return substr($this->name, strpos($this->name, ',') + 2);
     }
     
-    
     public function sendPasswordResetNotification($token)
     {
         $this->notify(new ResetPasswordNotification($token));
