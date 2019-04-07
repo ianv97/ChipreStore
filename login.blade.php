@@ -8,79 +8,79 @@
 
 @section('body')
 <div class="cart-table-area section-padding-100">
-    <div class="container-fluid px-0">
-        <div class="col-12 col-lg-10 col-xl-8 mx-auto px-0">
+    <div class="container-fluid">
+        <div class="col-12 col-lg-10 col-xl-8 mx-auto">
             <div class="form-structor">
-                <form method="post" action="{{action('SessionController@authenticate')}}">
+                <form method="post" action="{{action('CustomerController@signup')}}">
                     {{ csrf_field() }}
                     <div class="signup">
-                        <h2 class="form-title" id="signup">Ingresar</h2>
+                        <h2 class="form-title" id="signup">Registrarse</h2>
                         <div class="form-holder row justify-content-center signup-form">
                             <div class="col-8 my-3 webflow-style-input">
-                                <input type="email" name='email' placeholder="Email" data-rule="email" data-msg="Por favor ingrese un email válido." required>
+                                <input type="email" id="email" name="email" placeholder="Email" value="{{old('email')}}" required>
+                            </div>
+                            <div class="col-5 mb-3 webflow-style-input">
+                                <input type="password" id="password" name="password" pattern=".{6,}" placeholder="Contraseña" oninvalid="setCustomValidity('Debe contener al menos 6 caracteres.')" oninput="setCustomValidity('')" required>
+                            </div>
+                            <div class="col-5 mb-3 ml-3 webflow-style-input">
+                                <input type="password" id="repeat_password" name="repeat_password" pattern=".{6,}" placeholder="Repita su contraseña" oninvalid="setCustomValidity('Debe contener al menos 6 caracteres.')" oninput="setCustomValidity('')" required>
+                            </div>
+                            <div class="col-5 mb-3 webflow-style-input">
+                                <input type="text" id="first_name" name="first_name" placeholder="Nombre" pattern="[A-Za-z]{2,25}" value="{{old('first_name')}}" oninvalid="setCustomValidity('Debe contener más de 2 caracteres (solo letras).')" oninput="setCustomValidity('')" required>
+                            </div>
+                            <div class="col-5 mb-3 ml-3 webflow-style-input">
+                                <input type="text" id="last_name" name="last_name" placeholder="Apellido" pattern="[A-Za-z]{2,25}" value="{{old('last_name')}}" oninvalid="setCustomValidity('Debe contener más de 2 caracteres (solo letras).')" oninput="setCustomValidity('')" required>
+                            </div>
+                            <div class="col-5 mb-3 webflow-style-input">
+                                <select class="w-100" id="province" name="province" required>
+                                    <option></option>
+                                    @foreach (\App\Province::all() as $province)
+                                    <option value="{{$province->id}}">{{$province->name}}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                            <div class="col-5 mb-3 ml-3 webflow-style-input">
+                                <select class="w-100" id="city" name="city" required>
+                                    <option></option>
+                                </select>
                             </div>
                             <div class="col-8 mb-3 webflow-style-input">
-                                <input type="password" name='password' placeholder="Contraseña" required>
+                                <input type="text" id="address" name="address" placeholder="Dirección" value="{{old('address')}}" required>
                             </div>
-                            @foreach ($errors->get('auth') as $message)
-                            <label class="mt-0 mb-2 text-danger">
-                                    {{ $message }}
-                            </label>
-                            @endforeach
+                            <div class="col-md-6 mb-3 webflow-style-input">
+                                <input type="text" id="phone" name="phone" placeholder="Teléfono" value="{{old('phone')}}" required>
+                            </div>
                         </div>
-                        <button type="submit" class="submit-btn">Ingresar</button>
-                        <div class="form-group d-flex mx-auto justify-content-center">
-                            <a href="#" class="btnForgetPwd">¿Olvidó su contraseña?</a>
+                        <button type="submit" class="submit-btn">Registrarse</button>
+                    </div>
+                </form>
+                <form method="post" action="{{action('SessionController@authenticate')}}">
+                    {{ csrf_field() }}
+                    <div class="login slide-up">
+                        <div class="center">
+                            <h2 class="form-title" id="login">Ingresar</h2>
+                            <div class="form-holder row justify-content-center login-form">
+                                <div class="col-8 my-3 webflow-style-input">
+                                    <input type="email" name='email' placeholder="Email" data-rule="email" data-msg="Por favor ingrese un email válido." required>
+                                </div>
+                                <div class="col-8 mb-3 webflow-style-input">
+                                    <input type="password" name='password' placeholder="Contraseña" required>
+                                </div>
+                                @foreach ($errors->get('auth') as $message)
+                                <label class="mt-0 mb-2 text-danger">
+                                        {{ $message }}
+                                </label>
+                                @endforeach
+                            </div>
+                            <button type="submit" class="submit-btn">Ingresar</button>
+                            <div class="form-group d-flex mx-auto justify-content-center">
+                                <a href="#" class="btnForgetPwd">¿Olvidó su contraseña?</a>
+                            </div>
                         </div>
                     </div>
                 </form>
                 <form method='POST' action="{{route('customer.password.email')}}" id="reset_password">
                     {{ csrf_field() }}
-                </form>
-                <form method="post" action="{{action('CustomerController@signup')}}">
-                    {{ csrf_field() }}
-                    <div class="login slide-up">
-                        <div class="center">
-                            <h2 class="form-title" id="login">Registrarse</h2>
-                            <div class="form-holder row justify-content-center login-form">
-                                <div class="col-8 my-3 webflow-style-input">
-                                    <input type="email" id="email" name="email" placeholder="Email" value="{{old('email')}}" required>
-                                </div>
-                                <div class="col-5 mb-3 webflow-style-input">
-                                    <input type="password" id="password" name="password" pattern=".{6,}" placeholder="Contraseña" oninvalid="setCustomValidity('Debe contener al menos 6 caracteres.')" oninput="setCustomValidity('')" required>
-                                </div>
-                                <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                    <input type="password" id="repeat_password" name="repeat_password" pattern=".{6,}" placeholder="Repita su contraseña" oninvalid="setCustomValidity('Debe contener al menos 6 caracteres.')" oninput="setCustomValidity('')" required>
-                                </div>
-                                <div class="col-5 mb-3 webflow-style-input">
-                                    <input type="text" id="first_name" name="first_name" placeholder="Nombre" pattern="[A-Za-z]{2,25}" value="{{old('first_name')}}" oninvalid="setCustomValidity('Debe contener más de 2 caracteres (solo letras).')" oninput="setCustomValidity('')" required>
-                                </div>
-                                <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                    <input type="text" id="last_name" name="last_name" placeholder="Apellido" pattern="[A-Za-z]{2,25}" value="{{old('last_name')}}" oninvalid="setCustomValidity('Debe contener más de 2 caracteres (solo letras).')" oninput="setCustomValidity('')" required>
-                                </div>
-                                <div class="col-5 mb-3 webflow-style-input">
-                                    <select class="w-100" id="province" name="province" required>
-                                        <option></option>
-                                        @foreach (\App\Province::all() as $province)
-                                        <option value="{{$province->id}}">{{$province->name}}</option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                                <div class="col-5 mb-3 ml-3 webflow-style-input">
-                                    <select class="w-100" id="city" name="city" required>
-                                        <option></option>
-                                    </select>
-                                </div>
-                                <div class="col-8 mb-3 webflow-style-input">
-                                    <input type="text" id="address" name="address" placeholder="Dirección" value="{{old('address')}}" required>
-                                </div>
-                                <div class="col-8 mb-3 webflow-style-input">
-                                    <input type="text" id="phone" name="phone" placeholder="Teléfono" value="{{old('phone')}}" required>
-                                </div>
-                            </div>
-                            <button type="submit" class="submit-btn">Registrarse</button>
-                        </div>
-                    </div>
                 </form>
             </div>
         </div>
@@ -204,9 +204,7 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px rgba(57, 63, 84) inset !important;
-    -webkit-text-fill-color: #BFD2FF !important;
-    padding: 0 10px;
+    transition-delay: 3600s;
 }
 .webflow-style-input {
   border-radius: 2px;
@@ -235,7 +233,7 @@ input:-webkit-autofill:active {
 }
 .form-structor {
   font-family: "Fira Sans", Helvetica, Arial, sans-serif;
-  background-color: #212529;
+  background-color: #fbb710;
   border-radius: 15px;
   height: 750px;
   width: 100%;
@@ -250,7 +248,7 @@ input:-webkit-autofill:active {
   right: 0;
   bottom: 0;
   left: 0;
-  background-color: #212529;
+  background-color: #fbb710;
 }
 .form-structor .signup {
   position: absolute;
@@ -260,11 +258,6 @@ input:-webkit-autofill:active {
   width: 65%;
   z-index: 5;
   -webkit-transition: all .3s ease;
-}
-@media (max-width: 768px) {
-  .form-structor .signup {
-	 width: 90%;
-  }
 }
 .form-structor .signup.slide-up {
   top: 5%;
@@ -286,7 +279,7 @@ input:-webkit-autofill:active {
   -webkit-transition: all .3s ease;
 }
 .form-structor .signup .form-title {
-  color: #fbb710;
+  color: #212529;
   font-size: 1.7em;
   text-align: center;
   font-weight: 600;
@@ -325,12 +318,12 @@ input:-webkit-autofill:active {
 }
 .form-structor .signup .submit-btn {
   background-color: #fff;
-  color: #000;
+  color: #212529;
   border: 0;
   border-radius: 15px;
   display: block;
   margin: 15px auto;
-  padding: 15px 0px;
+  padding: 15px 45px;
   width: 50%;
   font-size: 16px;
   font-weight: bold;
@@ -341,15 +334,14 @@ input:-webkit-autofill:active {
 }
 .form-structor .signup .submit-btn:hover {
   transition: all .3s ease;
-  background-color: #fbb710;
-  color: #212529;
+  background-color: #212529;
+  color: #fbb710;
 }
-  
 .login{
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
-  background-color: #fbb710;
+  background-color: #212529;
 }
 .form-structor .login {
   position: absolute;
@@ -365,9 +357,8 @@ input:-webkit-autofill:active {
   position: absolute;
   left: 50%;
   top: -20px;
-  padding-top: 30px;
   -webkit-transform: translate(-50%, 0);
-  background-color: #fbb710;
+  background-color: #212529;
   width: 200%;
   height: 250px;
   border-radius: 50%;
@@ -383,18 +374,10 @@ input:-webkit-autofill:active {
   z-index: 5;
   -webkit-transition: all .3s ease;
 }
-@media (max-width: 768px) {
-  .form-structor .login .center {
-  	width: 90%;
-  }
-}
-
 .form-structor .login .center .form-title {
-  color: #000;
+  color: #fff;
   font-size: 1.7em;
-  font-weight: 600;
   text-align: center;
-  margin-top: 55px;
 }
 .form-structor .login .center .form-title span {
   color: rgba(0, 0, 0, 0.4);
@@ -404,7 +387,7 @@ input:-webkit-autofill:active {
 }
 .form-structor .login .center .form-holder {
   border-radius: 15px;
-  background-color: #212529;
+  background-color: transparent;
   overflow: hidden;
   margin-top: 50px;
   opacity: 1;
@@ -431,12 +414,12 @@ input:-webkit-autofill:active {
 }
 .form-structor .login .center .submit-btn {
   background-color: #fff;
-  color: #212529;
+  color: #000;
   border: 0;
   border-radius: 15px;
   display: block;
   margin: 15px auto;
-  padding: 15px 0px;
+  padding: 15px 45px;
   width: 50%;
   font-size: 16px;
   font-weight: bold;
@@ -447,10 +430,9 @@ input:-webkit-autofill:active {
 }
 .form-structor .login .center .submit-btn:hover {
   transition: all .3s ease;
-  background-color: #212529;
-  color: #fbb710;
+  background-color: #fbb710;
+  color: #212529;
 }
-    
 .form-structor .login.slide-up {
   top: 90%;
   -webkit-transition: all .3s ease;

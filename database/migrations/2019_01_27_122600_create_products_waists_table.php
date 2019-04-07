@@ -13,7 +13,6 @@ class CreateProductsWaistsTable extends Migration
             $table->integer('stock_quantity');
             $table->unsignedInteger('product_id');
             $table->unsignedInteger('waist_id');
-            $table->timestamps();
 
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->foreign('waist_id')->references('id')->on('waists');

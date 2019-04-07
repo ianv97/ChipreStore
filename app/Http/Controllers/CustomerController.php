@@ -45,10 +45,8 @@ class CustomerController extends Controller
             }catch (\Illuminate\Database\QueryException $e){
                 if($e->errorInfo[1] == 1062){
                     $error = 'Ya existe un usuario registrado con el email ingresado';
-                }else{
-                    $error = 'Error en el registro';
+                    return back()->withErrors(['db' => $error]);
                 }
-                return back()->withErrors(['db' => $error]);
             };
             return redirect(action('SessionController@login'))
                     ->with('success', 'Usuario registrado con éxito');

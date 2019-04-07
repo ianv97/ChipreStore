@@ -12,7 +12,6 @@ class CreateCategoriesProductsTable extends Migration
             $table->increments('id');
             $table->unsignedInteger('category_id');
             $table->unsignedInteger('product_id');
-            $table->timestamps();
             $table->unique('category_id', 'product_id');
             
             $table->foreign('category_id')->references('id')->on('categories');

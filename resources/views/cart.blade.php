@@ -13,25 +13,25 @@
 <div class="cart-table-area">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-12 col-lg-9">
+            <div class="col-12 col-xl-9 px-0 px-lg-2 px-xl-3">
                 <div class="cart-title mt-50">
                     <h2>Carrito de compras</h2>
                 </div>
 
                 <div class="cart-table clearfix">
                     <table class="table table-responsive">
-                        <thead>
+                        <thead class="mb-5 mb-lg-0">
                             <tr>
-                                <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%; padding-top:0;"><form method="post" action="{{action("ShopController@empty_cart")}}">{{ csrf_field() }}<button type="submit" class="btn btn-danger"><i class="fa fa-cart-arrow-down"></i> Vaciar carrito</button></form></th>
-                                <th style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">Nombre</th>
-                                <th style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">Talle</th>
-                                <th style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">Precio</th>
-                                <th style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">Cantidad</th>
-                                <th style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">Subtotal</th>
+                                <th class="px-0" style="width: 24%;"><form method="post" action="{{action("ShopController@empty_cart")}}">{{ csrf_field() }}<button type="submit" class="btn btn-danger"><i class="fa fa-cart-arrow-down"></i> Vaciar carrito</button></form></th>
+                                <th style="width: 15%;">Nombre</th>
+                                <th style="width: 10%;">Talle</th>
+                                <th style="width: 19%;">Precio</th>
+                                <th style="width: 14%;">Cantidad</th>
+                                <th style="width: 15%;">Subtotal</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <?php $total = 0; $ship = 100;
+                            <?php $total = 0;
                             if (isset($_COOKIE["product"])){
                                 foreach($_COOKIE["product"] as $cookie_product){
                                     foreach($cookie_product as $cookie_waist){
@@ -53,27 +53,27 @@
                                         $waist = \App\Waist::find($cookie_waist['waist']);
                                         $subtotal = $price * $cookie_waist['qty'];?>
                                         <tr>
-                                            <td class="cart_product_img" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
+                                            <td class="cart_product_img" style="width: 25%;max-width: 25%;">
                                                 <a href="{{action('ShopController@product_details', ['id'=>$cookie_waist['id']])}}">
                                                     <img src="img/product-img/{{$product->photos[0]->name}}" style="max-height: 200px;">
                                                 </a>
                                             </td>
-                                            <td class="cart_product_desc" style="-ms-flex: 0 0 25%;flex: 0 0 25%;width: 25%;max-width: 25%;">
+                                            <td class="cart_product_desc" style="width: 15%;">
                                                 <h5>{{$product->name}}</h5>
                                             </td>
-                                            <td class="waist" style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">
+                                            <td class="waist" style="width: 10%;">
                                                 <span>{{$waist->name}}</span>
                                             </td>
-                                            <td class="price" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
+                                            <td class="price" style="width: 19%;">
                                                 <span>${{number_format($price, 2, ',', '.')}}</span>
                                             </td>
-                                            <td class="qty" style="-ms-flex: 0 0 10%;flex: 0 0 10%;width: 10%;max-width: 10%;">
+                                            <td class="qty" style="width: 14%;">
                                                 <span>{{$cookie_waist['qty']}}</span>
                                             </td>
-                                            <td class="subtotal" style="-ms-flex: 0 0 15%;flex: 0 0 15%;width: 15%;max-width: 15%;">
+                                            <td class="subtotal" style="width: 15%;">
                                                 <span>${{number_format($subtotal, 2, ',', '.')}}</span>
                                             </td>
-                                            <input type="text" form="order-form" name="product_id[]" value="{{$product->id}}" hidden>
+                                            <input type="text" form="order-form" name="product_id[]" value="{{$product->id}}" style="display: none;">
                                         </tr>
                                         <?php $total+= $price * $cookie_waist['qty'];
                                     }
@@ -81,7 +81,7 @@
                             }else{ ?>
                             <tr>
                                 <td style="width: 100%;max-width: 100%;">
-                                    <h2 style="color:#ffc107;">El carrito está vacío</h2>
+                                    <h2 class="mt-5" style="color:#ffc107;">El carrito está vacío</h2>
                                 </td>
                             </tr>
                             <?php }?>
@@ -217,4 +217,8 @@
         $('#iaddress').val($('#address').val());
     }
 </script>
+
+<style type="text/css">
+    .table td, .table th { vertical-align: middle; padding: 0.75rem 0;}
+</style>
 @endsection

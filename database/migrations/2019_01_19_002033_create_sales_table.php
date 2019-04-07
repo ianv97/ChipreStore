@@ -22,7 +22,6 @@ class CreateSalesTable extends Migration
             $table->string('address');
             $table->string('payment_link')->nullable();
             $table->unsignedInteger('customer_id')->nullable();
-            $table->timestamps();
             
             $table->foreign('customer_id')->references('id')->on('customers')->onDelete('set null');
         });

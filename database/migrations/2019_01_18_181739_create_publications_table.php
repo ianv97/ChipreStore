@@ -19,7 +19,6 @@ class CreatePublicationsTable extends Migration
             $table->string('photo', 55);
             $table->string('description')->nullable();
             $table->string('publication_place', 20);
-            $table->timestamps();
         });
     }
 

@@ -144,7 +144,7 @@
                     <div class="row d-flex justify-content-center mt-4 mb-0">
                         <label class="text-white negrita col-4 col-lg-3">Costo</label>
                         <label class="text-white negrita col-4 col-lg-3 mx-lg-4 mx-xl-5">Precio de venta *</label>
-                        <label class="text-white negrita col-4 col-lg-3">Precio con crédito</label>
+                        <label class="text-white negrita col-4 col-lg-3">Precio especial</label>
                     </div>
                     <div class="row d-flex justify-content-center mt-0">
                         <div class="input-group col-4 col-lg-3">
@@ -179,7 +179,7 @@
                                 </select>
                             </div>
                             <div class="normal_width">
-                                <input type="number" class="form-control stock_quantity text-center ml-4" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
+                                <input type="number" class="form-control stock_quantity text-center ml-4" name="stock_quantity[]" placeholder="Cantidad en stock" min="0" required>
                             </div>
                         </div>
                     </div>
@@ -194,7 +194,7 @@
                         </div>
                         <div class="row d-flex justify-content-center">
                             <button type="button" class="btn btn-danger mr-1 mr-lg-3 my-auto" onclick="remove_photo(this)" style="height:40px; border-radius:20px;"><span class="fas fa-minus-square"></span></button>
-                            <input name="photos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;" onchange="file_input(this)"/>
+                            <input name="photos[]" type="file" class="file-input col-5 col-md-4 col-lg-3 my-auto" style="color:transparent; max-height: 30px;" onchange="file_input(this)" required />
                             <img style="max-width:355px; max-height:200px"/>
                         </div>
                     </div>
@@ -273,7 +273,7 @@
                     <div class="row d-flex justify-content-center mt-4 mb-0">
                         <label class="text-white negrita col-4 col-lg-3">Costo</label>
                         <label class="text-white negrita col-4 col-lg-3 mx-lg-4 mx-xl-5">Precio de venta *</label>
-                        <label class="text-white negrita col-4 col-lg-3">Precio con crédito</label>
+                        <label class="text-white negrita col-4 col-lg-3">Precio especial</label>
                     </div>
                     <div class="row d-flex justify-content-center mt-0">
                         <div class="input-group col-4 col-lg-3">
@@ -474,7 +474,7 @@
                     </select>
                 </div>
                 <div class="normal_width">
-                    <input type="number" class="form-control stock_quantity text-center ml-4" name="stock_quantity[]" placeholder="Cantidad en stock" min="0">
+                    <input type="number" class="form-control stock_quantity text-center ml-4" name="stock_quantity[]" placeholder="Cantidad en stock" min="0" required>
                 </div>
             </div>`);
     }
@@ -524,7 +524,7 @@
                     </select>
                 </div>
                 <div class="normal_width">
-                    <input type="number" class="form-control stock_quantity text-center ml-4 estock_quantity" name="estock_quantity[]" placeholder="Cantidad en stock" min="0">
+                    <input type="number" class="form-control stock_quantity text-center ml-4 estock_quantity" name="estock_quantity[]" placeholder="Cantidad en stock" min="0" required>
                 </div>
             </div>`);
     }

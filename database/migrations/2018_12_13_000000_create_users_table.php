@@ -26,7 +26,6 @@ class CreateUsersTable extends Migration
             $table->string('address')->nullable();
             $table->string('role', 20);
             $table->rememberToken();
-            $table->timestamps();
         });
     }
 

@@ -22,6 +22,8 @@
                         <th style="padding-left:30px;">Provincia</th>
                         <th style="padding-left:30px;">Localidad</th>
                         <th style="padding-left:30px;">Dirección</th>
+                        <th style="padding-left:30px;">Teléfono</th>
+                        <th style="padding-left:30px;">Email</th>
                         <td style="padding-left:15px;">Ver más</th>
                     </tr>
                 </thead>
@@ -36,6 +38,8 @@
                         <td class="negrita">{{$sale->city->province->name}}</td>
                         <td class="negrita">{{$sale->city->name}}</td>
                         <td class="negrita">{{$sale->address}}</td>
+                        <td class="negrita">{{$sale->customer->phone}}</td>
+                        <td class="negrita">{{$sale->customer->email}}</td>
                         <td>
                             <span class="btn btn-danger" class="btn btn-warning border-radius" onclick="sale_details('{{$sale->id}}', '{{$sale->state}}')" data-toggle="modal" data-target="#edit_sale_modal">
                                     <i class="fas fa-info"></i>
@@ -54,6 +58,8 @@
                         <th>Provincia</th>
                         <th>Localidad</th>
                         <th>Dirección</th>
+                        <th>Teléfono</th>
+                        <th>Email</th>
                         <td>Ver más</th>
                     </tr>
                 </tfoot>
@@ -226,10 +232,10 @@ $(document).ready(function () {
                 className: 'bg-primary negrita'
             }
         ],
-        "order": [[1, "asc"]],
+        "order": [[1, "desc"]],
         "columnDefs": [
-            { "orderable": false, "targets": 8 },
-            { "searchable": false, "targets": 8 }
+            { "orderable": false, "targets": 10 },
+            { "searchable": false, "targets": 10 }
           ],
         "autoWidth": false,
         "language": {
@@ -248,7 +254,7 @@ $(document).ready(function () {
             }
         }
     });
-    table.columns( [0] ).visible( false );
+    table.columns([0, 8, 9]).visible( false );
 
     // Apply the search
     table.columns().every(function () {

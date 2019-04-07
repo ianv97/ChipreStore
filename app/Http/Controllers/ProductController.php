@@ -59,18 +59,25 @@ class ProductController extends Controller
             $product_id = \DB::getPdo()->lastInsertId();
             
             foreach($data['categories'] as $category){
-                \App\CategoriesProduct::Create([
-                    'category_id' => $category,
-                    'product_id' => $product_id
-                ]);
+                if ($category != "null"){
+                    \App\CategoriesProduct::Create([
+                        'category_id' => $category,
+                        'product_id' => $product_id
+                    ]);
+                }
             }
             
             for ($i=0; $i<count($data['waists']); $i++){
-                \App\ProductsWaist::Create([
-                    'waist_id' => $data['waists'][$i],
-                    'stock_quantity' => $data['stock_quantity'][$i],
-                    'product_id' => $product_id
-                ]);
+                if ($data['waists'][$i] != "null"){
+                    \App\ProductsWaist::Create([
+                        'waist_id' => $data['waists'][$i],
+                        'stock_quantity' => $data['stock_quantity'][$i],
+                        'product_id' => $product_id
+                    ]);
+                }else{
+                    return redirect(action('ProductController@list_products'))
+                    ->withErrors(['repeat_password' => 'Las contraseñas ingresadas no coinciden']);
+                }
             }
             
             $files = request()->file('photos');
@@ -160,10 +167,12 @@ class ProductController extends Controller
                 };
                 $length = sizeof($categories_product);
                 while ($inputlength > $length){ //Inserción
-                    \App\CategoriesProduct::Create([
-                        'category_id' => $data['ecategories'][$count],
-                        'product_id' => $data['eid']
-                    ]);
+                    if ($data['ecategories'][$count] != "null"){
+                        \App\CategoriesProduct::Create([
+                            'category_id' => $data['ecategories'][$count],
+                            'product_id' => $data['eid']
+                        ]);
+                    }
                     $count += 1;
                     $length += 1;
                 };
@@ -174,8 +183,11 @@ class ProductController extends Controller
                 $count = 0;
                 foreach($product_waists as $product_waist){
                     if ($count < $inputlength){ //Actualización
-                        $product_waist->waist_id = $data['ewaists'][$count];
-                        $product_waist->save();
+                        if ($data['ewaists'][$count] != "null"){
+                            $product_waist->waist_id = $data['ewaists'][$count];
+                            $product_waist->stock_quantity = $data['estock_quantity'][$count];
+                            $product_waist->save();
+                        }
                         $count += 1;
                     }else{ //Eliminación
                         $product_waist->delete();
@@ -183,11 +195,13 @@ class ProductController extends Controller
                 };
                 $length = sizeof($product_waists);
                 while ($inputlength > $length){ //Inserción
-                    \App\ProductsWaist::Create([
-                        'product_id' => $data['eid'],
-                        'waist_id' => $data['ewaists'][$count],
-                        'stock_quantity' => $data['estock_quantity'][$count],
-                    ]);
+                    if ($data['ewaists'][$count] != "null"){
+                        \App\ProductsWaist::Create([
+                            'product_id' => $data['eid'],
+                            'waist_id' => $data['ewaists'][$count],
+                            'stock_quantity' => $data['estock_quantity'][$count],
+                        ]);
+                    }
                     $count += 1;
                     $length += 1;
                 };

@@ -89,8 +89,8 @@ GROUP BY cid, cname;'));
                 }
             }
             
-            \MercadoPago\SDK::setClientId("8711601650478762");
-            \MercadoPago\SDK::setClientSecret("NRQVorG1CfpJU74qRwdkUAtoLdejoPDt");
+            \MercadoPago\SDK::setClientId("8794816648036573"); //8711601650478762
+            \MercadoPago\SDK::setClientSecret("jX64dLIXUbgBPkFzhk5Iy61ADDu6pAcB"); //NRQVorG1CfpJU74qRwdkUAtoLdejoPDt
             $preference = new \MercadoPago\Preference();
             
 //            \DB::transaction(function() use($data, $sale_products, $total) {
@@ -117,7 +117,7 @@ GROUP BY cid, cname;'));
                         $item->id = $product_waist['product_id'];
                         $item->title = $product_waist['product_name'] . ' - Talle ' . $product_waist['waist_name'];
                         $item->description = $product_waist['product_description'];
-                        $item->picture_url = $product_waist['product_photo'];
+                        $item->picture_url = 'https://chiprestore.com/'.$product_waist['product_photo'];
                         $item->quantity = $product_waist['qty'];
                         $item->currency_id = "ARS";
                         $item->unit_price = $product_waist['price'];
@@ -130,7 +130,7 @@ GROUP BY cid, cname;'));
                 $payer = new \MercadoPago\Payer();
                 $payer->surname = $customer_name[0];
                 $payer->name = $customer_name[1];
-                $payer->email = 'test_user_59681935@testuser.com'; //$_SESSION['email'];
+                $payer->email = $_SESSION['email']; //'test_user_59681935@testuser.com';
 
                 $preference->items = $items;
                 $preference->payer = $payer;
@@ -141,9 +141,9 @@ GROUP BY cid, cname;'));
                     )
                 );
                 $preference->back_urls = array(
-                    "success" => "http://chipre.test/success",
-                    "failure" => "http://chipre.test/purchases",
-                    "pending" => "http://chipre.test/purchases"
+                    "success" => "https://chiprestore.com/success",
+                    "failure" => "https://chiprestore.com/purchases",
+                    "pending" => "https://chiprestore.com/purchases"
                 );
                 $preference->auto_return = "approved";
                 $preference->binary_mode = true;
@@ -190,8 +190,8 @@ GROUP BY cid, cname;'));
     }
     
     function approve_payment(){
-        \MercadoPago\SDK::setClientId("8711601650478762");
-        \MercadoPago\SDK::setClientSecret("NRQVorG1CfpJU74qRwdkUAtoLdejoPDt");
+        \MercadoPago\SDK::setClientId("8794816648036573"); //8711601650478762
+        \MercadoPago\SDK::setClientSecret("jX64dLIXUbgBPkFzhk5Iy61ADDu6pAcB"); //NRQVorG1CfpJU74qRwdkUAtoLdejoPDt
         
         $merchant_order = \MercadoPago\MerchantOrder::find_by_id($_GET["merchant_order_id"]);
         $paid_amount = 0;

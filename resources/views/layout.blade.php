@@ -44,7 +44,7 @@ if(!isset($_SESSION)){
         </div>
         <!-- Logo -->
         <div>
-            <a href="index.html"><img src="/img/logo.svg" alt=""></a>
+            <a href="/"><img src="/img/logo.svg" alt=""></a>
         </div>
         
         <?php
@@ -82,10 +82,10 @@ if(!isset($_SESSION)){
             </div>
         @else
             <div class="cart-fav-search mb-10">
-                <a href="{{action('SessionController@login')}}"><i class="fa fa-user-plus"></i> Registrarse</a>
+                <a href="{{action('SessionController@login')}}"><i class="fa fa-sign-in"></i> Ingresar</a>
             </div>
             <div class="cart-fav-search mb-30">
-                <a href="{{action('SessionController@login')}}"><i class="fa fa-sign-in"></i> Ingresar</a>
+                <a href="{{action('SessionController@login')}}"><i class="fa fa-user-plus"></i> Registrarse</a>
             </div>
         @endif
         
@@ -109,7 +109,7 @@ if(!isset($_SESSION)){
                 <div class="single_widget_area">
                     <!-- Logo -->
                     <div class="footer-logo mr-50">
-                        <a href="index.html"><img src="/img/logo.svg"></a>
+                        <a href="/"><img src="/img/logo.svg"></a>
                     </div>
                 </div>
             </div>
