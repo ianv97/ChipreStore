@@ -89,9 +89,9 @@
             </div>
             @endforeach
         </div>
-        <div class="pagination justify-content-end">
-            {!!$products->render()!!}
-        </div>
+        <!-- <div class="pagination justify-content-end">
+            {$products->render()}
+        </div> -->
         
     </div>
 </div>

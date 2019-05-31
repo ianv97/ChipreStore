@@ -26,7 +26,7 @@ GROUP BY cid, cname;'));
     function products($category_filter = null){
         $categories = \App\Category::where('state', 1)->get();
         $waists = \App\Waist::all();
-        $products = \App\Product::where('visible', 1)->paginate(15);
+        $products = \App\Product::where('visible', 1)->get();//->paginate(15);
         return view('products')->with('categories', $categories)->with('waists', $waists)->with('products', $products)->with('category_filter', $category_filter);
     }
     
